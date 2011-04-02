@@ -1,0 +1,12 @@
+#! /bin/bash
+
+g++ src/*.cpp \
+-o build/sfml2_3d_template \
+-lsfml-system \
+-lsfml-window \
+\
+-framework GLUT \
+-framework OpenGL \
+\
+&& echo "----------" \
+&& ./build/sfml2_3d_template

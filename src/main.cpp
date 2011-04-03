@@ -19,9 +19,11 @@ int main(int argc, char** argv) {
 	float AspectRatio = float(WIDTH)/float(HEIGHT);
 	sf::Window Window(DesktopMode, "SFML Window", sf::Style::Fullscreen, OGLContext);
 	Window.SetActive();
+	
 	const sf::Input& WInput = Window.GetInput();
-	Window.ShowMouseCursor(true); // TODO: hide
+	Window.ShowMouseCursor(false);
 	Window.SetCursorPosition(WIDTH/2, HEIGHT/2);
+	GLUquadric* MouseQuadric = gluNewQuadric();
 	
 	bool Running = true;
 	
@@ -36,7 +38,7 @@ int main(int argc, char** argv) {
 	// Setup a perspective projection
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(70.f, AspectRatio, 1.f, 500.f);
+	gluPerspective(70.f, AspectRatio, .1f, 500.f);
 	glMatrixMode(GL_MODELVIEW);
 	
 	// Setup Camera Matrix
@@ -93,16 +95,22 @@ int main(int argc, char** argv) {
 				{glViewport(0, 0, Event.Size.Width, Event.Size.Height);}
 		}
 		
+		// Setup a perspective projection
+		glMatrixMode(GL_PROJECTION);
+		glLoadIdentity();
+		gluPerspective(70.f, AspectRatio, .1f, 500.f);
+		glMatrixMode(GL_MODELVIEW);
+		
 		// Rendering Setup
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glLoadIdentity();
 		
 		// Camera Rotation Handling
 		glRotatef(
-			(WInput.GetMouseX()-(WIDTH/2.f))/float(WIDTH),
+			(WInput.GetMouseX()-(WIDTH/2.f))/float(WIDTH) * 2,
 			0, 1, 0);
 		glRotatef(
-			(WInput.GetMouseY()-(HEIGHT/2.f))/float(HEIGHT),
+			(WInput.GetMouseY()-(HEIGHT/2.f))/float(HEIGHT) * 2,
 			1, 0, 0);
 		if (Keys[sf::Key::E]) {
 			glRotatef(
@@ -151,6 +159,35 @@ int main(int argc, char** argv) {
 		glEnd();
 		glPopMatrix();
 		
+		// Draw a Spiral!
+		glPushMatrix;
+		glColor3f(1.0f, 0.80f, 0.20f);
+		for (int spix = 0; spix < 500; ++spix) {
+			glBegin(GL_POINTS);
+				glVertex3f(0, 0, 0);
+			glEnd();
+			glTranslatef(.1, .01, .1);
+			glRotatef(1, 0, 1, 0);
+			glRotatef(1, 1, 0, 0);
+			glScalef(.994, .994, .994);
+		}
+		glPopMatrix;
+		
+		// Draw a Spiral!
+		glPushMatrix;
+		glTranslatef(-5, 0, 0);
+		glColor3f(0.0f, 0.80f, 0.00f);
+		for (int spix = 0; spix < 500; ++spix) {
+			glBegin(GL_POINTS);
+				glVertex3f(0, 0, 0);
+			glEnd();
+			glTranslatef(.1, .01, .1);
+			glRotatef(1, 0, 1, 0);
+			glRotatef(1, 1, 0, 0);
+			glScalef(.994, .994, .994);
+		}
+		glPopMatrix;
+		
 		// Draw a grid
 		glPushMatrix;
 		glColor3f(1.0f, 0.80f, 0.90f);
@@ -172,6 +209,27 @@ int main(int argc, char** argv) {
 			glTranslatef(-2*griddims[1], 0, 0);
 			glTranslatef(0, 2, 0);
 		}
+		glPopMatrix;
+		
+		
+		// 2D Rendering Setup
+		glMatrixMode(GL_PROJECTION);
+		glLoadIdentity();
+		glOrtho(0, WIDTH, HEIGHT, 0, -1, 1);
+		glMatrixMode(GL_MODELVIEW);
+		glLoadIdentity();
+		
+		// 2D objects (mouse cursor)
+		glPushMatrix;
+		glTranslatef(WInput.GetMouseX(), WInput.GetMouseY(), 0);
+		glColor3f(.7, .3, .8);
+		glBegin(GL_TRIANGLES);
+			glVertex3f(10, 0, 0);
+			glVertex3f(-10, 0, 0);
+			glVertex3f(0, 10, 0);
+		glEnd();
+		glColor3f(.4,.2,1);
+		gluDisk(MouseQuadric, 15, 20, 16, 1);
 		glPopMatrix;
 		
 		// Display Window

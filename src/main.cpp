@@ -36,7 +36,7 @@ int main(int argc, char** argv) {
 	// Setup a perspective projection
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(90.f, AspectRatio, 1.f, 500.f);
+	gluPerspective(70.f, AspectRatio, 1.f, 500.f);
 	glMatrixMode(GL_MODELVIEW);
 	
 	// Setup Camera Matrix
@@ -106,12 +106,12 @@ int main(int argc, char** argv) {
 			1, 0, 0);
 		if (Keys[sf::Key::E]) {
 			glRotatef(
-				.2,
+				.3,
 				0, 0, 1);
 		}
 		if (Keys[sf::Key::Q]) {
 			glRotatef(
-				-.2,
+				-.3,
 				0, 0, 1);
 		}
 		
@@ -150,6 +150,29 @@ int main(int argc, char** argv) {
 			glVertex3f(-1.0f,-1.0f, 0.0f);
 		glEnd();
 		glPopMatrix();
+		
+		// Draw a grid
+		glPushMatrix;
+		glColor3f(1.0f, 0.80f, 0.90f);
+		int griddims[3] = {20, 20, 20};
+		glTranslatef(-griddims[0], -griddims[1], -griddims[2]);
+		for (int gridx = 0; gridx < griddims[0]; ++gridx) {
+			for (int gridy = 0; gridy < griddims[1]; ++gridy) {
+				for (int gridx = 0; gridx < griddims[0]; ++gridx) {
+					
+					glBegin(GL_POINTS);
+						glVertex3f(0, 0, 0);
+					glEnd();
+					
+					glTranslatef(0, 0, 2);
+				}
+				glTranslatef(2, 0, 0);
+				glTranslatef(0, 0, -2*griddims[2]);
+			}
+			glTranslatef(-2*griddims[1], 0, 0);
+			glTranslatef(0, 2, 0);
+		}
+		glPopMatrix;
 		
 		// Display Window
 		Window.Display();

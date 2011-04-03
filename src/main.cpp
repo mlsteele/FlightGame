@@ -33,15 +33,14 @@ int main(int argc, char** argv) {
 	// Setup a perspective projection
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(90.f, 1.f, 1.f, 500.f);
+	gluPerspective(90.f, AspectRatio, 1.f, 500.f);
 	
 	// Setup Camera Matrix
-	float CamMat[16] = {
-		1, 0, 0, 0,
-		0, 1, 0, 0,
-		0, 0, 1, 0,
-		0, 0, 0, 1
-		};
+	float CamMat[16];
+	glGetFloatv(GL_PROJECTION_MATRIX, CamMat);
+//	// Print Camera (Current) Matrix to stdout
+//	for (int i=0; i < 16; ++i)
+//		{ std::cout << CamMat[i] << "\n"; }
 	
 	sf::Event Event;
 	
@@ -51,7 +50,6 @@ int main(int argc, char** argv) {
 		// Rendering Setup
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glLoadIdentity();
-		gluPerspective(90.f, AspectRatio, 1.f, 500.f);
 		glMultMatrixf(CamMat); // Camera transformation
 		
 		// Event Handling
@@ -61,12 +59,20 @@ int main(int argc, char** argv) {
 			else if (Event.Type == sf::Event::KeyPressed) {
 				if (Event.Key.Code == sf::Key::Escape)
 					{Running = false; }
+				else if (Event.Key.Code == sf::Key::W)
+					{glTranslatef(0, 0, .1);}
 				else if (Event.Key.Code == sf::Key::A)
-					{}
+					{glTranslatef(.1, 0, 0);}
+				else if (Event.Key.Code == sf::Key::S)
+					{glTranslatef(0, 0, -.1);}
+				else if (Event.Key.Code == sf::Key::D)
+					{glTranslatef(-.1, 0, 0);}
 			} else if (Event.Type == sf::Event::Resized)
 				{glViewport(0, 0, Event.Size.Width, Event.Size.Height);}
 		}
 		
+		// Reassign camera matrix after event handling
+		glGetFloatv(GL_PROJECTION_MATRIX, CamMat);
 		
 		// Draw a sphere
 		glPushMatrix();

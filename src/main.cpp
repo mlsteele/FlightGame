@@ -35,32 +35,49 @@ int main(int argc, char** argv) {
 	glLoadIdentity();
 	gluPerspective(90.f, 1.f, 1.f, 500.f);
 	
+	// Setup Camera Matrix
+	float CamMat[16] = {
+		1, 0, 0, 0,
+		0, 1, 0, 0,
+		0, 0, 1, 0,
+		0, 0, 0, 1
+		};
+	
 	sf::Event Event;
+	
+	// Main Loop
 	while (Running) {
-		// Event Handling
-		while (Window.GetEvent(Event)) {
-			if (Event.Type == sf::Event::Closed) {
-				Running = false;
-			} else if (Event.Type == sf::Event::KeyPressed) {
-				if (Event.Key.Code == sf::Key::Escape) {
-					Running = false;
-				}
-			} else if (Event.Type == sf::Event::Resized) {
-			    glViewport(0, 0, Event.Size.Width, Event.Size.Height);
-			}
-		}
 		
-		
-		// Rendering
+		// Rendering Setup
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glLoadIdentity();
 		gluPerspective(90.f, AspectRatio, 1.f, 500.f);
+		glMultMatrixf(CamMat); // Camera transformation
 		
+		// Event Handling
+		while (Window.GetEvent(Event)) {
+			if (Event.Type == sf::Event::Closed)
+				{Running = false;}
+			else if (Event.Type == sf::Event::KeyPressed) {
+				if (Event.Key.Code == sf::Key::Escape)
+					{Running = false; }
+				else if (Event.Key.Code == sf::Key::A)
+					{}
+			} else if (Event.Type == sf::Event::Resized)
+				{glViewport(0, 0, Event.Size.Width, Event.Size.Height);}
+		}
+		
+		
+		// Draw a sphere
+		glPushMatrix();
 		glTranslatef(0.f, 0.f, -6.f);
 		glColor3f(0.0f,0.0f,1.0f);
 		glutSolidSphere(1, 8, 8);
+		glPopMatrix();
 		
-		glTranslatef(3.f, 0.f, 0.f);
+		// Draw a square with colors
+		glPushMatrix();
+		glTranslatef(5.f, 0.f, -10.f);
 		glColor3f(1.0f,0.0f,0.0f);
 		glBegin(GL_QUADS);
 			glColor3f(1.0f,0.0f,0.0f);
@@ -71,8 +88,9 @@ int main(int argc, char** argv) {
 			glColor3f(0.0f,1.0f,0.0f);
 			glVertex3f(-1.0f,-1.0f, 0.0f);
 		glEnd();
+		glPopMatrix();
 		
-		// Display Window (yep)
+		// Display Window
 		Window.Display();
 		
 	}

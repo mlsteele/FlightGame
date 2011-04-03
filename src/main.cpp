@@ -43,14 +43,13 @@ int main(int argc, char** argv) {
 //		{ std::cout << CamMat[i] << "\n"; }
 	
 	sf::Event Event;
+	// Array to store whether or not keys are pressed
+	bool Keys[500]; // Arbitrary large length; TODO: find out what it should be
+	// Zero out Keys
+	for (int i=0; i < 256; ++i) {Keys[i] = false;}
 	
 	// Main Loop
 	while (Running) {
-		
-		// Rendering Setup
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		glLoadIdentity();
-		glMultMatrixf(CamMat); // Camera transformation
 		
 		// Event Handling
 		while (Window.GetEvent(Event)) {
@@ -60,16 +59,42 @@ int main(int argc, char** argv) {
 				if (Event.Key.Code == sf::Key::Escape)
 					{Running = false; }
 				else if (Event.Key.Code == sf::Key::W)
-					{glTranslatef(0, 0, .1);}
+					{Keys[Event.Key.Code] = true;}
 				else if (Event.Key.Code == sf::Key::A)
-					{glTranslatef(.1, 0, 0);}
+					{Keys[Event.Key.Code] = true;}
 				else if (Event.Key.Code == sf::Key::S)
-					{glTranslatef(0, 0, -.1);}
+					{Keys[Event.Key.Code] = true;}
 				else if (Event.Key.Code == sf::Key::D)
-					{glTranslatef(-.1, 0, 0);}
-			} else if (Event.Type == sf::Event::Resized)
+					{Keys[Event.Key.Code] = true;}
+			}
+			else if (Event.Type == sf::Event::KeyReleased) {
+				if (Event.Key.Code == sf::Key::W)
+					{Keys[Event.Key.Code] = false;}
+				else if (Event.Key.Code == sf::Key::A)
+					{Keys[Event.Key.Code] = false;}
+				else if (Event.Key.Code == sf::Key::S)
+					{Keys[Event.Key.Code] = false;}
+				else if (Event.Key.Code == sf::Key::D)
+					{Keys[Event.Key.Code] = false;}
+			}
+			else if (Event.Type == sf::Event::Resized)
 				{glViewport(0, 0, Event.Size.Width, Event.Size.Height);}
 		}
+		
+		// Rendering Setup
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		glLoadIdentity();
+		glMultMatrixf(CamMat); // Camera transformation
+		
+		// Translation Handling
+		if (Keys[sf::Key::W])
+			{glTranslatef(0, 0, .1);}
+		if (Keys[sf::Key::A])
+			{glTranslatef(.1, 0, 0);}
+		if (Keys[sf::Key::S])
+			{glTranslatef(0, 0, -.1);}
+		if (Keys[sf::Key::D])
+			{glTranslatef(-.1, 0, 0);}		
 		
 		// Reassign camera matrix after event handling
 		glGetFloatv(GL_PROJECTION_MATRIX, CamMat);

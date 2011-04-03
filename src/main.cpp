@@ -45,8 +45,11 @@ int main(int argc, char** argv) {
 	float CamMat[16];
 	glGetFloatv(GL_MODELVIEW_MATRIX, CamMat);
 //	// Print Camera (Current) Matrix to stdout
-//	for (int i=0; i < 16; ++i)
-//		{ std::cout << CamMat[i] << "\n"; }
+//	std::cout << "\n| ";
+//	for (int i=0; i < 16; ++i) {
+//		std::cout << CamMat[i] << " ";
+//		if (i %4 == 3) {std::cout << "|\n| ";}
+//	}
 	
 	sf::Event Event;
 	// Array to store whether or not keys are pressed
@@ -64,6 +67,13 @@ int main(int argc, char** argv) {
 			else if (Event.Type == sf::Event::KeyPressed) {
 				if (Event.Key.Code == sf::Key::Escape)
 					{Running = false; }
+				else if (Event.Key.Code == sf::Key::O) {
+					glMatrixMode(GL_MODELVIEW);
+					glLoadIdentity();
+					glGetFloatv(GL_MODELVIEW_MATRIX, CamMat);
+					Window.SetCursorPosition(WIDTH/2, HEIGHT/2);
+					
+				}
 				else if (Event.Key.Code == sf::Key::W)
 					{Keys[Event.Key.Code] = true;}
 				else if (Event.Key.Code == sf::Key::A)
@@ -106,12 +116,16 @@ int main(int argc, char** argv) {
 		glLoadIdentity();
 		
 		// Camera Rotation Handling
-		glRotatef(
-			(WInput.GetMouseX()-(WIDTH/2.f))/float(WIDTH) * 2,
-			0, 1, 0);
-		glRotatef(
-			(WInput.GetMouseY()-(HEIGHT/2.f))/float(HEIGHT) * 2,
-			1, 0, 0);
+		if (abs(WInput.GetMouseX()-(WIDTH/2.f)) > 50) {
+			glRotatef(
+				(WInput.GetMouseX()-(WIDTH/2.f))/float(WIDTH) * 2,
+				0, 1, 0);
+		}
+		if (abs(WInput.GetMouseY()-(HEIGHT/2.f)) > 50) {
+			glRotatef(
+				(WInput.GetMouseY()-(HEIGHT/2.f))/float(HEIGHT) * 2,
+				1, 0, 0);
+		}
 		if (Keys[sf::Key::E]) {
 			glRotatef(
 				.3,
@@ -219,8 +233,18 @@ int main(int argc, char** argv) {
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
 		
-		// 2D objects (mouse cursor)
+		// 2D objects
+		
+		// 2D mid-screen
 		glPushMatrix;
+		glTranslatef(WIDTH/2, HEIGHT/2, -.1);
+		glColor3f(.1, .05, .3);
+		gluDisk(MouseQuadric, 47, 50, 32, 1);
+		glPopMatrix();
+		
+		// 2D mouse cursor
+		glPushMatrix;
+		glLoadIdentity();
 		glTranslatef(WInput.GetMouseX(), WInput.GetMouseY(), 0);
 		glColor3f(.7, .3, .8);
 		glBegin(GL_TRIANGLES);
@@ -229,7 +253,7 @@ int main(int argc, char** argv) {
 			glVertex3f(0, 10, 0);
 		glEnd();
 		glColor3f(.4,.2,1);
-		gluDisk(MouseQuadric, 15, 20, 16, 1);
+		gluDisk(MouseQuadric, 15, 20, 4, 1);
 		glPopMatrix;
 		
 		// Display Window

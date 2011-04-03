@@ -19,6 +19,9 @@ int main(int argc, char** argv) {
 	float AspectRatio = float(WIDTH)/float(HEIGHT);
 	sf::Window Window(DesktopMode, "SFML Window", sf::Style::Fullscreen, OGLContext);
 	Window.SetActive();
+	const sf::Input& WInput = Window.GetInput();
+	Window.ShowMouseCursor(true); // TODO: hide
+	Window.SetCursorPosition(WIDTH/2, HEIGHT/2);
 	
 	bool Running = true;
 	
@@ -34,10 +37,11 @@ int main(int argc, char** argv) {
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	gluPerspective(90.f, AspectRatio, 1.f, 500.f);
+	glMatrixMode(GL_MODELVIEW);
 	
 	// Setup Camera Matrix
 	float CamMat[16];
-	glGetFloatv(GL_PROJECTION_MATRIX, CamMat);
+	glGetFloatv(GL_MODELVIEW_MATRIX, CamMat);
 //	// Print Camera (Current) Matrix to stdout
 //	for (int i=0; i < 16; ++i)
 //		{ std::cout << CamMat[i] << "\n"; }
@@ -66,6 +70,10 @@ int main(int argc, char** argv) {
 					{Keys[Event.Key.Code] = true;}
 				else if (Event.Key.Code == sf::Key::D)
 					{Keys[Event.Key.Code] = true;}
+				else if (Event.Key.Code == sf::Key::Q)
+					{Keys[Event.Key.Code] = true;}
+				else if (Event.Key.Code == sf::Key::E)
+					{Keys[Event.Key.Code] = true;}
 			}
 			else if (Event.Type == sf::Event::KeyReleased) {
 				if (Event.Key.Code == sf::Key::W)
@@ -76,6 +84,10 @@ int main(int argc, char** argv) {
 					{Keys[Event.Key.Code] = false;}
 				else if (Event.Key.Code == sf::Key::D)
 					{Keys[Event.Key.Code] = false;}
+				else if (Event.Key.Code == sf::Key::Q)
+					{Keys[Event.Key.Code] = false;}
+				else if (Event.Key.Code == sf::Key::E)
+					{Keys[Event.Key.Code] = false;}
 			}
 			else if (Event.Type == sf::Event::Resized)
 				{glViewport(0, 0, Event.Size.Width, Event.Size.Height);}
@@ -84,9 +96,26 @@ int main(int argc, char** argv) {
 		// Rendering Setup
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glLoadIdentity();
-		glMultMatrixf(CamMat); // Camera transformation
 		
-		// Translation Handling
+		// Camera Rotation Handling
+		glRotatef(
+			(WInput.GetMouseX()-(WIDTH/2.f))/float(WIDTH),
+			0, 1, 0);
+		glRotatef(
+			(WInput.GetMouseY()-(HEIGHT/2.f))/float(HEIGHT),
+			1, 0, 0);
+		if (Keys[sf::Key::E]) {
+			glRotatef(
+				.2,
+				0, 0, 1);
+		}
+		if (Keys[sf::Key::Q]) {
+			glRotatef(
+				-.2,
+				0, 0, 1);
+		}
+		
+		// Camera Translation Handling
 		if (Keys[sf::Key::W])
 			{glTranslatef(0, 0, .1);}
 		if (Keys[sf::Key::A])
@@ -94,16 +123,17 @@ int main(int argc, char** argv) {
 		if (Keys[sf::Key::S])
 			{glTranslatef(0, 0, -.1);}
 		if (Keys[sf::Key::D])
-			{glTranslatef(-.1, 0, 0);}		
+			{glTranslatef(-.1, 0, 0);}
 		
-		// Reassign camera matrix after event handling
-		glGetFloatv(GL_PROJECTION_MATRIX, CamMat);
+		// Camera application and reassignment
+		glMultMatrixf(CamMat); // Camera transformation
+		glGetFloatv(GL_MODELVIEW_MATRIX, CamMat);
 		
 		// Draw a sphere
 		glPushMatrix();
 		glTranslatef(0.f, 0.f, -6.f);
 		glColor3f(0.0f,0.0f,1.0f);
-		glutSolidSphere(1, 8, 8);
+		glutSolidSphere(1, 32, 32);
 		glPopMatrix();
 		
 		// Draw a square with colors

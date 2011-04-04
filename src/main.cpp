@@ -118,22 +118,22 @@ int main(int argc, char** argv) {
 		// Camera Rotation Handling
 		if (abs(WInput.GetMouseX()-(WIDTH/2.f)) > 50) {
 			glRotatef(
-				(WInput.GetMouseX()-(WIDTH/2.f))/float(WIDTH) * 2,
+				(WInput.GetMouseX()-(WIDTH/2.f))/float(WIDTH) * 4,
 				0, 1, 0);
 		}
 		if (abs(WInput.GetMouseY()-(HEIGHT/2.f)) > 50) {
 			glRotatef(
-				(WInput.GetMouseY()-(HEIGHT/2.f))/float(HEIGHT) * 2,
+				(WInput.GetMouseY()-(HEIGHT/2.f))/float(HEIGHT) * 4,
 				1, 0, 0);
 		}
 		if (Keys[sf::Key::E]) {
 			glRotatef(
-				.3,
+				.6,
 				0, 0, 1);
 		}
 		if (Keys[sf::Key::Q]) {
 			glRotatef(
-				-.3,
+				-.6,
 				0, 0, 1);
 		}
 		
@@ -174,7 +174,7 @@ int main(int argc, char** argv) {
 		glPopMatrix();
 		
 		// Draw a Spiral!
-		glPushMatrix;
+		glPushMatrix();
 		glColor3f(1.0f, 0.80f, 0.20f);
 		for (int spix = 0; spix < 500; ++spix) {
 			glBegin(GL_POINTS);
@@ -185,10 +185,11 @@ int main(int argc, char** argv) {
 			glRotatef(1, 1, 0, 0);
 			glScalef(.994, .994, .994);
 		}
-		glPopMatrix;
+		glPopMatrix();
 		
 		// Draw a Spiral!
-		glPushMatrix;
+		glPushMatrix();
+		glScalef(-1, 1, 1);
 		glTranslatef(-5, 0, 0);
 		glColor3f(0.0f, 0.80f, 0.00f);
 		for (int spix = 0; spix < 500; ++spix) {
@@ -200,10 +201,10 @@ int main(int argc, char** argv) {
 			glRotatef(1, 1, 0, 0);
 			glScalef(.994, .994, .994);
 		}
-		glPopMatrix;
+		glPopMatrix();
 		
 		// Draw a grid
-		glPushMatrix;
+		glPushMatrix();
 		glColor3f(1.0f, 0.80f, 0.90f);
 		int griddims[3] = {20, 20, 20};
 		glTranslatef(-griddims[0], -griddims[1], -griddims[2]);
@@ -223,7 +224,31 @@ int main(int argc, char** argv) {
 			glTranslatef(-2*griddims[1], 0, 0);
 			glTranslatef(0, 2, 0);
 		}
-		glPopMatrix;
+		glPopMatrix();
+		
+		// Draw another grid
+		glPushMatrix();
+		glRotatef(90, 1, 1, 1);
+		glColor3f(1.0f, 1.0f, 0.40f);
+		int griddims2[3] = {10, 10, 10};
+		glTranslatef(-griddims2[0], -griddims2[1], -griddims2[2]);
+		for (int gridx = 0; gridx < griddims2[0]; ++gridx) {
+			for (int gridy = 0; gridy < griddims2[1]; ++gridy) {
+				for (int gridx = 0; gridx < griddims2[0]; ++gridx) {
+					
+					glBegin(GL_POINTS);
+						glVertex3f(0, 0, 0);
+					glEnd();
+					
+					glTranslatef(0, 0, 2);
+				}
+				glTranslatef(2, 0, 0);
+				glTranslatef(0, 0, -2*griddims2[2]);
+			}
+			glTranslatef(-2*griddims2[1], 0, 0);
+			glTranslatef(0, 2, 0);
+		}
+		glPopMatrix();
 		
 		
 		// 2D Rendering Setup
@@ -236,14 +261,14 @@ int main(int argc, char** argv) {
 		// 2D objects
 		
 		// 2D mid-screen
-		glPushMatrix;
+		glPushMatrix();
 		glTranslatef(WIDTH/2, HEIGHT/2, -.1);
 		glColor3f(.1, .05, .3);
 		gluDisk(MouseQuadric, 47, 50, 32, 1);
 		glPopMatrix();
 		
 		// 2D mouse cursor
-		glPushMatrix;
+		glPushMatrix();
 		glLoadIdentity();
 		glTranslatef(WInput.GetMouseX(), WInput.GetMouseY(), 0);
 		glColor3f(.7, .3, .8);
@@ -254,7 +279,7 @@ int main(int argc, char** argv) {
 		glEnd();
 		glColor3f(.4,.2,1);
 		gluDisk(MouseQuadric, 15, 20, 4, 1);
-		glPopMatrix;
+		glPopMatrix();
 		
 		// Display Window
 		Window.Display();

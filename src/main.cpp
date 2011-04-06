@@ -64,23 +64,13 @@ int main(int argc, char** argv) {
 	GLfloat light2dif[] = {.3, .2, 1, 1};
 	glLightfv(GL_LIGHT2, GL_DIFFUSE, light2dif);
 	
-	// Setup a perspective projection
+	// Perspective Projection
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	gluPerspective(70.f, AspectRatio, .1f, 500.f);
 	glMatrixMode(GL_MODELVIEW);
 	
-	// Setup Camera Matrix (phasing out)
-	float CamMat[16];
-	glGetFloatv(GL_MODELVIEW_MATRIX, CamMat);
-//	// Print Camera (Current) Matrix to stdout
-//	std::cout << "\n| ";
-//	for (int i=0; i < 16; ++i) {
-//		std::cout << CamMat[i] << " ";
-//		if (i %4 == 3) {std::cout << "|\n| ";}
-//	}
-	
-	// Setup Oggler-type Camera
+	// Camera Setup
 	Oggler Cam;
 	
 	sf::Event Event;
@@ -100,9 +90,7 @@ int main(int argc, char** argv) {
 				if (Event.Key.Code == sf::Key::Escape)
 					{Running = false; }
 				else if (Event.Key.Code == sf::Key::O) {
-					glMatrixMode(GL_MODELVIEW);
-					glLoadIdentity();
-					glGetFloatv(GL_MODELVIEW_MATRIX, CamMat);
+					Cam.Zero();
 					Window.SetCursorPosition(WIDTH/2, HEIGHT/2);
 					
 				}
@@ -159,31 +147,20 @@ int main(int argc, char** argv) {
 
 		// Camera Rotation Handling
 		if (abs(WInput.GetMouseX()-(WIDTH/2.f)) > 50) {
-			glRotatef(
-				(WInput.GetMouseX()-(WIDTH/2.f))/float(WIDTH) * 4,
-				0, 1, 0);
+			Cam.RotateGlobal(0, (WInput.GetMouseX()-(WIDTH/2.f))/float(WIDTH) * 4, 0);
 		}
 		if (abs(WInput.GetMouseY()-(HEIGHT/2.f)) > 50) {
-			glRotatef(
-				(WInput.GetMouseY()-(HEIGHT/2.f))/float(HEIGHT) * 4,
-				1, 0, 0);
+			Cam.RotateGlobal((WInput.GetMouseY()-(HEIGHT/2.f))/float(HEIGHT) * 4, 0, 0);
 		}
 		if (Keys[sf::Key::E]) {
-			glRotatef(
-				.6,
-				0, 0, 1);
+			Cam.RotateGlobal(0, 0, .6);
 		}
 		if (Keys[sf::Key::Q]) {
-			glRotatef(
-				-.6,
-				0, 0, 1);
+			Cam.RotateGlobal(0, 0, -.6);
 		}
-				
-		// Camera application and reassignment
-		glMultMatrixf(CamMat); // Camera transformation
-		glGetFloatv(GL_MODELVIEW_MATRIX, CamMat);
 		
 		// Enable Lighting
+		// Update Light Positions
 		glEnable(GL_LIGHTING);
 		glLightfv(GL_LIGHT0, GL_POSITION, light0pos);
 		glLightfv(GL_LIGHT1, GL_POSITION, light1pos);

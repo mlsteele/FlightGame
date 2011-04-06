@@ -1,7 +1,8 @@
 #! /bin/bash
 
 g++ src/*.cpp \
--o build/sfml2_3d_template \
+-o build/camera_dev \
+\
 -lsfml-system \
 -lsfml-window \
 \
@@ -9,4 +10,4 @@ g++ src/*.cpp \
 -framework OpenGL \
 \
 && echo "----------" \
-&& ./build/sfml2_3d_template
+&& ./build/camera_dev

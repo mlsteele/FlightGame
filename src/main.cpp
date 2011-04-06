@@ -5,6 +5,8 @@
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
 
+#include "Oggler.h"
+
 int main(int argc, char** argv) {
 	
 	sf::VideoMode DesktopMode = sf::VideoMode::GetDesktopMode();
@@ -35,13 +37,40 @@ int main(int argc, char** argv) {
 	glEnable(GL_DEPTH_TEST);
 	glDepthMask(GL_TRUE);
 	
+//	// glFog Setup
+//	glFogi(GL_FOG_MODE, GL_EXP2);
+//	glFogf(GL_FOG_DENSITY, .05);
+//	glEnable(GL_FOG);
+	
+	// General Lighting
+	GLfloat ambientcolor[] = {.2, .2, .2, 1};
+	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambientcolor);
+	glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);
+	glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_FALSE);
+	glEnable(GL_LIGHTING);
+	glEnable(GL_COLOR_MATERIAL);
+	
+	// Individual Lights
+	glEnable(GL_LIGHT0);
+	glEnable(GL_LIGHT1);
+	glEnable(GL_LIGHT2);
+	GLfloat light0pos[] = {0, 0, -1, 1};
+	GLfloat light0dif[] = {1, .8, .8, 1};
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, light0dif);
+	GLfloat light1pos[] = {5, -2, 8, 1};
+	GLfloat light1dif[] = {.4, 1, .2, 1};
+	glLightfv(GL_LIGHT1, GL_DIFFUSE, light1dif);
+	GLfloat light2pos[] = {-2, 10, -15, 1};
+	GLfloat light2dif[] = {.3, .2, 1, 1};
+	glLightfv(GL_LIGHT2, GL_DIFFUSE, light2dif);
+	
 	// Setup a perspective projection
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	gluPerspective(70.f, AspectRatio, .1f, 500.f);
 	glMatrixMode(GL_MODELVIEW);
 	
-	// Setup Camera Matrix
+	// Setup Camera Matrix (phasing out)
 	float CamMat[16];
 	glGetFloatv(GL_MODELVIEW_MATRIX, CamMat);
 //	// Print Camera (Current) Matrix to stdout
@@ -50,6 +79,9 @@ int main(int argc, char** argv) {
 //		std::cout << CamMat[i] << " ";
 //		if (i %4 == 3) {std::cout << "|\n| ";}
 //	}
+	
+	// Setup Oggler-type Camera
+	Oggler Cam;
 	
 	sf::Event Event;
 	// Array to store whether or not keys are pressed
@@ -104,7 +136,7 @@ int main(int argc, char** argv) {
 			else if (Event.Type == sf::Event::Resized)
 				{glViewport(0, 0, Event.Size.Width, Event.Size.Height);}
 		}
-		
+				
 		// Setup a perspective projection
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
@@ -113,8 +145,18 @@ int main(int argc, char** argv) {
 		
 		// Rendering Setup
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		glLoadIdentity();
+		Cam.View();
 		
+		// Camera Translation Handling
+		if (Keys[sf::Key::W])
+			{Cam.TranslateGlobal(0, 0, .1);}
+		if (Keys[sf::Key::A])
+			{Cam.TranslateGlobal(.1, 0, 0);}
+		if (Keys[sf::Key::S])
+			{Cam.TranslateGlobal(0, 0, -.1);}
+		if (Keys[sf::Key::D])
+			{Cam.TranslateGlobal(-.1, 0, 0);}
+
 		// Camera Rotation Handling
 		if (abs(WInput.GetMouseX()-(WIDTH/2.f)) > 50) {
 			glRotatef(
@@ -136,39 +178,34 @@ int main(int argc, char** argv) {
 				-.6,
 				0, 0, 1);
 		}
-		
-		// Camera Translation Handling
-		if (Keys[sf::Key::W])
-			{glTranslatef(0, 0, .1);}
-		if (Keys[sf::Key::A])
-			{glTranslatef(.1, 0, 0);}
-		if (Keys[sf::Key::S])
-			{glTranslatef(0, 0, -.1);}
-		if (Keys[sf::Key::D])
-			{glTranslatef(-.1, 0, 0);}
-		
+				
 		// Camera application and reassignment
 		glMultMatrixf(CamMat); // Camera transformation
 		glGetFloatv(GL_MODELVIEW_MATRIX, CamMat);
 		
+		// Enable Lighting
+		glEnable(GL_LIGHTING);
+		glLightfv(GL_LIGHT0, GL_POSITION, light0pos);
+		glLightfv(GL_LIGHT1, GL_POSITION, light1pos);
+		glLightfv(GL_LIGHT2, GL_POSITION, light2pos);
+		
 		// Draw a sphere
 		glPushMatrix();
 		glTranslatef(0.f, 0.f, -6.f);
-		glColor3f(0.0f,0.0f,1.0f);
+		glColor3f(1, .5, .5);
 		glutSolidSphere(1, 32, 32);
 		glPopMatrix();
 		
 		// Draw a square with colors
 		glPushMatrix();
 		glTranslatef(5.f, 0.f, -10.f);
-		glColor3f(1.0f,0.0f,0.0f);
 		glBegin(GL_QUADS);
-			glColor3f(1.0f,0.0f,0.0f);
+			glColor3f(1, .2, .2);
 			glVertex3f(-1.0f, 1.0f, 0.0f);
 			glVertex3f( 1.0f, 1.0f, 0.0f);
-			glColor3f(0.0f,0.0f,1.0f);
+			glColor3f(.2, .2, 1);
 			glVertex3f( 1.0f,-1.0f, 0.0f);
-			glColor3f(0.0f,1.0f,0.0f);
+			glColor3f(.2, 1, .2);
 			glVertex3f(-1.0f,-1.0f, 0.0f);
 		glEnd();
 		glPopMatrix();
@@ -226,32 +263,9 @@ int main(int argc, char** argv) {
 		}
 		glPopMatrix();
 		
-		// Draw another grid
-		glPushMatrix();
-		glRotatef(90, 1, 1, 1);
-		glColor3f(1.0f, 1.0f, 0.40f);
-		int griddims2[3] = {10, 10, 10};
-		glTranslatef(-griddims2[0], -griddims2[1], -griddims2[2]);
-		for (int gridx = 0; gridx < griddims2[0]; ++gridx) {
-			for (int gridy = 0; gridy < griddims2[1]; ++gridy) {
-				for (int gridx = 0; gridx < griddims2[0]; ++gridx) {
-					
-					glBegin(GL_POINTS);
-						glVertex3f(0, 0, 0);
-					glEnd();
-					
-					glTranslatef(0, 0, 2);
-				}
-				glTranslatef(2, 0, 0);
-				glTranslatef(0, 0, -2*griddims2[2]);
-			}
-			glTranslatef(-2*griddims2[1], 0, 0);
-			glTranslatef(0, 2, 0);
-		}
-		glPopMatrix();
-		
 		
 		// 2D Rendering Setup
+		glDisable(GL_LIGHTING);
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
 		glOrtho(0, WIDTH, HEIGHT, 0, -1, 1);

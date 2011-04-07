@@ -17,6 +17,7 @@ class Oggler {
 		// State Manipulation
 		void TranslateGlobal(float, float, float);
 		void RotateGlobal(float, float, float);
+		void TranslateLocal(float, float, float);
 		void Zero();
 		
 		// OpenGL Action

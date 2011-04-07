@@ -32,6 +32,14 @@ void Oggler::RotateGlobal(float _pitch, float _yaw, float _roll) {
 	Rotation.z += _roll;
 }
 
+// TranslateLocal
+// Translates the camera along local space
+void Oggler::TranslateLocal(float _left, float _up, float _forw) {
+	Center.x += _left;
+	Center.y += _up;
+	Center.z += _forw;
+}
+
 // View
 // Applies openGL transformations to MODLELVIEW
 void Oggler::View() {

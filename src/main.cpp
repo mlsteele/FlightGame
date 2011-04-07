@@ -137,13 +137,13 @@ int main(int argc, char** argv) {
 		
 		// Camera Translation Handling
 		if (Keys[sf::Key::W])
-			{Cam.TranslateGlobal(0, 0, .1);}
+			{Cam.TranslateLocal(0, 0, .1);}
 		if (Keys[sf::Key::A])
-			{Cam.TranslateGlobal(.1, 0, 0);}
+			{Cam.TranslateLocal(.1, 0, 0);}
 		if (Keys[sf::Key::S])
-			{Cam.TranslateGlobal(0, 0, -.1);}
+			{Cam.TranslateLocal(0, 0, -.1);}
 		if (Keys[sf::Key::D])
-			{Cam.TranslateGlobal(-.1, 0, 0);}
+			{Cam.TranslateLocal(-.1, 0, 0);}
 
 		// Camera Rotation Handling
 		if (abs(WInput.GetMouseX()-(WIDTH/2.f)) > 50) {

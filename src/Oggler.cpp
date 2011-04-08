@@ -19,8 +19,8 @@ void Oggler::View() {
 	
 	// Apply to modelview matrix	
 	gluLookAt(
-		Dolly->Center.x, Dolly->Center.y, Dolly->Center.z,
-		Dolly->Center.x + Dolly->Fd.x, Dolly->Center.y + Dolly->Fd.y, Dolly->Center.z + Dolly->Fd.z,
+		Dolly->Pos.x, Dolly->Pos.y, Dolly->Pos.z,
+		Dolly->Pos.x + Dolly->Fd.x, Dolly->Pos.y + Dolly->Fd.y, Dolly->Pos.z + Dolly->Fd.z,
 		Dolly->Up.x, Dolly->Up.y, Dolly->Up.z
 	);
 }

@@ -6,6 +6,8 @@
 #include <SFML/Window.hpp>
 
 #include "Oggler.h"
+#include "Orientable.h"
+#include "DumbShip.h"
 
 int main(int argc, char** argv) {
 	
@@ -71,14 +73,14 @@ int main(int argc, char** argv) {
 	glMatrixMode(GL_MODELVIEW);
 	
 	// Camera and Ship Setup
-	Orientable MainShip;
+	DumbShip MainShip;
 	Oggler Cam(&MainShip);
 	
 	sf::Event Event;
 	// Array to store whether or not keys are pressed
 	bool Keys[500]; // Arbitrary large length; TODO: find out what it should be
 	// Zero out Keys
-	for (int i=0; i < 256; ++i) {Keys[i] = false;}
+	for (int i=0; i < 500; ++i) {Keys[i] = false;}
 	
 	// Main Loop
 	unsigned int nFrame = 0;
@@ -109,6 +111,8 @@ int main(int argc, char** argv) {
 					{Keys[Event.Key.Code] = true;}
 				else if (Event.Key.Code == sf::Key::E)
 					{Keys[Event.Key.Code] = true;}
+				else if (Event.Key.Code == sf::Key::Space)
+					{Keys[Event.Key.Code] = true;}
 			}
 			else if (Event.Type == sf::Event::KeyReleased) {
 				if (Event.Key.Code == sf::Key::W)
@@ -123,11 +127,55 @@ int main(int argc, char** argv) {
 					{Keys[Event.Key.Code] = false;}
 				else if (Event.Key.Code == sf::Key::E)
 					{Keys[Event.Key.Code] = false;}
+				else if (Event.Key.Code == sf::Key::Space)
+					{Keys[Event.Key.Code] = false;}
 			}
 			else if (Event.Type == sf::Event::Resized)
 				{glViewport(0, 0, Event.Size.Width, Event.Size.Height);}
 		}
 		
+		// Update Ship Physics
+		MainShip.Update();
+		
+		// Camera Translation Handling
+		float thrust = .004;
+		if (Keys[sf::Key::W])
+			{MainShip.PushLocal(0, 0, thrust);}
+		if (Keys[sf::Key::A])
+			{MainShip.PushLocal(-thrust, 0, 0);}
+		if (Keys[sf::Key::S])
+			{MainShip.PushLocal(0, 0, -thrust);}
+		if (Keys[sf::Key::D])
+			{MainShip.PushLocal(thrust, 0, 0);}
+		if (Keys[sf::Key::Space])
+			{MainShip.AirBrake(.9);}
+		
+		// Mouse Rotation
+		if (
+				sqrt(
+					pow(
+						(WInput.GetMouseX()-(WIDTH/2.f))
+						, 2)
+					+
+					pow(
+						(WInput.GetMouseY()-(HEIGHT/2.f))
+						, 2)
+				)
+			> 20.f)
+		{
+			MainShip.Yaw((WInput.GetMouseX()-(WIDTH/2.f))/float(WIDTH) * -.08);
+			MainShip.Pitch((WInput.GetMouseY()-(HEIGHT/2.f))/float(HEIGHT) * -.08);
+		}
+		
+		// Roll
+		if (Keys[sf::Key::E]) {
+			MainShip.Roll(.03);
+		}
+		if (Keys[sf::Key::Q]) {
+			MainShip.Roll(-.03);
+		}
+		
+				
 		// Setup a perspective projection
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
@@ -137,7 +185,7 @@ int main(int argc, char** argv) {
 		// Clear screen
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		
-		// Render camera axis
+		// Render camera axes
 		glPushMatrix();
 		glTranslatef(0, 0, -1);
 		glScalef(.25, .25, .25);
@@ -158,41 +206,6 @@ int main(int argc, char** argv) {
 		
 		// Apply camera transform
 		Cam.View();
-		
-		// Camera Translation Handling
-		if (Keys[sf::Key::W])
-			{MainShip.TranslateLocal(0, 0, .1);}
-		if (Keys[sf::Key::A])
-			{MainShip.TranslateLocal(-.1, 0, 0);}
-		if (Keys[sf::Key::S])
-			{MainShip.TranslateLocal(0, 0, -.1);}
-		if (Keys[sf::Key::D])
-			{MainShip.TranslateLocal(.1, 0, 0);}
-
-		// Camera Rotation
-		if (
-				sqrt(
-					pow(
-						(WInput.GetMouseX()-(WIDTH/2.f))
-						, 2)
-					+
-					pow(
-						(WInput.GetMouseY()-(HEIGHT/2.f))
-						, 2)
-				)
-			> 20.f)
-		{
-			MainShip.Yaw((WInput.GetMouseX()-(WIDTH/2.f))/float(WIDTH) * -.08);
-			MainShip.Pitch((WInput.GetMouseY()-(HEIGHT/2.f))/float(HEIGHT) * -.08);
-		}
-		
-		// Camera Roll
-		if (Keys[sf::Key::E]) {
-			MainShip.Roll(.03);
-		}
-		if (Keys[sf::Key::Q]) {
-			MainShip.Roll(-.03);
-		}
 		
 		// Enable Lighting
 		// Update Light Positions

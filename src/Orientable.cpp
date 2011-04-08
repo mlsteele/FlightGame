@@ -9,7 +9,7 @@ Orientable::Orientable() {
 // Zero
 // Zeros the camera in global space
 void Orientable::Zero() {
-	Center.Set(0,0,0);
+	Pos.Set(0,0,0);
 	Rt.Set(-1, 0, 0);
 	Up.Set(0, -1, 0);
 	Fd.Set(0, 0, -1);
@@ -18,17 +18,17 @@ void Orientable::Zero() {
 // TranslateGlobal
 // Translates the camera along the global space
 void Orientable::TranslateGlobal(float _x, float _y, float _z) {
-	Center.x += _x;
-	Center.y += _y;
-	Center.z += _z;
+	Pos.x += _x;
+	Pos.y += _y;
+	Pos.z += _z;
 }
 
 // TranslateLocal
 // Translates the camera along local space
 void Orientable::TranslateLocal(float _right, float _up, float _forw) {
-	Center += Rt * _right;
-	Center += Up * _up;
-	Center += Fd * _forw;
+	Pos += Rt * _right;
+	Pos += Up * _up;
+	Pos += Fd * _forw;
 }
 
 // Pitch

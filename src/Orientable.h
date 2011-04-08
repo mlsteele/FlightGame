@@ -11,7 +11,7 @@
 // Rotation is represented by a [pitch, yaw, roll] vectors
 class Orientable {
 	public:
-		V3D Center;
+		V3D Pos;
 		V3D Rt;
 		V3D Up;
 		V3D Fd;

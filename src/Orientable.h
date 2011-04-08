@@ -1,9 +1,6 @@
 #ifndef _ORIENTABLE_H_
 	#define _ORIENTABLE_H_
 
-#include <iostream>
-#include <OpenGL/gl.h>
-#include <GLUT/glut.h>
 #include "V3D.h"
 
 // Orientable

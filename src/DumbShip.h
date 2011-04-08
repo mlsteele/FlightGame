@@ -2,7 +2,6 @@
 	#define _DUMBSHIP_H_
 
 #include "Orientable.h"
-#include "V3D.h"
 
 // Dumb Testing Ship
 // Inherits from Orientable, some basics physics

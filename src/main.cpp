@@ -92,6 +92,7 @@ int main(int argc, char** argv) {
 			if (Event.Type == sf::Event::Closed)
 				{Running = false;}
 			else if (Event.Type == sf::Event::KeyPressed) {
+				Keys[Event.Key.Code] = true;
 				if (Event.Key.Code == sf::Key::Escape)
 					{Running = false; }
 				else if (Event.Key.Code == sf::Key::O) {
@@ -99,36 +100,9 @@ int main(int argc, char** argv) {
 					Window.SetCursorPosition(WIDTH/2, HEIGHT/2);
 					
 				}
-				else if (Event.Key.Code == sf::Key::W)
-					{Keys[Event.Key.Code] = true;}
-				else if (Event.Key.Code == sf::Key::A)
-					{Keys[Event.Key.Code] = true;}
-				else if (Event.Key.Code == sf::Key::S)
-					{Keys[Event.Key.Code] = true;}
-				else if (Event.Key.Code == sf::Key::D)
-					{Keys[Event.Key.Code] = true;}
-				else if (Event.Key.Code == sf::Key::Q)
-					{Keys[Event.Key.Code] = true;}
-				else if (Event.Key.Code == sf::Key::E)
-					{Keys[Event.Key.Code] = true;}
-				else if (Event.Key.Code == sf::Key::Space)
-					{Keys[Event.Key.Code] = true;}
 			}
 			else if (Event.Type == sf::Event::KeyReleased) {
-				if (Event.Key.Code == sf::Key::W)
-					{Keys[Event.Key.Code] = false;}
-				else if (Event.Key.Code == sf::Key::A)
-					{Keys[Event.Key.Code] = false;}
-				else if (Event.Key.Code == sf::Key::S)
-					{Keys[Event.Key.Code] = false;}
-				else if (Event.Key.Code == sf::Key::D)
-					{Keys[Event.Key.Code] = false;}
-				else if (Event.Key.Code == sf::Key::Q)
-					{Keys[Event.Key.Code] = false;}
-				else if (Event.Key.Code == sf::Key::E)
-					{Keys[Event.Key.Code] = false;}
-				else if (Event.Key.Code == sf::Key::Space)
-					{Keys[Event.Key.Code] = false;}
+				Keys[Event.Key.Code] = false;
 			}
 			else if (Event.Type == sf::Event::Resized)
 				{glViewport(0, 0, Event.Size.Width, Event.Size.Height);}
@@ -147,6 +121,10 @@ int main(int argc, char** argv) {
 			{MainShip.PushLocal(0, 0, -thrust);}
 		if (Keys[sf::Key::D])
 			{MainShip.PushLocal(thrust, 0, 0);}
+		if (Keys[sf::Key::R])
+			{MainShip.PushLocal(0, thrust, 0);}
+		if (Keys[sf::Key::F])
+			{MainShip.PushLocal(0, -thrust, 0);}			
 		if (Keys[sf::Key::Space])
 			{MainShip.AirBrake(.9);}
 		
@@ -169,10 +147,10 @@ int main(int argc, char** argv) {
 		
 		// Roll
 		if (Keys[sf::Key::E]) {
-			MainShip.Roll(.03);
+			MainShip.Roll(.02);
 		}
 		if (Keys[sf::Key::Q]) {
-			MainShip.Roll(-.03);
+			MainShip.Roll(-.02);
 		}
 		
 				
@@ -187,8 +165,8 @@ int main(int argc, char** argv) {
 		
 		// Render camera axes
 		glPushMatrix();
-		glTranslatef(0, 0, -1);
-		glScalef(.25, .25, .25);
+		glTranslatef(-.8, -.5, -1);
+		glScalef(.1, .1, .1);
 		glBegin(GL_LINES);
 			glColor3f(1, 0, 0);
 			glVertex3f(0, 0, 0);

@@ -80,7 +80,9 @@ int main(int argc, char** argv) {
 	for (int i=0; i < 256; ++i) {Keys[i] = false;}
 	
 	// Main Loop
+	unsigned int nFrame = 0;
 	while (Running) {
+		++nFrame;
 		
 		// Event Handling
 		while (Window.GetEvent(Event)) {
@@ -124,7 +126,7 @@ int main(int argc, char** argv) {
 			else if (Event.Type == sf::Event::Resized)
 				{glViewport(0, 0, Event.Size.Width, Event.Size.Height);}
 		}
-				
+		
 		// Setup a perspective projection
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
@@ -160,11 +162,11 @@ int main(int argc, char** argv) {
 		if (Keys[sf::Key::W])
 			{Cam.TranslateLocal(0, 0, .1);}
 		if (Keys[sf::Key::A])
-			{Cam.TranslateLocal(.1, 0, 0);}
+			{Cam.TranslateLocal(-.1, 0, 0);}
 		if (Keys[sf::Key::S])
 			{Cam.TranslateLocal(0, 0, -.1);}
 		if (Keys[sf::Key::D])
-			{Cam.TranslateLocal(-.1, 0, 0);}
+			{Cam.TranslateLocal(.1, 0, 0);}
 
 		// Camera Rotation
 		if (
@@ -180,7 +182,7 @@ int main(int argc, char** argv) {
 			> 20.f)
 		{
 			Cam.Yaw((WInput.GetMouseX()-(WIDTH/2.f))/float(WIDTH) * -.08);
-			Cam.Pitch((WInput.GetMouseY()-(HEIGHT/2.f))/float(HEIGHT) * .08);
+			Cam.Pitch((WInput.GetMouseY()-(HEIGHT/2.f))/float(HEIGHT) * -.08);
 		}
 		
 		// Camera Roll
@@ -250,6 +252,7 @@ int main(int argc, char** argv) {
 		glPopMatrix();
 		
 		// Draw a grid
+		glDisable(GL_LIGHTING);
 		glPushMatrix();
 		glColor3f(1.0f, 0.80f, 0.90f);
 		int griddims[3] = {20, 20, 20};
@@ -271,6 +274,7 @@ int main(int argc, char** argv) {
 			glTranslatef(0, 2, 0);
 		}
 		glPopMatrix();
+		glEnable(GL_LIGHTING);
 		
 		
 		// 2D Rendering Setup

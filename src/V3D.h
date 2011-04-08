@@ -60,6 +60,20 @@ class V3D {
 			z -= _vec.z;
 		}
 		
+		// Scalar multiplication (set)
+		inline V3D& operator*= (const float &s) {
+			x *= s;
+			y *= s;
+			z *= s;
+		}
+		
+		// Scalar division (set)
+		inline V3D& operator/= (const float &s) {
+			x /= s;
+			y /= s;
+			z /= s;
+		}
+		
 		// Scalar multiplication (no set)
 		inline const V3D operator* (const float &s) {
 			return V3D(x*s, y*s, z*s);

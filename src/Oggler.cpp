@@ -1,9 +1,13 @@
 #include "Oggler.h"
 
-// Constructor
-// Set to origin
 Oggler::Oggler() {
 	Dolly = new Orientable();
+	OwnDolly = true;
+}
+
+Oggler::Oggler(Orientable* _dolly) {
+	Dolly = _dolly;
+	OwnDolly = false;
 }
 
 // View

@@ -70,8 +70,9 @@ int main(int argc, char** argv) {
 	gluPerspective(70.f, AspectRatio, .1f, 500.f);
 	glMatrixMode(GL_MODELVIEW);
 	
-	// Camera Setup
-	Oggler Cam;
+	// Camera and Ship Setup
+	Orientable MainShip;
+	Oggler Cam(&MainShip);
 	
 	sf::Event Event;
 	// Array to store whether or not keys are pressed
@@ -92,7 +93,7 @@ int main(int argc, char** argv) {
 				if (Event.Key.Code == sf::Key::Escape)
 					{Running = false; }
 				else if (Event.Key.Code == sf::Key::O) {
-					Cam.Zero();
+					MainShip.Zero();
 					Window.SetCursorPosition(WIDTH/2, HEIGHT/2);
 					
 				}
@@ -160,13 +161,13 @@ int main(int argc, char** argv) {
 		
 		// Camera Translation Handling
 		if (Keys[sf::Key::W])
-			{Cam.TranslateLocal(0, 0, .1);}
+			{MainShip.TranslateLocal(0, 0, .1);}
 		if (Keys[sf::Key::A])
-			{Cam.TranslateLocal(-.1, 0, 0);}
+			{MainShip.TranslateLocal(-.1, 0, 0);}
 		if (Keys[sf::Key::S])
-			{Cam.TranslateLocal(0, 0, -.1);}
+			{MainShip.TranslateLocal(0, 0, -.1);}
 		if (Keys[sf::Key::D])
-			{Cam.TranslateLocal(.1, 0, 0);}
+			{MainShip.TranslateLocal(.1, 0, 0);}
 
 		// Camera Rotation
 		if (
@@ -181,16 +182,16 @@ int main(int argc, char** argv) {
 				)
 			> 20.f)
 		{
-			Cam.Yaw((WInput.GetMouseX()-(WIDTH/2.f))/float(WIDTH) * -.08);
-			Cam.Pitch((WInput.GetMouseY()-(HEIGHT/2.f))/float(HEIGHT) * -.08);
+			MainShip.Yaw((WInput.GetMouseX()-(WIDTH/2.f))/float(WIDTH) * -.08);
+			MainShip.Pitch((WInput.GetMouseY()-(HEIGHT/2.f))/float(HEIGHT) * -.08);
 		}
 		
 		// Camera Roll
 		if (Keys[sf::Key::E]) {
-			Cam.Roll(.03);
+			MainShip.Roll(.03);
 		}
 		if (Keys[sf::Key::Q]) {
-			Cam.Roll(-.03);
+			MainShip.Roll(-.03);
 		}
 		
 		// Enable Lighting

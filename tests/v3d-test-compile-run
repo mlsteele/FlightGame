@@ -1,0 +1,15 @@
+#! /bin/bash
+
+cd `dirname $0`
+
+g++ v3d-test.cpp \
+-o build/v3d-test \
+\
+-lsfml-system \
+-lsfml-window \
+\
+-framework GLUT \
+-framework OpenGL \
+\
+&& echo "----------" \
+&& ./build/v3d-test

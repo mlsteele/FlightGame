@@ -131,8 +131,29 @@ int main(int argc, char** argv) {
 		gluPerspective(70.f, AspectRatio, .1f, 500.f);
 		glMatrixMode(GL_MODELVIEW);
 		
-		// Rendering Setup
+		// Clear screen
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		
+		// Render camera axis
+		glPushMatrix();
+		glTranslatef(0, 0, -1);
+		glScalef(.25, .25, .25);
+		glBegin(GL_LINES);
+			glColor3f(1, 0, 0);
+			glVertex3f(0, 0, 0);
+			glVertex3f(-1*Cam.Up.x, -1*Cam.Up.y, -1*Cam.Up.z);
+			
+			glColor3f(0, 1, 0);
+			glVertex3f(0, 0, 0);
+			glVertex3f(-1*Cam.Rt.x, -1*Cam.Rt.y, -1*Cam.Rt.z);
+			
+			glColor3f(0, 0, 1);
+			glVertex3f(0, 0, 0);
+			glVertex3f(-1*Cam.Fd.x, -1*Cam.Fd.y, -1*Cam.Fd.z);
+		glEnd();
+		glPopMatrix();
+		
+		// Apply camera transform
 		Cam.View();
 		
 		// Camera Translation Handling
@@ -145,18 +166,29 @@ int main(int argc, char** argv) {
 		if (Keys[sf::Key::D])
 			{Cam.TranslateLocal(-.1, 0, 0);}
 
-		// Camera Rotation Handling
-		if (abs(WInput.GetMouseX()-(WIDTH/2.f)) > 50) {
-			Cam.RotateGlobal(0, (WInput.GetMouseX()-(WIDTH/2.f))/float(WIDTH) * 4, 0);
+		// Camera Rotation
+		if (
+				sqrt(
+					pow(
+						(WInput.GetMouseX()-(WIDTH/2.f))
+						, 2)
+					+
+					pow(
+						(WInput.GetMouseY()-(HEIGHT/2.f))
+						, 2)
+				)
+			> 50.f)
+		{
+			Cam.Yaw((WInput.GetMouseX()-(WIDTH/2.f))/float(WIDTH) * -.4);
+			Cam.Pitch((WInput.GetMouseY()-(HEIGHT/2.f))/float(HEIGHT) * .4);
 		}
-		if (abs(WInput.GetMouseY()-(HEIGHT/2.f)) > 50) {
-			Cam.RotateGlobal((WInput.GetMouseY()-(HEIGHT/2.f))/float(HEIGHT) * 4, 0, 0);
-		}
+		
+		// Camera Roll
 		if (Keys[sf::Key::E]) {
-			Cam.RotateGlobal(0, 0, .6);
+			Cam.Roll(.03);
 		}
 		if (Keys[sf::Key::Q]) {
-			Cam.RotateGlobal(0, 0, -.6);
+			Cam.Roll(-.03);
 		}
 		
 		// Enable Lighting

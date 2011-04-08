@@ -85,6 +85,15 @@ class V3D {
 		inline float Length() {
 			return sqrt( pow(x,2) + pow(y,2) + pow(z,2) );
 		}
+		
+		// Normalize
+		// Unitize vector
+		inline void Normalize() {
+			float len = Length();
+			x /= len;
+			y /= len;
+			z /= len;
+		}
 
 };
 

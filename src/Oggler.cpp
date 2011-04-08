@@ -59,27 +59,30 @@ void Oggler::View() {
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	
+	// Apply to modelview matrix	
+	gluLookAt(
+		Center.x, Center.y, Center.z,
+		Center.x + Fd.x, Center.y + Fd.y, Center.z + Fd.z,
+		Up.x, Up.y, Up.z
+	);
+	
+	/* DEPRECATED
 	// Camera rotation matrix
 	// http://www.songho.ca/opengl/gl_anglestoaxes.html
-/*	GLfloat m_rot[16] = {
+	GLfloat m_rot[16] = {
 		Rt.x, Rt.y, Rt.z, 0,
 		Up.x, Up.y, Up.z, 0,
 		Fd.x, Fd.y, Fd.z, 0,
 		0, 0, 0, 1
 	};
 	glLoadMatrixf(m_rot);
-*/	
-	gluLookAt(
-		Center.x, Center.y, Center.z,
-		Center.x + Fd.x, Center.y + Fd.y, Center.z + Fd.z,
-		Up.x, Up.y, Up.z
-	);
+	*/	
 }
 
 // Calibrate
 // Normalizes camera axis
-//void Oggler::Calibrate() {
-//	Fd.Normalize()
-//	Fd.Normalize()
-//	Fd.Normalize()
-//}
+void Oggler::Calibrate() {
+	Fd.Normalize();
+	Rt.Normalize();
+	Up.Normalize();
+}

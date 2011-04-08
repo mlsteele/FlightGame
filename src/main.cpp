@@ -177,10 +177,10 @@ int main(int argc, char** argv) {
 						(WInput.GetMouseY()-(HEIGHT/2.f))
 						, 2)
 				)
-			> 50.f)
+			> 20.f)
 		{
-			Cam.Yaw((WInput.GetMouseX()-(WIDTH/2.f))/float(WIDTH) * -.4);
-			Cam.Pitch((WInput.GetMouseY()-(HEIGHT/2.f))/float(HEIGHT) * .4);
+			Cam.Yaw((WInput.GetMouseX()-(WIDTH/2.f))/float(WIDTH) * -.08);
+			Cam.Pitch((WInput.GetMouseY()-(HEIGHT/2.f))/float(HEIGHT) * .08);
 		}
 		
 		// Camera Roll
@@ -287,13 +287,14 @@ int main(int argc, char** argv) {
 		glPushMatrix();
 		glTranslatef(WIDTH/2, HEIGHT/2, -.1);
 		glColor3f(.1, .05, .3);
-		gluDisk(MouseQuadric, 47, 50, 32, 1);
+		gluDisk(MouseQuadric, 17, 20, 32, 1);
 		glPopMatrix();
 		
 		// 2D mouse cursor
 		glPushMatrix();
 		glLoadIdentity();
 		glTranslatef(WInput.GetMouseX(), WInput.GetMouseY(), 0);
+		glScalef(.7, .7, .7);
 		glColor3f(.7, .3, .8);
 		glBegin(GL_TRIANGLES);
 			glVertex3f(10, 0, 0);

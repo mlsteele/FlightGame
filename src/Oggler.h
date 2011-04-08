@@ -18,13 +18,18 @@ class Oggler {
 	public:
 		Oggler();
 		
-		// State Manipulation
+		// Position Manipulation
 		void TranslateGlobal(float, float, float);
+		void TranslateLocal(float, float, float);
+		
+		// Rotation
 		void Pitch(float);
 		void Yaw(float);
 		void Roll(float);
-		void TranslateLocal(float, float, float);
+		
+		// Special
 		void Zero();
+		void Calibrate();
 		
 		// OpenGL Action
 		void View();

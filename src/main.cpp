@@ -143,15 +143,15 @@ int main(int argc, char** argv) {
 		glBegin(GL_LINES);
 			glColor3f(1, 0, 0);
 			glVertex3f(0, 0, 0);
-			glVertex3f(-1*Cam.Up.x, -1*Cam.Up.y, -1*Cam.Up.z);
+			glVertex3f(-1*Cam.Dolly->Up.x, -1*Cam.Dolly->Up.y, -1*Cam.Dolly->Up.z);
 			
 			glColor3f(0, 1, 0);
 			glVertex3f(0, 0, 0);
-			glVertex3f(-1*Cam.Rt.x, -1*Cam.Rt.y, -1*Cam.Rt.z);
+			glVertex3f(-1*Cam.Dolly->Rt.x, -1*Cam.Dolly->Rt.y, -1*Cam.Dolly->Rt.z);
 			
 			glColor3f(0, 0, 1);
 			glVertex3f(0, 0, 0);
-			glVertex3f(-1*Cam.Fd.x, -1*Cam.Fd.y, -1*Cam.Fd.z);
+			glVertex3f(-1*Cam.Dolly->Fd.x, -1*Cam.Dolly->Fd.y, -1*Cam.Dolly->Fd.z);
 		glEnd();
 		glPopMatrix();
 		

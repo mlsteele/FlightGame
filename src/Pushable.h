@@ -3,9 +3,8 @@
 
 #include "V3D.h"
 
-// Orientable
-// An object space which exists in global space
-// Rotation is represented by a [pitch, yaw, roll] vectors
+// Pushable
+// An Orientable that can be pushed
 class Pushable {
 	public:
 		V3D Pos;

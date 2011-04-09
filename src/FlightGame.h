@@ -3,6 +3,8 @@
 
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
+#include <OpenGL/gl.h>
+#include <GLUT/glut.h>
 
 class FlightGame {
 	public:
@@ -16,7 +18,19 @@ class FlightGame {
 		float WIDTH;
 		float HEIGHT;
 		float ASPECT;
-	
+		
+		float mX;
+		float mY;
+		
+		GLfloat light0pos[4];
+		GLfloat light0dif[4];
+		GLfloat light1pos[4];
+		GLfloat light1dif[4];
+		GLfloat light2pos[4];
+		GLfloat light2dif[4];
+		
+		GLUquadric* GLUQ;
+		
 	public:
 		FlightGame();
 		
@@ -27,7 +41,8 @@ class FlightGame {
 		void InputHandler();
 		void Logic();
 		void Physics();
-		void Render();
+		void Render3D();
+		void Render2D();
 		
 		void Exit();
 		void Cleanup();

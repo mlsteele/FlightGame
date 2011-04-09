@@ -10,6 +10,17 @@ Oggler::Oggler(Orientable* _dolly) {
 	OwnDolly = false;
 }
 
+// Attach
+// Attach camera to an orientable
+void Oggler::Attach(Orientable* _dolly) {
+	if (OwnDolly) {
+		delete Dolly;
+	}
+	
+	Dolly = _dolly;
+	OwnDolly = false;
+}
+
 // View
 // Applies openGL transformations to MODLELVIEW
 void Oggler::View() {

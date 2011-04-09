@@ -17,6 +17,9 @@ class Oggler {
 		Oggler();
 		Oggler(Orientable*);
 		
+		// Attach camera to orientable
+		void Attach(Orientable*);
+		
 		// OpenGL Action
 		void View();		
 };

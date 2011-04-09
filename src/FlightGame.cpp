@@ -10,6 +10,7 @@ void FlightGame::Initialize() {
 	Clock.Reset();
 	TimeStack = 0;
 	
+	
 	sf::VideoMode DesktopMode = sf::VideoMode::GetDesktopMode();
 	sf::ContextSettings OGLContext(
 		24,	// depth
@@ -25,6 +26,13 @@ void FlightGame::Initialize() {
 	
 	Window.ShowMouseCursor(false);
 	Window.SetCursorPosition(WIDTH/2, HEIGHT/2);
+	mX = WIDTH/2; mY = HEIGHT/2;
+	
+	
+	// Camera, Ship, Object Setup
+	Ball.Pos = V3D(0, 0, 6);
+	Cam.Attach(&MainShip);
+	
 	
 	/////////////////////////////////
 	// Let the OpenGL setup begin! //
@@ -53,15 +61,15 @@ void FlightGame::Initialize() {
 	
 	// Lights
 	glEnable(GL_LIGHT0);
-		GLfloat light0pos[4] = {0, 0, -1, 1};
+		GLfloat light0pos[4] = {0, 0, 1, 1};
 		GLfloat light0dif[4] = {1, .8, .8, 1};
 		glLightfv(GL_LIGHT0, GL_DIFFUSE, light0dif);
 	glEnable(GL_LIGHT1);
-		GLfloat light1pos[4] = {5, -2, 8, 1};
+		GLfloat light1pos[4] = {5, -2, -8, 1};
 		GLfloat light1dif[4] = {.4, 1, .2, 1};
 		glLightfv(GL_LIGHT1, GL_DIFFUSE, light1dif);
 	glEnable(GL_LIGHT2);
-		GLfloat light2pos[4] = {-2, 10, -15, 1};
+		GLfloat light2pos[4] = {-2, 10, 15, 1};
 		GLfloat light2dif[4] = {.3, .2, 1, 1};
 		glLightfv(GL_LIGHT2, GL_DIFFUSE, light2dif);
 	
@@ -84,9 +92,9 @@ int FlightGame::Execute() {
 		TimeStack += Clock.GetElapsedTime();
 		Clock.Reset();
 		if (TimeStack >= .2) {TimeStack = .2;} // Safety for spiral of death
-		while (TimeStack >= 1/60.f) {
+		while (TimeStack >= 1/100.f) {
 			Physics();
-			TimeStack -= 1/60.f;
+			TimeStack -= 1/100.f;
 		}
 		
 		Render3D();
@@ -100,30 +108,14 @@ int FlightGame::Execute() {
 }
 
 
-void FlightGame::InputHandler() {
-	mX = Window.GetInput().GetMouseX();
-	mY = Window.GetInput().GetMouseY();
-	
-	while (Window.GetEvent(Event)) {
-		if (Event.Type == sf::Event::Closed) {
-			Exit();
-		}
-		else if (Event.Type == sf::Event::KeyPressed) {
-			if (Event.Key.Code == sf::Key::Escape) {
-				Exit();
-			}
-		}
-	}
-}
-
-
 void FlightGame::Logic() {
 	
 }
 
 
 void FlightGame::Physics() {
-	
+	MainShip.Update();
+	Ball.Update();
 }
 
 
@@ -140,11 +132,35 @@ void FlightGame::Render3D() {
 	gluPerspective(70.f, ASPECT, .1f, 500.f);
 	glMatrixMode(GL_MODELVIEW);
 	
+	// Camera Transformation
+	Cam.View();
+	
 	// Enable lighting & update light positions
-	glEnable(GL_LIGHTING);
+	glDisable(GL_LIGHTING);
 	glLightfv(GL_LIGHT0, GL_POSITION, light0pos);
 	glLightfv(GL_LIGHT1, GL_POSITION, light1pos);
 	glLightfv(GL_LIGHT2, GL_POSITION, light2pos);
+	
+	// Draw a sphere (as PushMe avatar)
+	glPushMatrix();
+	glTranslatef(Ball.Pos.x, Ball.Pos.y, Ball.Pos.z);
+	glColor3f(1, .5, .5);
+	glutSolidSphere(1, 32, 32);
+	glPopMatrix();
+	
+	// Draw a square with colors
+	glPushMatrix();
+	glTranslatef(5.f, 0.f, 10.f);
+	glBegin(GL_QUADS);
+		glColor3f(1, .2, .2);
+		glVertex3f(-1.0f, 1.0f, 0.0f);
+		glVertex3f( 1.0f, 1.0f, 0.0f);
+		glColor3f(.2, .2, 1);
+		glVertex3f( 1.0f,-1.0f, 0.0f);
+		glColor3f(.2, 1, .2);
+		glVertex3f(-1.0f,-1.0f, 0.0f);
+	glEnd();
+	glPopMatrix();
 }
 
 void FlightGame::Render2D() {

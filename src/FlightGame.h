@@ -1,10 +1,15 @@
 #ifndef _FLIGHTGAME_H_
 	#define _FLIGHTGAME_H_
 
+#include <iostream>
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
 #include <OpenGL/gl.h>
 #include <GLUT/glut.h>
+
+#include "DumbShip.h"
+#include "Oggler.h"
+#include "Pushable.h"
 
 class FlightGame {
 	public:
@@ -30,6 +35,10 @@ class FlightGame {
 		GLfloat light2dif[4];
 		
 		GLUquadric* GLUQ;
+		
+		DumbShip MainShip;
+		Oggler Cam;
+		Pushable Ball;
 		
 	public:
 		FlightGame();

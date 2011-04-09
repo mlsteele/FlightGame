@@ -1,5 +1,9 @@
 #include "Pushable.h"
 
+Pushable::Pushable() {
+	Zero();
+}
+
 Pushable::Pushable (float _x, float _y, float _z) {
 	Zero();
 	Pos.Set(_x, _y, _z);

@@ -7,6 +7,7 @@
 
 #include "Oggler.h"
 #include "Orientable.h"
+#include "Pushable.h"
 #include "DumbShip.h"
 
 int main(int argc, char** argv) {
@@ -72,9 +73,10 @@ int main(int argc, char** argv) {
 	gluPerspective(70.f, AspectRatio, .1f, 500.f);
 	glMatrixMode(GL_MODELVIEW);
 	
-	// Camera and Ship Setup
+	// Camera, Ship, Object Setup
 	DumbShip MainShip;
 	Oggler Cam(&MainShip);
+	Pushable PushMe(0, 0, -6);
 	
 	sf::Event Event;
 	// Array to store whether or not keys are pressed
@@ -97,8 +99,8 @@ int main(int argc, char** argv) {
 					{Running = false; }
 				else if (Event.Key.Code == sf::Key::O) {
 					MainShip.Zero();
+//					PushMe.SetPos(0, 0, -6);
 					Window.SetCursorPosition(WIDTH/2, HEIGHT/2);
-					
 				}
 			}
 			else if (Event.Type == sf::Event::KeyReleased) {
@@ -108,8 +110,9 @@ int main(int argc, char** argv) {
 				{glViewport(0, 0, Event.Size.Width, Event.Size.Height);}
 		}
 		
-		// Update Ship Physics
+		// Update Physics
 		MainShip.Update();
+		PushMe.Update();
 		
 		// Camera Translation Handling
 		float thrust = .004;
@@ -127,6 +130,21 @@ int main(int argc, char** argv) {
 			{MainShip.PushLocal(0, -thrust, 0);}			
 		if (Keys[sf::Key::Space])
 			{MainShip.AirBrake(.9);}
+		
+		// PushMe Pushing
+		thrust = 0.002;
+		if (Keys[sf::Key::I])
+			{PushMe.PushGlobal(0, 0, thrust);}
+		if (Keys[sf::Key::K])
+			{PushMe.PushGlobal(0, 0, -thrust);}
+		if (Keys[sf::Key::J])
+			{PushMe.PushGlobal(-thrust, 0, 0);}
+		if (Keys[sf::Key::L])
+			{PushMe.PushGlobal(thrust, 0, 0);}
+		if (Keys[sf::Key::N])
+			{PushMe.PushGlobal(0, thrust, 0);}
+		if (Keys[sf::Key::M])
+			{PushMe.PushGlobal(0, -thrust, 0);}
 		
 		// Mouse Rotation
 		if (
@@ -152,7 +170,6 @@ int main(int argc, char** argv) {
 		if (Keys[sf::Key::Q]) {
 			MainShip.Roll(-.02);
 		}
-		
 				
 		// Setup a perspective projection
 		glMatrixMode(GL_PROJECTION);
@@ -192,9 +209,9 @@ int main(int argc, char** argv) {
 		glLightfv(GL_LIGHT1, GL_POSITION, light1pos);
 		glLightfv(GL_LIGHT2, GL_POSITION, light2pos);
 		
-		// Draw a sphere
+		// Draw a sphere (as PushMe avatar)
 		glPushMatrix();
-		glTranslatef(0.f, 0.f, -6.f);
+		glTranslatef(PushMe.Pos.x, PushMe.Pos.y, PushMe.Pos.z);
 		glColor3f(1, .5, .5);
 		glutSolidSphere(1, 32, 32);
 		glPopMatrix();

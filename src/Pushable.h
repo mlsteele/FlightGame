@@ -1,7 +1,6 @@
 #ifndef _PUSHABLE_H_
 	#define _PUSHABLE_H_
 
-#include <iostream>
 #include "V3D.h"
 
 // Orientable

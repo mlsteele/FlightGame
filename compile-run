@@ -1,7 +1,7 @@
 #! /bin/bash
 
 g++ src/*.cpp \
--o build/camera_dev \
+-o build/FlightGame \
 \
 -lsfml-system \
 -lsfml-window \
@@ -10,4 +10,4 @@ g++ src/*.cpp \
 -framework OpenGL \
 \
 && echo "----------" \
-&& ./build/camera_dev
+&& ./build/FlightGame

@@ -31,6 +31,7 @@ void FlightGame::Initialize() {
 	
 	// Camera, Ship, Object Setup
 	Ball.Pos = V3D(0, 0, -6);
+	Cam.Settings(90, ASPECT, .1, 500);
 	Cam.Attach(&MainShip);
 	
 	
@@ -52,7 +53,7 @@ void FlightGame::Initialize() {
 //	glEnable(GL_FOG);
 	
 	// Lighting
-	GLfloat ambientcolor[] = {.2, .2, .2, 1};
+	GLfloat ambientcolor[] = {.15, .15, .15, 1};
 	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambientcolor);
 	glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);
 	glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_FALSE);
@@ -69,8 +70,8 @@ void FlightGame::Initialize() {
 		light1dif[0] = .4; light1dif[1] = 1; light1dif[2] = .2; light1dif[3] = 1;
 		glLightfv(GL_LIGHT1, GL_DIFFUSE, light1dif);
 	glEnable(GL_LIGHT2);
-		light1pos[0] = -2; light1pos[1] = 10; light1pos[2] = -1; light1pos[3] = 1;
-		light1dif[0] = .3; light1dif[1] = .2; light1dif[2] = 1; light1dif[3] = 1;
+		light2pos[0] = -2; light2pos[1] = 10; light2pos[2] = -1; light2pos[3] = 1;
+		light2dif[0] = .3; light2dif[1] = .2; light2dif[2] = 1;  light2dif[3] = 1;
 		glLightfv(GL_LIGHT2, GL_DIFFUSE, light2dif);
 	
 	// Quadric (Misc)
@@ -131,14 +132,7 @@ void FlightGame::Render3D() {
 	
 	// Clear screen
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		
-	// Perspective Projection
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	float FOV = 1/17.;
-	glFrustum(-ASPECT*FOV, ASPECT*FOV, -1*FOV, 1*FOV, .1, 500);
-	glMatrixMode(GL_MODELVIEW);
-		
+			
 	// Camera Transformation
 	Cam.View();
 	

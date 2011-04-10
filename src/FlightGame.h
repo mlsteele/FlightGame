@@ -7,7 +7,6 @@
 #include <OpenGL/gl.h>
 #include <GLUT/glut.h>
 
-#include "DumbShip.h"
 #include "Oggler.h"
 #include "Pushable.h"
 
@@ -36,8 +35,9 @@ class FlightGame {
 		
 		GLUquadric* GLUQ;
 		
-		Pushable MainShip;
 		Oggler Cam;
+		
+		Pushable MainShip;
 		Pushable Ball;
 		
 	public:

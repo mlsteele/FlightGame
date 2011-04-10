@@ -14,6 +14,11 @@ class Oggler {
 		// Orientable to which the camera is attached
 		Orientable* Dolly;
 		bool OwnDolly;
+		
+		float Fov;
+		float Aspect;
+		float Near;
+		float Far;
 	
 	public:
 		Oggler();
@@ -21,6 +26,8 @@ class Oggler {
 		
 		// Attach camera to orientable
 		void Attach(Orientable*);
+		
+		void Settings(float _fov, float _aspect, float _near, float _far);
 		
 		// OpenGL Action
 		void View();		

@@ -67,10 +67,10 @@ void FlightGame::PhysicalInput() {
 	//// Ball Control
 	thrust = 0.0002;
 	if ( WInput.IsKeyDown(sf::Key::I) ) {
-		Ball.PushGlobal(0, 0, thrust);
+		Ball.PushGlobal(0, 0, -thrust);
 	}
 	if ( WInput.IsKeyDown(sf::Key::K) ) {
-		Ball.PushGlobal(0, 0, -thrust);
+		Ball.PushGlobal(0, 0, thrust);
 	}
 	if ( WInput.IsKeyDown(sf::Key::J) ) {
 		Ball.PushGlobal(-thrust, 0, 0);

@@ -47,10 +47,15 @@ void FlightGame::Initialize() {
 	glEnable(GL_DEPTH_TEST);
 	glDepthMask(GL_TRUE);
 	
-//	// Fog
+	// Fog
+	glEnable(GL_FOG);
 //	glFogi(GL_FOG_MODE, GL_EXP2);
 //	glFogf(GL_FOG_DENSITY, .05);
-//	glEnable(GL_FOG);
+	glFogi(GL_FOG_MODE, GL_LINEAR);
+	glFogf(GL_FOG_START, 40.f);
+	glFogf(GL_FOG_END, 500.f);
+	float FogCol[3]={0, 0, 0};
+	glFogfv(GL_FOG_COLOR, FogCol);
 	
 	// Lighting
 	GLfloat ambientcolor[] = {.15, .15, .15, 1};

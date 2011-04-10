@@ -40,10 +40,11 @@ class V3D {
 		}
 		
 		// Set vector value
-		inline void Set(float _x, float _y, float _z) {
-			x = _x;
-			y = _y;
-			z = _z;
+		inline void Set(float _x, float _y, float _z) {Set(V3D(_x, _y, _z));};
+		inline void Set(V3D _in) {
+			x = _in.x;
+			y = _in.y;
+			z = _in.z;
 		}
 		
 		// Vector addition (set)

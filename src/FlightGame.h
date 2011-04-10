@@ -36,7 +36,7 @@ class FlightGame {
 		
 		GLUquadric* GLUQ;
 		
-		DumbShip MainShip;
+		Pushable MainShip;
 		Oggler Cam;
 		Pushable Ball;
 		
@@ -48,6 +48,8 @@ class FlightGame {
 		void Loop();
 		
 		void InputHandler();
+		void PhysicalInput();
+		
 		void Logic();
 		void Physics();
 		void Render3D();

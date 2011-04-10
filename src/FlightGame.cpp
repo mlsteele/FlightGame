@@ -88,6 +88,7 @@ int FlightGame::Execute() {
 		
 		Logic();
 		
+		// Cheese Grater Physics
 		// Update physics n frames pers second, maximum updates
 		TimeStack += Clock.GetElapsedTime();
 		Clock.Reset();
@@ -97,6 +98,7 @@ int FlightGame::Execute() {
 			std::cerr << "Physics Safety Valve Tripped!";
 		}
 		while (TimeStack >= 1/100.f) {
+			PhysicalInput();
 			Physics();
 			TimeStack -= 1/100.f;
 		}
@@ -133,7 +135,7 @@ void FlightGame::Render3D() {
 	// Perspective Projection
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	float FOV = 1/10.;
+	float FOV = 1/17.;
 	glFrustum(-ASPECT*FOV, ASPECT*FOV, -1*FOV, 1*FOV, .1, 500);
 	glMatrixMode(GL_MODELVIEW);
 		

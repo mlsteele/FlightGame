@@ -9,7 +9,7 @@ Orientable::Orientable() {
 // Zero
 // Zeros the camera in global space
 void Orientable::Zero() {
-	Pos.Set(0,0,0);
+	Pos.Set(0, 0, 0);
 	Rt.Set(1, 0, 0);
 	Up.Set(0, 1, 0);
 	Fd.Set(0, 0, -1);

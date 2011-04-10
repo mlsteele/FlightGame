@@ -23,12 +23,15 @@ void FlightGame::InputHandler() {
 	if ( WInput.IsKeyDown(sf::Key::Escape) ) {
 		Exit();
 	}
+}
+
+void FlightGame::PhysicalInput() {
+	const sf::Input &WInput = Window.GetInput();
 	
 	//// Main Ship Control
 	// Translate
-	float thrust = 0.002;
+	float thrust = 0.001;
 	if ( WInput.IsKeyDown(sf::Key::W) ) {
-		std::cout << "\nInput\t" << -thrust << "\n";
 		MainShip.PushLocal(0, 0, thrust);
 	}
 	if ( WInput.IsKeyDown(sf::Key::S) ) {
@@ -57,8 +60,8 @@ void FlightGame::InputHandler() {
 	
 	// Pitch & Yaw
 	if (sqrt(pow(mX-WIDTH/2, 2) + pow(mY-HEIGHT/2, 2)) > 20) {
-		MainShip.Yaw( ((mX - WIDTH/2)/float(WIDTH)) * -.08 );
-		MainShip.Pitch( ((mY - HEIGHT/2)/float(HEIGHT)) * -.08*ASPECT );
+		MainShip.Yaw( ((mX - WIDTH/2)/float(WIDTH)) * -.04 );
+		MainShip.Pitch( ((mY - HEIGHT/2)/float(HEIGHT)) * -.04*ASPECT );
 	}
 	
 	//// Ball Control

@@ -28,9 +28,6 @@ class Orientable {
 		// Special
 		void Zero();
 		void Calibrate();
-		
-		// OpenGL Action
-		void View();
 };
 
 #endif

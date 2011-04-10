@@ -28,7 +28,7 @@ void Oggler::View() {
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	
-	// Apply to modelview matrix	
+	// Apply to modelview matrix
 	gluLookAt(
 		Dolly->Pos.x, Dolly->Pos.y, Dolly->Pos.z,
 		Dolly->Pos.x + Dolly->Fd.x, Dolly->Pos.y + Dolly->Fd.y, Dolly->Pos.z + Dolly->Fd.z,

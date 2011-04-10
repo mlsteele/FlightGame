@@ -26,7 +26,7 @@ class DumbShip : public Orientable {
 			Accel += V3D(_x, _y, _z);
 		};
 		
-		inline void PushLocal(V3D& _pushv) {
+		inline void PushLocal(V3D& _pushv) {			
 			Accel += Rt * _pushv.x;
 			Accel += Up * _pushv.y;
 			Accel += Fd * _pushv.z;

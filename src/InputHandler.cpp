@@ -3,8 +3,14 @@
 void FlightGame::InputHandler() {
 	const sf::Input &WInput = Window.GetInput();
 	
-	mX = WInput.GetMouseX();
-	mY = WInput.GetMouseY();
+	// TODO: Find more elegant solution
+	if (nFrame < 2){
+		mX = WIDTH/2;
+		mY = HEIGHT/2;
+	} else {
+		mX = WInput.GetMouseX();
+		mY = WInput.GetMouseY();
+	}
 	
 	while (Window.GetEvent(Event)) {
 		if (Event.Type == sf::Event::Closed) {
@@ -22,6 +28,7 @@ void FlightGame::InputHandler() {
 	// Translate
 	float thrust = 0.002;
 	if ( WInput.IsKeyDown(sf::Key::W) ) {
+		std::cout << "\nInput\t" << -thrust << "\n";
 		MainShip.PushLocal(0, 0, thrust);
 	}
 	if ( WInput.IsKeyDown(sf::Key::S) ) {
@@ -50,29 +57,28 @@ void FlightGame::InputHandler() {
 	
 	// Pitch & Yaw
 	if (sqrt(pow(mX-WIDTH/2, 2) + pow(mY-HEIGHT/2, 2)) > 20) {
-		MainShip.Yaw( ((mX - WIDTH/2)/float(WIDTH)) * .08 );
-		MainShip.Pitch( ((mY - HEIGHT/2)/float(HEIGHT)) * .08*ASPECT );
+		MainShip.Yaw( ((mX - WIDTH/2)/float(WIDTH)) * -.08 );
+		MainShip.Pitch( ((mY - HEIGHT/2)/float(HEIGHT)) * -.08*ASPECT );
 	}
 	
-	// Ball Control
+	//// Ball Control
 	thrust = 0.0002;
 	if ( WInput.IsKeyDown(sf::Key::I) ) {
-		Exit();
+		Ball.PushGlobal(0, 0, thrust);
 	}
 	if ( WInput.IsKeyDown(sf::Key::K) ) {
-		Exit();
+		Ball.PushGlobal(0, 0, -thrust);
 	}
 	if ( WInput.IsKeyDown(sf::Key::J) ) {
-		Exit();
+		Ball.PushGlobal(-thrust, 0, 0);
 	}
 	if ( WInput.IsKeyDown(sf::Key::L) ) {
-		Exit();
+		Ball.PushGlobal(thrust, 0, 0);
 	}
 	if ( WInput.IsKeyDown(sf::Key::U) ) {
-		Exit();
+		Ball.PushGlobal(0, thrust, 0);
 	}
-
 	if ( WInput.IsKeyDown(sf::Key::O) ) {
-		Exit();
+		Ball.PushGlobal(0, -thrust, 0);
 	}
 }

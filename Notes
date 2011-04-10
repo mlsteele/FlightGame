@@ -1,4 +1,5 @@
 TODO:
+Fix Ugly Physics + Input mapping!
 Pushable Class
 Rear View Mirror
 radar
@@ -6,3 +7,8 @@ webbing
 asteroids
 Invert orientable default, fix camera
 bullet deletion
+give ship thrusters
+put fov into oggler
+
+Potential source of problems:
+default orientation is 'backwards', handedness is yuck

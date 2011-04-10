@@ -30,7 +30,7 @@ void FlightGame::Initialize() {
 	
 	
 	// Camera, Ship, Object Setup
-	Ball.Pos = V3D(0, 0, 6);
+	Ball.Pos = V3D(0, 0, -6);
 	Cam.Attach(&MainShip);
 	
 	
@@ -61,16 +61,16 @@ void FlightGame::Initialize() {
 	
 	// Lights
 	glEnable(GL_LIGHT0);
-		GLfloat light0pos[4] = {0, 0, 1, 1};
-		GLfloat light0dif[4] = {1, .8, .8, 1};
+		light0pos[0] = 0; light0pos[1] = 0; light0pos[2] = 1; light0pos[3] = 1;
+		light0dif[0] = 1; light0dif[1] = .8; light0dif[2] = .8; light0dif[3] = 1;
 		glLightfv(GL_LIGHT0, GL_DIFFUSE, light0dif);
 	glEnable(GL_LIGHT1);
-		GLfloat light1pos[4] = {5, -2, -8, 1};
-		GLfloat light1dif[4] = {.4, 1, .2, 1};
+		light1pos[0] = 5; light1pos[1] = -2; light1pos[2] = 8; light1pos[3] = 1;
+		light1dif[0] = .4; light1dif[1] = 1; light1dif[2] = .2; light1dif[3] = 1;
 		glLightfv(GL_LIGHT1, GL_DIFFUSE, light1dif);
 	glEnable(GL_LIGHT2);
-		GLfloat light2pos[4] = {-2, 10, 15, 1};
-		GLfloat light2dif[4] = {.3, .2, 1, 1};
+		light1pos[0] = -2; light1pos[1] = 10; light1pos[2] = -1; light1pos[3] = 1;
+		light1dif[0] = .3; light1dif[1] = .2; light1dif[2] = 1; light1dif[3] = 1;
 		glLightfv(GL_LIGHT2, GL_DIFFUSE, light2dif);
 	
 	// Quadric (Misc)
@@ -91,7 +91,11 @@ int FlightGame::Execute() {
 		// Update physics n frames pers second, maximum updates
 		TimeStack += Clock.GetElapsedTime();
 		Clock.Reset();
-		if (TimeStack >= .2) {TimeStack = .2;} // Safety for spiral of death
+		// Safety for spiral of death
+		if (TimeStack >= .2) {
+			TimeStack = .2;
+			std::cerr << "Physics Safety Valve Tripped!";
+		}
 		while (TimeStack >= 1/100.f) {
 			Physics();
 			TimeStack -= 1/100.f;
@@ -129,14 +133,34 @@ void FlightGame::Render3D() {
 	// Perspective Projection
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(70.f, ASPECT, .1f, 500.f);
+	float FOV = 1/10.;
+	glFrustum(-ASPECT*FOV, ASPECT*FOV, -1*FOV, 1*FOV, .1, 500);
 	glMatrixMode(GL_MODELVIEW);
-	
+		
 	// Camera Transformation
 	Cam.View();
 	
+	// Axis visualization
+	glTranslatef(0, 0, -1);
+	glBegin(GL_LINES);
+		// Red X
+		glColor3f(1, 0, 0);
+		glVertex3f(0, 0, 0);
+		glVertex3f(1, 0, 0);
+		
+		// Green Y
+		glColor3f(0, 1, 0);
+		glVertex3f(0, 0, 0);
+		glVertex3f(0, 1, 0);
+		
+		// Blue Z
+		glColor3f(0, 0, 1);
+		glVertex3f(0, 0, 0);
+		glVertex3f(0, 0, 1);
+	glEnd();
+	
 	// Enable lighting & update light positions
-	glDisable(GL_LIGHTING);
+	glEnable(GL_LIGHTING);
 	glLightfv(GL_LIGHT0, GL_POSITION, light0pos);
 	glLightfv(GL_LIGHT1, GL_POSITION, light1pos);
 	glLightfv(GL_LIGHT2, GL_POSITION, light2pos);
@@ -150,7 +174,7 @@ void FlightGame::Render3D() {
 	
 	// Draw a square with colors
 	glPushMatrix();
-	glTranslatef(5.f, 0.f, 10.f);
+	glTranslatef(5.f, 0.f, -10.f);
 	glBegin(GL_QUADS);
 		glColor3f(1, .2, .2);
 		glVertex3f(-1.0f, 1.0f, 0.0f);
@@ -160,6 +184,30 @@ void FlightGame::Render3D() {
 		glColor3f(.2, 1, .2);
 		glVertex3f(-1.0f,-1.0f, 0.0f);
 	glEnd();
+	glPopMatrix();
+	
+	// Draw a grid
+	glDisable(GL_LIGHTING);
+	glPushMatrix();
+	glColor3f(1.0f, 0.80f, 0.90f);
+	int griddims[3] = {20, 20, 20};
+	glTranslatef(-griddims[0], -griddims[1], -griddims[2]);
+	for (int gridx = 0; gridx < griddims[0]; ++gridx) {
+		for (int gridy = 0; gridy < griddims[1]; ++gridy) {
+			for (int gridx = 0; gridx < griddims[0]; ++gridx) {
+				
+				glBegin(GL_POINTS);
+					glVertex3f(0, 0, 0);
+				glEnd();
+				
+				glTranslatef(0, 0, 2);
+			}
+			glTranslatef(2, 0, 0);
+			glTranslatef(0, 0, -2*griddims[2]);
+		}
+		glTranslatef(-2*griddims[1], 0, 0);
+		glTranslatef(0, 2, 0);
+	}
 	glPopMatrix();
 }
 

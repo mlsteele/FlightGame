@@ -9,7 +9,6 @@ Pushable::Pushable (V3D _Position) {
 Pushable::Pushable () {
 	Pos.Zero();
 	Accel.Zero();
-	
 }
 
 void Pushable::PushLocal(V3D _Accel) {
@@ -27,5 +26,6 @@ void Pushable::Update() {
 	Pos += Vel;
 	Accel.Zero();
 	
+	// Friction
 	Vel *= 0.997127;
 }

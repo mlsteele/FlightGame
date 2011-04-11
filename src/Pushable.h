@@ -22,6 +22,9 @@ class Pushable : public Orientable {
 		void PushGlobal (V3D);
 		
 		void Update ();
+		
+		// Extractor functions
+		float GetSpeed();
 };
 
 #endif

@@ -12,34 +12,37 @@
 
 class FlightGame {
 	public:
+		// Process Properties
 		bool Running;
 		unsigned int nFrame;
 		sf::Clock Clock;
 		float TimeStack;
 		
+		// Window & Properties
 		sf::Window Window;
-		sf::Event Event;
 		float WIDTH;
 		float HEIGHT;
 		float ASPECT;
 		
+		// Mouse Position and Input
+		sf::Event Event;
 		float mX;
 		float mY;
 		
+		// OpenGL & GLUT
 		GLfloat light0pos[4];
 		GLfloat light0dif[4];
 		GLfloat light1pos[4];
 		GLfloat light1dif[4];
 		GLfloat light2pos[4];
 		GLfloat light2dif[4];
-		
 		GLUquadric* GLUQ;
 		
+		// Game Objects
 		Oggler Cam;
-		
 		Pushable MainShip;
 		Pushable Ball;
-		
+	
 	public:
 		FlightGame();
 		
@@ -47,11 +50,14 @@ class FlightGame {
 		void Initialize();
 		void Loop();
 		
+		void Logic();
+		void Physics();
+		
+		// InputHandler.cpp
 		void InputHandler();
 		void PhysicalInput();
 		
-		void Logic();
-		void Physics();
+		// Render.cpp
 		void Render3D();
 		void Render2D();
 		

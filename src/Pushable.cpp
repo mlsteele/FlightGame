@@ -29,3 +29,13 @@ void Pushable::Update() {
 	// Friction
 	Vel *= 0.997127;
 }
+
+float Pushable::GetSpeed() {
+	return sqrt(
+		pow(Vel.x, 2)
+		+
+		pow(Vel.y, 2)
+		+
+		pow(Vel.z, 2)
+	);
+}

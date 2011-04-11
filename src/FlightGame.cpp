@@ -101,7 +101,7 @@ int FlightGame::Execute() {
 		// Safety for spiral of death
 		if (TimeStack >= .2) {
 			TimeStack = .2;
-			std::cerr << "Physics Safety Valve Tripped!";
+			std::cerr << "ERROR: Physics Safety Valve Tripped!\n";
 		}
 		while (TimeStack >= 1/100.f) {
 			PhysicalInput();
@@ -111,6 +111,7 @@ int FlightGame::Execute() {
 		
 		Render3D();
 		Render2D();
+		
 		Window.Display();
 	}
 	

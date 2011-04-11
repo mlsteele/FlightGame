@@ -1,7 +1,6 @@
 TODO:
 Rear View Mirror
 radar
-webbing
 asteroids
 Invert orientable default, fix camera
 bullet deletion
@@ -9,3 +8,11 @@ give ship thrusters
 
 Potential source of problems:
 default orientation is 'backwards', handedness is yuck
+
+harpoon
+webbing
+
+networking
+
+GLFW
+SFML alternative

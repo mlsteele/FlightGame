@@ -116,4 +116,40 @@ void FlightGame::Render2D() {
 	glColor3f(.4, .2, 1);
 	gluDisk(GLUQ, 15, 20, 4, 1);
 	glPopMatrix();
+	
+	// Reusable Bar Variables
+	float BarWidth;
+	float VizQ;
+	
+	// Distance from ball
+	BarWidth = 4;
+	V3D From = (MainShip.Pos - Ball.Pos);
+	VizQ = From.Length();
+	VizQ *= 10; // Visualization scale
+	glPushMatrix();
+	glTranslatef(WIDTH/2 - VizQ/2, 0, 0);
+	glColor3f(.15, .8, .15);
+	glBegin(GL_QUADS);
+		glVertex3f(0,		0, 0);
+		glVertex3f(VizQ,	0, 0);
+		glVertex3f(VizQ,	BarWidth, 0);
+		glVertex3f(0,		BarWidth, 0);
+	glEnd();
+	glPopMatrix();
+	
+	// Speed Visualizer
+	BarWidth = 15;
+	VizQ = MainShip.GetSpeed();
+	VizQ *= 500; // Visualization scale
+	glPushMatrix();
+	glTranslatef(BarWidth, HEIGHT, 0);
+	glRotatef(170, 0, 0, -1);
+	glColor3f(.3, .3, 1);
+	glBegin(GL_QUADS);
+		glVertex3f(0,			0, 0);
+		glVertex3f(BarWidth,	0, 0);
+		glVertex3f(BarWidth,	VizQ, 0);
+		glVertex3f(0,			VizQ, 0);
+	glEnd();
+	glPopMatrix();	
 }

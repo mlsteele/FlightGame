@@ -75,9 +75,29 @@ class V3D {
 			z /= s;
 		}
 		
-		// Scalar multiplication (no set)
-		inline const V3D operator* (const float &s) {
+		// Negation
+		inline const V3D operator- () const {
+			return V3D(-x, -y, -z);
+		}
+		
+		// Vector Addition (no set)
+		inline const V3D operator+ (const V3D& _v) const {
+			return V3D(*this) += _v;
+		}
+		
+		// Vector Subtraction (no set)
+		inline const V3D operator- (const V3D& _v) const {
+			return V3D(*this) -= _v;
+		}
+		
+		// Scalar Multiplication (no set)
+		inline const V3D operator* (const float &s) const {
 			return V3D(x*s, y*s, z*s);
+		}
+		
+		// Scalar Divison (no set)
+		inline const V3D operator/ (const float &s) const {
+			return V3D(x/s, y/s, z/s);
 		}
 		
 		// SpinAxis
@@ -97,7 +117,7 @@ class V3D {
 		
 		// Length
 		// Computer the length of a vector
-		inline float Length() {
+		inline float Length() const {
 			return sqrt( pow(x,2) + pow(y,2) + pow(z,2) );
 		}
 		
@@ -108,6 +128,14 @@ class V3D {
 			x /= len;
 			y /= len;
 			z /= len;
+		}
+		
+		// Normalized
+		// Unitize vector and return
+		inline const V3D Normalized() const {
+			V3D result = V3D(x, y, z);
+			result.Normalize();
+			return result;
 		}
 
 };

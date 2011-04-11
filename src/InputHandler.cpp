@@ -52,10 +52,10 @@ void FlightGame::PhysicalInput() {
 	
 	// Roll
 	if ( WInput.IsKeyDown(sf::Key::Q) ) {
-		MainShip.Roll(-.02);;
+		MainShip.Roll(-.01);;
 	}
 	if ( WInput.IsKeyDown(sf::Key::E) ) {
-		MainShip.Roll(.02);;
+		MainShip.Roll(.01);;
 	}
 	
 	// Pitch & Yaw
@@ -83,5 +83,16 @@ void FlightGame::PhysicalInput() {
 	}
 	if ( WInput.IsKeyDown(sf::Key::O) ) {
 		Ball.PushGlobal(0, -thrust, 0);
+	}
+	
+	// Tractor Beam!
+	if ( WInput.IsKeyDown(sf::Key::LShift) ) {
+		Ball.PushGlobal( ((MainShip.Pos + MainShip.Fd* 5) - Ball.Pos).Normalized()/100 );
+		Ball.Vel *= .99;
+	}
+	if ( WInput.IsKeyDown(sf::Key::RShift) ) {
+		if ( ((MainShip.Pos + MainShip.Fd*5) - Ball.Pos).Length() < 5 ) {
+			Ball.PushGlobal( MainShip.Fd.Normalized()/100 );
+		}
 	}
 }

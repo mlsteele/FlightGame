@@ -1,13 +1,13 @@
 #include "Pushable.h"
 #include "iostream"
 
-Pushable::Pushable (V3D _Position) {
-	Pos.Set(_Position);
+Pushable::Pushable () {
+	Pos.Zero();
 	Accel.Zero();
 }
 
-Pushable::Pushable () {
-	Pos.Zero();
+Pushable::Pushable (V3D _Position) {
+	Pos.Set(_Position);
 	Accel.Zero();
 }
 
@@ -28,14 +28,4 @@ void Pushable::Update() {
 	
 	// Friction
 	Vel *= 0.997127;
-}
-
-float Pushable::GetSpeed() {
-	return sqrt(
-		pow(Vel.x, 2)
-		+
-		pow(Vel.y, 2)
-		+
-		pow(Vel.z, 2)
-	);
 }

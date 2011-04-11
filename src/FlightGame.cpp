@@ -31,6 +31,12 @@ void FlightGame::Initialize() {
 	
 	// Camera, Ship, Object Setup
 	Ball.Pos = V3D(0, 0, -6);
+	StrandA = Strand(
+		V3D(0, 0, 0),
+		V3D(10, 5, 0),
+		7,
+		40
+	);
 	Cam.Settings(90, ASPECT, .1, 500);
 	Cam.Attach(&MainShip);
 	
@@ -129,6 +135,10 @@ void FlightGame::Logic() {
 void FlightGame::Physics() {
 	MainShip.Update();
 	Ball.Update();
+	for (int i = 0; i < 10; ++i) {
+		StrandA.Update();
+		StrandA.SetStart(Ball);
+	}
 }
 
 

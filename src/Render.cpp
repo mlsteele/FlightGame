@@ -79,6 +79,9 @@ void FlightGame::Render3D() {
 		glTranslatef(0, 2, 0);
 	}
 	glPopMatrix();
+	
+	// Render Strand
+	StrandA.Render();
 }
 
 void FlightGame::Render2D() {
@@ -139,7 +142,7 @@ void FlightGame::Render2D() {
 	
 	// Speed Visualizer
 	BarWidth = 15;
-	VizQ = MainShip.GetSpeed();
+	VizQ = MainShip.Speed();
 	VizQ *= 500; // Visualization scale
 	glPushMatrix();
 	glTranslatef(BarWidth, HEIGHT, 0);

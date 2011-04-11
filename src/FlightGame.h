@@ -9,6 +9,7 @@
 
 #include "Oggler.h"
 #include "Pushable.h"
+#include "Strand.h"
 
 class FlightGame {
 	public:
@@ -42,6 +43,7 @@ class FlightGame {
 		Oggler Cam;
 		Pushable MainShip;
 		Pushable Ball;
+		Strand StrandA;
 	
 	public:
 		FlightGame();

@@ -12,8 +12,8 @@ class Pushable : public Orientable {
 		V3D Accel;
 		
 	public:
-		Pushable (V3D);
 		Pushable ();
+		Pushable (V3D _Position);
 		
 		inline void PushLocal (float _x, float _y, float _z) {PushLocal(V3D(_x, _y, _z));};
 		void PushLocal (V3D);
@@ -24,7 +24,7 @@ class Pushable : public Orientable {
 		void Update ();
 		
 		// Extractor functions
-		float GetSpeed();
+		inline float Speed() const { return sqrt(pow(Vel.x, 2) + pow(Vel.y, 2) +	pow(Vel.z, 2));	};
 };
 
 #endif

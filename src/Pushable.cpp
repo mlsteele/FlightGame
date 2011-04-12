@@ -25,6 +25,6 @@ void Pushable::Update() {
 	Pos += Vel;
 	Accel.Zero();
 	
-	// Friction
-	Vel *= 0.997127;
+//	// Friction
+//	Vel *= 0.997127;
 }

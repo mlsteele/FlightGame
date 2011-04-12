@@ -87,8 +87,11 @@ void FlightGame::PhysicalInput() {
 	
 	// Tractor Beam!
 	if ( WInput.IsKeyDown(sf::Key::LShift) ) {
-		BallA.PushGlobal( ((MainShip.Pos + MainShip.Fd* 5) - BallA.Pos).Normalized()/100 );
-		BallA.Vel *= .99;
+		if ( ((MainShip.Pos + MainShip.Fd*5) - BallA.Pos).Length() > 2 ) {
+			BallA.PushGlobal( ((MainShip.Pos + MainShip.Fd* 5) - BallA.Pos).Normalized()*.1 );
+		} else {
+			BallA.Vel *= .7;
+		}
 	}
 	if ( WInput.IsKeyDown(sf::Key::RShift) ) {
 		if ( ((MainShip.Pos + MainShip.Fd*5) - BallA.Pos).Length() < 5 ) {

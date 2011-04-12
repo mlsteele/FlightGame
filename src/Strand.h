@@ -19,7 +19,7 @@ class Strand {
 		int Res;
 	
 	public:
-		Strand(V3D _start, V3D _end, float _targl, int _res);
+		Strand(const V3D _start, const V3D _end, float _targl, int _res);
 		
 		void Splice(int _index, Pushable&, bool _delete);
 		

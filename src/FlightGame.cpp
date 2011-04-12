@@ -4,8 +4,8 @@ FlightGame::FlightGame() :
 	  Running (false)
 	, MainShip( V3D(), 1 )
 	, BallA ( V3D(0, 0, -6), 1 )
-	, BallB ( V3D(0, 4, -7), 1 )
-	, StrandA ( V3D(0, 0, 0), V3D(10, 5, 0), 1, 20 )
+	, BallB ( V3D(2, 4, -7), 1 )
+	, StrandA ( BallA.Pos, BallB.Pos, 1, 20 )
 {
 	nFrame = 0;
 	Clock.Reset();

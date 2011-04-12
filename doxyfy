@@ -1,0 +1,6 @@
+#! /bin/bash
+
+cd src/
+doxygen Doxyfile
+cd ..
+ln -s ./src/html/index.html ./docs.html

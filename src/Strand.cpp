@@ -1,6 +1,6 @@
 #include "Strand.h"
 
-Strand::Strand(V3D _start, V3D _end, float _targl, int _res) {
+Strand::Strand(const V3D _start, const V3D _end, float _targl, int _res) {
 	Res = _res;
 	TargL = _targl;
 	
@@ -26,16 +26,26 @@ void Strand::Splice(int _index, Pushable& _p, bool _delete) {
 
 void Strand::Update() {
 	float MiniTargL = TargL / Nodes.size();
-	float k = .0001;
 	
 	// Influence
 	for (int n = 1; n < Nodes.size(); ++n) {
-		V3D diffv = Nodes[n-1]->Pos - Nodes[n]->Pos;
-		float x = diffv.Length() - MiniTargL;
+		float k;
+		V3D diffp = Nodes[n-1]->Pos - Nodes[n]->Pos;
+		V3D force;
+		
 		// F [varies with] k*x
-		diffv = diffv.Normalized()*x*k;
-		Nodes[n]->PushGlobal(diffv);
-		Nodes[n-1]->PushGlobal(-diffv);
+		k = .001;
+		float x = diffp.Length() - MiniTargL;
+		force = diffp.Normalized()*x*k;
+		Nodes[n]->PushGlobal(force);
+		Nodes[n-1]->PushGlobal(-force);
+		
+		// Viscosity
+		k = .001;
+		V3D diffvel = Nodes[n-1]->Vel - Nodes[n]->Vel;
+		force = diffvel*k;
+		Nodes[n]->PushGlobal(force);
+		Nodes[n-1]->PushGlobal(-force);
 	}
 	
 	// Updates

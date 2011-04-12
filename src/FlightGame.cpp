@@ -1,11 +1,9 @@
 #include "FlightGame.h"
 
-
-FlightGame::FlightGame() {}
-
-
-void FlightGame::Initialize() {
-	Running = true;
+FlightGame::FlightGame() :
+	  Running (false)
+	, StrandA ( V3D(0, 0, 0), V3D(10, 5, 0), 7, 40 )
+{
 	nFrame = 0;
 	Clock.Reset();
 	TimeStack = 0;
@@ -29,14 +27,11 @@ void FlightGame::Initialize() {
 	mX = WIDTH/2; mY = HEIGHT/2;
 	
 	
-	// Camera, Ship, Object Setup
+	// Objects
 	Ball.Pos = V3D(0, 0, -6);
-	StrandA = Strand(
-		V3D(0, 0, 0),
-		V3D(10, 5, 0),
-		7,
-		40
-	);
+	StrandA.Splice(0, Ball, true);
+	
+	// Camera
 	Cam.Settings(90, ASPECT, .1, 500);
 	Cam.Attach(&MainShip);
 	
@@ -91,7 +86,7 @@ void FlightGame::Initialize() {
 
 
 int FlightGame::Execute() {
-	Initialize();
+	Running = true;
 	
 	while (Running) {
 		++nFrame;
@@ -134,11 +129,7 @@ void FlightGame::Logic() {
 
 void FlightGame::Physics() {
 	MainShip.Update();
-	Ball.Update();
-	for (int i = 0; i < 10; ++i) {
-		StrandA.Update();
-		StrandA.SetStart(Ball);
-	}
+	StrandA.Update();
 }
 
 

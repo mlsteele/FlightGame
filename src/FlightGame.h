@@ -49,7 +49,6 @@ class FlightGame {
 		FlightGame();
 		
 		int Execute();
-		void Initialize();
 		void Loop();
 		
 		void Logic();

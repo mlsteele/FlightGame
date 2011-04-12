@@ -1,24 +1,23 @@
 #include "Pushable.h"
 #include "iostream"
 
-Pushable::Pushable () {
-	Pos.Zero();
+Pushable::Pushable (V3D _pos, float _mass) {
+	Mass = _mass;
+	Pos.Set(_pos);
+	Vel.Zero();
 	Accel.Zero();
 }
 
-Pushable::Pushable (V3D _Position) {
-	Pos.Set(_Position);
-	Accel.Zero();
+void Pushable::PushLocal(V3D _force) {
+	_force /= Mass;
+	Accel += (Rt * _force.x);
+	Accel += (Up * _force.y);
+	Accel += (Fd * _force.z);
 }
 
-void Pushable::PushLocal(V3D _Accel) {
-	Accel += (Rt * _Accel.x);
-	Accel += (Up * _Accel.y);
-	Accel += (Fd * _Accel.z);
-}
-
-void Pushable::PushGlobal(V3D _Accel) {
-	Accel += _Accel;
+void Pushable::PushGlobal(V3D _force) {
+	_force /= Mass;
+	Accel += _force;
 }
 
 void Pushable::Update() {

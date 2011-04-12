@@ -35,9 +35,16 @@ void FlightGame::Render3D() {
 	glLightfv(GL_LIGHT1, GL_POSITION, light1pos);
 	glLightfv(GL_LIGHT2, GL_POSITION, light2pos);
 	
-	// Draw a sphere (as PushMe avatar)
+	// Draw a sphere (BallA)
 	glPushMatrix();
-	glTranslatef(Ball.Pos.x, Ball.Pos.y, Ball.Pos.z);
+	glTranslatef(BallA.Pos.x, BallA.Pos.y, BallA.Pos.z);
+	glColor3f(1, .5, .5);
+	glutSolidSphere(1, 32, 32);
+	glPopMatrix();
+	
+	// Draw a sphere (BallB)
+	glPushMatrix();
+	glTranslatef(BallB.Pos.x, BallB.Pos.y, BallB.Pos.z);
 	glColor3f(1, .5, .5);
 	glutSolidSphere(1, 32, 32);
 	glPopMatrix();
@@ -123,22 +130,6 @@ void FlightGame::Render2D() {
 	// Reusable Bar Variables
 	float BarWidth;
 	float VizQ;
-	
-	// Distance from ball
-	BarWidth = 4;
-	V3D From = (MainShip.Pos - Ball.Pos);
-	VizQ = From.Length();
-	VizQ *= 10; // Visualization scale
-	glPushMatrix();
-	glTranslatef(WIDTH/2 - VizQ/2, 0, 0);
-	glColor3f(.15, .8, .15);
-	glBegin(GL_QUADS);
-		glVertex3f(0,		0, 0);
-		glVertex3f(VizQ,	0, 0);
-		glVertex3f(VizQ,	BarWidth, 0);
-		glVertex3f(0,		BarWidth, 0);
-	glEnd();
-	glPopMatrix();
 	
 	// Speed Visualizer
 	BarWidth = 15;

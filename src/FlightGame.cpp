@@ -2,7 +2,10 @@
 
 FlightGame::FlightGame() :
 	  Running (false)
-	, StrandA ( V3D(0, 0, 0), V3D(10, 5, 0), 7, 40 )
+	, MainShip( V3D(), 1 )
+	, BallA ( V3D(0, 0, -6), 1 )
+	, BallB ( V3D(0, 4, -7), 1 )
+	, StrandA ( V3D(0, 0, 0), V3D(10, 5, 0), 1, 20 )
 {
 	nFrame = 0;
 	Clock.Reset();
@@ -28,8 +31,8 @@ FlightGame::FlightGame() :
 	
 	
 	// Objects
-	Ball.Pos = V3D(0, 0, -6);
-	StrandA.Splice(0, Ball, true);
+	StrandA.Splice(0, BallA, true);
+	StrandA.Splice(-1, BallB, true);
 	
 	// Camera
 	Cam.Settings(90, ASPECT, .1, 500);

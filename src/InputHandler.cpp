@@ -64,35 +64,35 @@ void FlightGame::PhysicalInput() {
 		MainShip.Pitch( ((mY - HEIGHT/2)/float(HEIGHT)) * -.04*ASPECT );
 	}
 	
-	//// Ball Control
+	//// BallA Control
 	thrust = 0.0002;
 	if ( WInput.IsKeyDown(sf::Key::I) ) {
-		Ball.PushGlobal(0, 0, -thrust);
+		BallA.PushGlobal(0, 0, -thrust);
 	}
 	if ( WInput.IsKeyDown(sf::Key::K) ) {
-		Ball.PushGlobal(0, 0, thrust);
+		BallA.PushGlobal(0, 0, thrust);
 	}
 	if ( WInput.IsKeyDown(sf::Key::J) ) {
-		Ball.PushGlobal(-thrust, 0, 0);
+		BallA.PushGlobal(-thrust, 0, 0);
 	}
 	if ( WInput.IsKeyDown(sf::Key::L) ) {
-		Ball.PushGlobal(thrust, 0, 0);
+		BallA.PushGlobal(thrust, 0, 0);
 	}
 	if ( WInput.IsKeyDown(sf::Key::U) ) {
-		Ball.PushGlobal(0, thrust, 0);
+		BallA.PushGlobal(0, thrust, 0);
 	}
 	if ( WInput.IsKeyDown(sf::Key::O) ) {
-		Ball.PushGlobal(0, -thrust, 0);
+		BallA.PushGlobal(0, -thrust, 0);
 	}
 	
 	// Tractor Beam!
 	if ( WInput.IsKeyDown(sf::Key::LShift) ) {
-		Ball.PushGlobal( ((MainShip.Pos + MainShip.Fd* 5) - Ball.Pos).Normalized()/100 );
-		Ball.Vel *= .99;
+		BallA.PushGlobal( ((MainShip.Pos + MainShip.Fd* 5) - BallA.Pos).Normalized()/100 );
+		BallA.Vel *= .99;
 	}
 	if ( WInput.IsKeyDown(sf::Key::RShift) ) {
-		if ( ((MainShip.Pos + MainShip.Fd*5) - Ball.Pos).Length() < 5 ) {
-			Ball.PushGlobal( MainShip.Fd.Normalized()/100 );
+		if ( ((MainShip.Pos + MainShip.Fd*5) - BallA.Pos).Length() < 5 ) {
+			BallA.PushGlobal( MainShip.Fd.Normalized()/100 );
 		}
 	}
 }

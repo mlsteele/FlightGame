@@ -42,7 +42,8 @@ class FlightGame {
 		// Game Objects
 		Oggler Cam;
 		Pushable MainShip;
-		Pushable Ball;
+		Pushable BallA;
+		Pushable BallB;
 		Strand StrandA;
 	
 	public:

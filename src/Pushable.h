@@ -8,18 +8,18 @@
 // An Orientable that can be pushed
 class Pushable : public Orientable {
 	public:
+		float Mass;
 		V3D Vel;
 		V3D Accel;
 		
 	public:
-		Pushable ();
-		Pushable (V3D _Position);
+		Pushable (V3D _pos, float _mass);
 		
 		inline void PushLocal (float _x, float _y, float _z) {PushLocal(V3D(_x, _y, _z));};
-		void PushLocal (V3D);
+		void PushLocal(V3D _force);
 		
-		inline void PushGlobal (float _x, float _y, float _z) {PushGlobal(V3D(_x, _y, _z));};
-		void PushGlobal (V3D);
+		inline void PushGlobal(float _x, float _y, float _z) {PushGlobal(V3D(_x, _y, _z));};
+		void PushGlobal(V3D _force);
 		
 		void Update ();
 		

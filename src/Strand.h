@@ -1,11 +1,13 @@
 #include <iostream>
 #include <vector>
+#include <algorithm>
 #include <OpenGL/gl.h>
 #include <GLUT/glut.h>
 
 #include "Pushable.h"
 
 using std::vector;
+using std::min;
 
 class Strand {
 	private:

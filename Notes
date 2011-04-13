@@ -2,7 +2,6 @@ TODO:
 Rear View Mirror
 radar
 asteroids
-Invert orientable default, fix camera
 bullet deletion
 give ship thrusters
 
@@ -33,6 +32,15 @@ line to ship position
 add mass
 add loc/glob converters
 
-MKS units
+Physics units
+A 1 radius sphere masses 
+The unit of time is 1/100 second
 
 sfml networking
+
+collisions
+arena based
+
+organize lighting
+
+research graphics

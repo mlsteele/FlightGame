@@ -1,13 +1,13 @@
+#ifndef _ORIENTABLE_H_
+	#define _ORIENTABLE_H_
+
+#include "V3D.h"
+
 /// \brief Object in space with orientation.
 /// 
 /// \n Holds position (vector), and orientation (3 vectors).
 /// \n Orientation is represented by right, up, and forward directions.
 /// \n Default orientation uses a negative z axis as forward for OpenGL compliance.
-
-#ifndef _ORIENTABLE_H_
-	#define _ORIENTABLE_H_
-
-#include "V3D.h"
 
 class Orientable {
 	public:
@@ -23,9 +23,15 @@ class Orientable {
 	public:
 		Orientable();
 		
-		// Position Manipulation
-		void TranslateGlobal(float, float, float);
-		void TranslateLocal(float, float, float);
+		// Translation
+		
+		/// \brief Translates along global space
+		void TranslateGlobal(V3D _offset);
+		inline void TranslateGlobal (float _x, float _y, float _z) {TranslateGlobal(V3D(_x, _y, _z));};
+		
+		/// \brief Translates along local space
+		void TranslateLocal(V3D _offset);
+		inline void TranslateLocal (float _x, float _y, float _z) {TranslateLocal(V3D(_x, _y, _z));};
 		
 		// Rotation
 		
@@ -36,7 +42,7 @@ class Orientable {
 		/// \brief Rotate around forward
 		void Roll(float);
 		
-		// Special
+		/// \brief Return to default orientation and position
 		void Zero();
 		
 		/// \brief Unitize directions if they have decayed

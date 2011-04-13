@@ -1,8 +1,3 @@
-/// \brief OpenGL Camera
-/// 
-/// A camera class which can modify OpenGL stack to mimic camera movement.
-/// \n Attaches to an Orientable
-
 #ifndef _OGGLER_H_
 	#define _OGGLER_H_
 
@@ -11,6 +6,11 @@
 #include <GLUT/glut.h>
 
 #include "Orientable.h"
+
+/// \brief OpenGL Camera
+/// 
+/// A camera class which can modify OpenGL stack to mimic camera movement.
+/// \n Attaches to an Orientable
 
 // Oggler OpenGL Camera
 // Attached to an Orientable, attempts to emulate interface

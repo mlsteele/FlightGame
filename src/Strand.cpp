@@ -5,7 +5,6 @@ Strand::Strand(const V3D _start, const V3D _end, float _targl, int _res) {
 	TargL = _targl;
 	
 	V3D shift = _end - _start;
-	Length = shift.Length();
 	shift /= Res;
 	
 	for (int n = 0; n < Res; ++n) {
@@ -13,12 +12,20 @@ Strand::Strand(const V3D _start, const V3D _end, float _targl, int _res) {
 	}
 }
 
+/// Replace the pushable at [_index] with the input
+/// Index 0 is string beginning, index -1 is string end
 void Strand::Splice(int _index, Pushable& _p, bool _delete) {
 	if (_delete)
 		{ delete Nodes[_index]; }
 	
 	if (_index < 0) {
 		_index = Nodes.size() + _index;
+	}
+	
+	// Safety check
+	if ( _index >= (int) Nodes.size() ) {
+		std::cerr << "ERROR: Strand splice out of bounds\n\tFile: " << __FILE__ << "\n\tLine: " << __LINE__ << "\n";
+		return;
 	}
 	
 	Nodes[_index] = &_p;
@@ -54,7 +61,7 @@ void Strand::Update() {
 	}
 }
 
-void Strand::Render() {
+void Strand::Render() const {
 	float MiniTargL = TargL / Nodes.size();
 	
 	for (unsigned int n = 1; n < Nodes.size(); ++n) {
@@ -69,4 +76,17 @@ void Strand::Render() {
 		glEnd();
 		glPopMatrix();
 	}
+}
+
+Pushable* Strand::GetIndex (int _index) const {
+	if (_index < 0) {
+		_index = Nodes.size() + _index;
+	}
+	
+	// Safety check
+	if ( _index >= (int) Nodes.size() ) {
+		std::cerr << "ERROR: Strand retrieve out of bounds\n\tFile: " << __FILE__ << "\n\tLine: " << __LINE__ << "\n";
+	}
+	
+	return Nodes[_index];
 }

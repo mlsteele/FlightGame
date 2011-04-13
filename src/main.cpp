@@ -1,3 +1,7 @@
+/// \mainpage FlightGame Docs
+/// \section FlightGame
+/// This is it, man!
+
 #include <iostream>
 #include "FlightGame.h"
 

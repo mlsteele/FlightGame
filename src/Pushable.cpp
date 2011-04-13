@@ -8,6 +8,11 @@ Pushable::Pushable (V3D _pos, float _mass) {
 	Accel.Zero();
 }
 
+void Pushable::PushGlobal(V3D _force) {
+	_force /= Mass;
+	Accel += _force;
+}
+
 void Pushable::PushLocal(V3D _force) {
 	_force /= Mass;
 	Accel += (Rt * _force.x);
@@ -15,11 +20,7 @@ void Pushable::PushLocal(V3D _force) {
 	Accel += (Fd * _force.z);
 }
 
-void Pushable::PushGlobal(V3D _force) {
-	_force /= Mass;
-	Accel += _force;
-}
-
+/// Explicit Euler integration
 void Pushable::Update() {
 	Vel += Accel;
 	Pos += Vel;

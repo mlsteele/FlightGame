@@ -17,18 +17,18 @@ void Orientable::Zero() {
 
 // TranslateGlobal
 // Translates the camera along the global space
-void Orientable::TranslateGlobal(float _x, float _y, float _z) {
-	Pos.x += _x;
-	Pos.y += _y;
-	Pos.z += _z;
+void Orientable::TranslateGlobal(V3D _offset) {
+	Pos.x += _offset.x;
+	Pos.y += _offset.y;
+	Pos.z += _offset.z;
 }
 
 // TranslateLocal
 // Translates the camera along local space
-void Orientable::TranslateLocal(float _right, float _up, float _forw) {
-	Pos += Rt * _right;
-	Pos += Up * _up;
-	Pos += Fd * _forw;
+void Orientable::TranslateLocal(V3D _offset) {
+	Pos += Rt * _offset.x;
+	Pos += Up * _offset.y;
+	Pos += Fd * _offset.z;
 }
 
 // Pitch

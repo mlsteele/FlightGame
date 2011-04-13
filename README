@@ -1,0 +1,6 @@
+This is a 3d space flight sim.
+
+External dependencies are as follows:
+	- OpenGL & GLUT
+	- SFML v2 (http://sfml-dev.org/)
+	- Doxygen for documentation generation (http://www.stack.nl/~dimitri/doxygen/index.html)

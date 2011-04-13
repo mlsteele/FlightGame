@@ -2,7 +2,7 @@
 // Comprised of floats
 /// \brief 3 Dimensional Vector
 /// 
-/// Holder for floats as well as common vector operations
+/// Holder for 3 floats as well as common vector operations
 
 #ifndef _V3D_H_
 	#define _V3D_H_
@@ -13,99 +13,103 @@ class V3D {
 	
 	// Base floats
 	public:
+		/// \brief x-axis component
 		float x;
+		/// \brief y-axis component
 		float y;
+		/// \brief z-axis component
 		float z;
 	
 	
 	// Public Operations
 	public:
 	
-		// Constructor zeroes vector
+		/// \brief Constructs a default zero vector
 		inline V3D() {
 			x = 0;
 			y = 0;
 			z = 0;
 		};
 		
-		// Constructor sets vector
+		/// \brief Constructor sets vector to floats
 		inline V3D(float _x, float _y, float _z) {
 			x = _x;
 			y = _y;
 			z = _z;
 		};
 		
-		// Zeroes out floats
+		/// \brief Zeroes out components
 		inline void Zero() {
 			x = 0;
 			y = 0;
 			z = 0;
-		}
+		};
 		
-		// Set vector value
+		/// \brief Set vector value
 		inline void Set(float _x, float _y, float _z) {Set(V3D(_x, _y, _z));};
+		/// \brief Set vector value
 		inline void Set(V3D _in) {
 			x = _in.x;
 			y = _in.y;
 			z = _in.z;
-		}
+		};
 		
-		// Vector addition (set)
+		/// \brief Vector addition (set)
 		inline V3D& operator+= (const V3D& _vec) {
 			x += _vec.x;
 			y += _vec.y;
 			z += _vec.z;
 			return *this;
-		}
+		};
 		
-		// Vector subtraction (set)
+		/// \brief Vector subtraction (set)
 		inline V3D& operator-= (const V3D& _vec) {
 			x -= _vec.x;
 			y -= _vec.y;
 			z -= _vec.z;
 			return *this;
-		}
+		};
 		
-		// Scalar multiplication (set)
+		/// \brief Scalar multiplication (set)
 		inline V3D& operator*= (const float &s) {
 			x *= s;
 			y *= s;
 			z *= s;
 			return *this;
-		}
+		};
 		
-		// Scalar division (set)
+		/// \brief Scalar division (set)
 		inline V3D& operator/= (const float &s) {
 			x /= s;
 			y /= s;
 			z /= s;
 			return *this;
-		}
+		};
 		
-		// Negation
+		/// \brief Negation
 		inline const V3D operator- () const {
 			return V3D(-x, -y, -z);
-		}
+		};
 		
-		// Vector Addition (no set)
+		/// \brief Vector Addition (no set)
 		inline const V3D operator+ (const V3D& _v) const {
 			return V3D(*this) += _v;
-		}
+		};
 		
-		// Vector Subtraction (no set)
+		/// \brief Vector Subtraction (no set)
 		inline const V3D operator- (const V3D& _v) const {
 			return V3D(*this) -= _v;
-		}
+		};
 		
-		// Scalar Multiplication (no set)
+		/// \brief Scalar Multiplication (no set)
 		inline const V3D operator* (const float &s) const {
 			return V3D(x*s, y*s, z*s);
-		}
+		};
 		
-		// Scalar Divison (no set)
+		/// \brief Scalar Divison (no set)
 		inline const V3D operator/ (const float &s) const {
 			return V3D(x/s, y/s, z/s);
-		}
+		};
 		
 		/// \brief Spins around the given UNIT vector
 		inline void SpinAxis(float _theta, V3D _axis) {
@@ -119,30 +123,27 @@ class V3D {
 			float nz = w*(u*x + v*y + w*z)*(1 - cos(_theta)) + z*cos(_theta) + (- v*x + u*y)*sin(_theta);
 			
 			Set(nx, ny, nz);
-		}
+		};
 		
-		// Length
-		// Computer the length of a vector
+		/// \brief Computer the length of a vector
 		inline float Length() const {
 			return sqrt( pow(x,2) + pow(y,2) + pow(z,2) );
-		}
+		};
 		
-		// Normalize
-		// Unitize vector
+		/// \brief Normalize vector into unit (set)
 		inline void Normalize() {
 			float len = Length();
 			x /= len;
 			y /= len;
 			z /= len;
-		}
+		};
 		
-		// Normalized
-		// Unitize vector and return
+		/// \brief Return normalized vector
 		inline const V3D Normalized() const {
 			V3D result = V3D(x, y, z);
 			result.Normalize();
 			return result;
-		}
+		};
 
 };
 

@@ -16,8 +16,9 @@
 // Attached to an Orientable, attempts to emulate interface
 class Oggler {
 	public:
-		// Orientable to which the camera is attached
+		/// \brief Orientable to which the camera is attached
 		Orientable* Dolly;
+		/// \brief Whether the current dolly is one used for the sole purpose of carrying the camera
 		bool OwnDolly;
 		
 		/// \brief Field of view
@@ -33,12 +34,13 @@ class Oggler {
 		Oggler();
 		Oggler(Orientable*);
 		
-		// Attach camera to orientable
+		/// \brief Attach camera to orientable
 		void Attach(Orientable*);
 		
+		/// \brief Assign sight parameters
 		void Settings(float _fov, float _aspect, float _near, float _far);
 		
-		// OpenGL Action
+		/// \brief Applies both MODELVIEW and PERSPECTIVE matrices to OpenGL
 		void View();		
 };
 

@@ -28,7 +28,7 @@ void Strand::Update() {
 	float MiniTargL = TargL / Nodes.size();
 	
 	// Influence
-	for (int n = 1; n < Nodes.size(); ++n) {
+	for (unsigned int n = 1; n < Nodes.size(); ++n) {
 		float k;
 		V3D diffp = Nodes[n-1]->Pos - Nodes[n]->Pos;
 		V3D force;
@@ -49,7 +49,7 @@ void Strand::Update() {
 	}
 	
 	// Updates
-	for (int n = 0; n < Nodes.size(); ++n) {
+	for (unsigned int n = 0; n < Nodes.size(); ++n) {
 		Nodes[n]->Update();
 	}
 }
@@ -57,7 +57,7 @@ void Strand::Update() {
 void Strand::Render() {
 	float MiniTargL = TargL / Nodes.size();
 	
-	for (int n = 1; n < Nodes.size(); ++n) {
+	for (unsigned int n = 1; n < Nodes.size(); ++n) {
 		glPushMatrix();
 		V3D diffv = Nodes[n-1]->Pos - Nodes[n]->Pos;
 		float x = diffv.Length() - MiniTargL;

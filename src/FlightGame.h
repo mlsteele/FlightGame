@@ -6,10 +6,10 @@
 	#define _FLIGHTGAME_H_
 
 #include <iostream>
-#include <SFML/System.hpp>
-#include <SFML/Window.hpp>
 #include <OpenGL/gl.h>
 #include <GLUT/glut.h>
+#include <SFML/System.hpp>
+#include <SFML/Window.hpp>
 
 #include "Oggler.h"
 #include "Pushable.h"

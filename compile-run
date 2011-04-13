@@ -1,6 +1,8 @@
 #! /bin/bash
 
-g++ src/*.cpp \
+cd `dirname $0`
+
+g++ -Wall src/*.cpp \
 -o build/FlightGame \
 \
 -lsfml-system \

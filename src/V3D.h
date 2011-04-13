@@ -55,6 +55,7 @@ class V3D {
 			x += _vec.x;
 			y += _vec.y;
 			z += _vec.z;
+			return *this;
 		}
 		
 		// Vector subtraction (set)
@@ -62,6 +63,7 @@ class V3D {
 			x -= _vec.x;
 			y -= _vec.y;
 			z -= _vec.z;
+			return *this;
 		}
 		
 		// Scalar multiplication (set)
@@ -69,6 +71,7 @@ class V3D {
 			x *= s;
 			y *= s;
 			z *= s;
+			return *this;
 		}
 		
 		// Scalar division (set)
@@ -76,6 +79,7 @@ class V3D {
 			x /= s;
 			y /= s;
 			z /= s;
+			return *this;
 		}
 		
 		// Negation

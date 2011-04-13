@@ -1,3 +1,8 @@
+/// \brief OpenGL Camera
+/// 
+/// A camera class which can modify OpenGL stack to mimic camera movement.
+/// \n Attaches to an Orientable
+
 #ifndef _OGGLER_H_
 	#define _OGGLER_H_
 
@@ -15,9 +20,13 @@ class Oggler {
 		Orientable* Dolly;
 		bool OwnDolly;
 		
+		/// \brief Field of view
 		float Fov;
+		/// \brief Aspect ratio to display to
 		float Aspect;
+		/// \brief Near clipping plane
 		float Near;
+		/// \brief Far clipping plane
 		float Far;
 	
 	public:

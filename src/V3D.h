@@ -1,5 +1,8 @@
-// 3 Dimension Vector
+// 3 dimensional vector
 // Comprised of floats
+/// \brief 3 Dimensional Vector
+/// 
+/// Holder for floats as well as common vector operations
 
 #ifndef _V3D_H_
 	#define _V3D_H_
@@ -100,8 +103,7 @@ class V3D {
 			return V3D(x/s, y/s, z/s);
 		}
 		
-		// SpinAxis
-		// Spins around the given vector
+		/// \brief Spins around the given UNIT vector
 		inline void SpinAxis(float _theta, V3D _axis) {
 			float u = _axis.x;
 			float v = _axis.y;

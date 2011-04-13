@@ -1,3 +1,7 @@
+/// \mainpage FlightGame Docs
+/// \section FlightGame
+/// This is it, man!
+
 #ifndef _FLIGHTGAME_H_
 	#define _FLIGHTGAME_H_
 

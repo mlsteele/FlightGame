@@ -5,7 +5,7 @@ FlightGame::FlightGame() :
 	, MainShip( V3D(), 1 )
 	, BallA ( V3D(0, 0, -6), 1 )
 	, BallB ( V3D(2, 4, -7), 1 )
-	, StrandA ( BallA.Pos, BallB.Pos, 1, 20 )
+	, StrandA ( &BallA, &BallB, 10 )
 {
 	nFrame = 0;
 	Clock.Reset();
@@ -28,11 +28,6 @@ FlightGame::FlightGame() :
 	Window.ShowMouseCursor(false);
 	Window.SetCursorPosition(WIDTH/2, HEIGHT/2);
 	mX = WIDTH/2; mY = HEIGHT/2;
-	
-	
-	// Objects
-	StrandA.Splice(0, BallA, true);
-	StrandA.Splice(-1, BallB, true);
 	
 	// Camera
 	Cam.Settings(90, ASPECT, .1, 500);
@@ -133,6 +128,8 @@ void FlightGame::Logic() {
 void FlightGame::Physics() {
 	MainShip.Update();
 	StrandA.Update();
+	BallA.Update();
+	BallB.Update();
 }
 
 

@@ -15,38 +15,31 @@ using std::min;
 
 /// \brief Stretchy tension device
 ///
-/// Strand is a linear string of pushables which cohere.
+/// Strand is a linear string of pushables which cohere.\n
+/// Ends are pushables which are interacted with but updated independently
+/// \n Constants compiled in: Node Mass, Spring Constant, Viscosity Constant, Density
 
 class Strand {
 	private:
-		/// \brief Container for nodes along strand
+		/// \brief Container for nodes and ends along strand
 		vector<Pushable*> Nodes;
 		/// \brief Target length of whole strand
 		float TargL;
 	
 	public:
-		/// \brief Resolution of strand (number of nodes)
-		int Res;
-	
-	public:
-		Strand(const V3D _start, const V3D _end, float _targl, int _res);
+		/// \param _head Head end ([0]) of strand
+		/// \param _tail Tail end of strand
+		/// \param _targl Target length
+		Strand(Pushable* _head, Pushable* _tail, float _targl);
 		
-		/// \brief Place object into string
-		void Splice(int _index, Pushable&, bool _delete);
-		
-		/// \brief Update members of Nodes
+		/// \brief Update hidden members
+		///
+		/// Does not update ends, those are assumed to be handled elsewhere. 
+		/// Does, however, push ends.
 		void Update();
 		
 		/// \brief Visualize
 		void Render() const;
-		
-		// Extractor Functions
-		/// \brief Pointer to first element in string [NOT TESTED]
-		inline Pushable* GetStart() const { return Nodes[ 0 ]; };
-		/// \brief Pointer to last element in string [NOT TESTED]
-		inline Pushable* GetEnd  () const { return Nodes[Res]; };
-		/// \brief Pointer to any element in string [NOT TESTED]
-		Pushable* GetIndex (int _index) const;
 };
 
 #endif

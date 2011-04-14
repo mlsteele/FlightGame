@@ -5,7 +5,13 @@ FlightGame::FlightGame() :
 	, MainShip( V3D(), 1 )
 	, BallA ( V3D(0, 0, -6), 1 )
 	, BallB ( V3D(2, 4, -7), 1 )
+	, BallC ( V3D(6, 3, -4), 1 )
+	, BallD ( V3D(1, -4, 2), 1 )
 	, StrandA ( &BallA, &BallB, 10 )
+	, StrandB ( &BallB, &BallC, 10 )
+	, StrandC ( &BallA, &BallC, 10 )
+	, StrandD ( &BallD, &BallA, 10 )
+	, StrandE ( &BallD, &BallB, 10 )
 {
 	nFrame = 0;
 	Clock.Reset();
@@ -128,8 +134,14 @@ void FlightGame::Logic() {
 void FlightGame::Physics() {
 	MainShip.Update();
 	StrandA.Update();
+	StrandB.Update();
+	StrandC.Update();
+	StrandD.Update();
+	StrandE.Update();
 	BallA.Update();
 	BallB.Update();
+	BallC.Update();
+	BallD.Update();
 }
 
 

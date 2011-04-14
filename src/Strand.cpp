@@ -4,7 +4,7 @@ Strand::Strand(Pushable* _head, Pushable* _tail, float _targl)
 	: TargL(_targl)
 {
 	// nNodes is the number of nodes in between the two ends
-	unsigned int nNodes = ceil(TargL* 1 ); // Density of nodes (compiled in)
+	unsigned int nNodes = ceil(TargL* 2 ); // Density of nodes (compiled in)
 	V3D shift = _tail->Pos - _head->Pos;
 	shift /= nNodes+1;
 	

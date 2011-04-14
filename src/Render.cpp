@@ -49,6 +49,20 @@ void FlightGame::Render3D() {
 	glutSolidSphere(1, 32, 32);
 	glPopMatrix();
 	
+	// Draw a sphere (BallC)
+	glPushMatrix();
+	glTranslatef(BallC.Pos.x, BallC.Pos.y, BallC.Pos.z);
+	glColor3f(1, .5, .5);
+	glutSolidSphere(1, 32, 32);
+	glPopMatrix();
+	
+	// Draw a sphere (BallD)
+	glPushMatrix();
+	glTranslatef(BallD.Pos.x, BallD.Pos.y, BallD.Pos.z);
+	glColor3f(1, .5, .5);
+	glutSolidSphere(1, 32, 32);
+	glPopMatrix();
+	
 	// Draw a square with colors
 	glPushMatrix();
 	glTranslatef(5.f, 0.f, -10.f);
@@ -67,7 +81,7 @@ void FlightGame::Render3D() {
 	glDisable(GL_LIGHTING);
 	glPushMatrix();
 	glColor3f(1.0f, 0.80f, 0.90f);
-	int griddims[3] = {20, 20, 20};
+	int griddims[3] = {25, 25, 25};
 	glTranslatef(-griddims[0], -griddims[1], -griddims[2]);
 	for (int gridx = 0; gridx < griddims[0]; ++gridx) {
 		for (int gridy = 0; gridy < griddims[1]; ++gridy) {
@@ -77,18 +91,22 @@ void FlightGame::Render3D() {
 					glVertex3f(0, 0, 0);
 				glEnd();
 				
-				glTranslatef(0, 0, 2);
+				glTranslatef(0, 0, 4);
 			}
-			glTranslatef(2, 0, 0);
-			glTranslatef(0, 0, -2*griddims[2]);
+			glTranslatef(4, 0, 0);
+			glTranslatef(0, 0, -4*griddims[2]);
 		}
-		glTranslatef(-2*griddims[1], 0, 0);
-		glTranslatef(0, 2, 0);
+		glTranslatef(-4*griddims[1], 0, 0);
+		glTranslatef(0, 4, 0);
 	}
 	glPopMatrix();
 	
-	// Render Strand
+	// Render Strands
 	StrandA.Render();
+	StrandB.Render();
+	StrandC.Render();
+	StrandD.Render();
+	StrandE.Render();
 }
 
 void FlightGame::Render2D() {

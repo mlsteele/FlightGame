@@ -10,6 +10,7 @@
 #include "Oggler.h"
 #include "Pushable.h"
 #include "Strand.h"
+#include "Ship.h"
 
 /// \brief Master game class
 /// 
@@ -56,10 +57,16 @@ class FlightGame {
 		/// \brief Primary game camera
 		Oggler Cam;
 		/// \brief View player's ship
-		Pushable MainShip;
+		Ship MainShip;
 		Pushable BallA;
 		Pushable BallB;
+		Pushable BallC;
+		Pushable BallD;
 		Strand StrandA;
+		Strand StrandB;
+		Strand StrandC;
+		Strand StrandD;
+		Strand StrandE;
 	
 	public:
 		FlightGame();

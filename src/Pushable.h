@@ -26,7 +26,7 @@ class Pushable : public Orientable {
 		inline void PushLocal (float _x, float _y, float _z) {PushLocal(V3D(_x, _y, _z));};
 		
 		/// \brief Physics integration method
-		void Update ();
+		virtual void Update ();
 		
 		// Extractor functions
 		/// \brief Returns magnitude of velocity

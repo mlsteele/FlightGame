@@ -23,49 +23,51 @@ void FlightGame::InputHandler() {
 	if ( WInput.IsKeyDown(sf::Key::Escape) ) {
 		Exit();
 	}
+	
+	// Main Ship Control
+	// Translate
+	MainShip.KillThrust();
+	float thrust = 0.001;
+	if ( WInput.IsKeyDown(sf::Key::W) ) {
+		MainShip.AddThrust(0, 0, thrust);
+	}
+	if ( WInput.IsKeyDown(sf::Key::S) ) {
+		MainShip.AddThrust(0, 0, -thrust);
+	}
+	if ( WInput.IsKeyDown(sf::Key::A) ) {
+		MainShip.AddThrust(-thrust, 0, 0);
+	}
+	if ( WInput.IsKeyDown(sf::Key::D) ) {
+		MainShip.AddThrust(thrust, 0, 0);
+	}
+	if ( WInput.IsKeyDown(sf::Key::R) ) {
+		MainShip.AddThrust(0, thrust, 0);
+	}
+	if ( WInput.IsKeyDown(sf::Key::F) ) {
+		MainShip.AddThrust(0, -thrust, 0);
+	}
+	
+	MainShip.KillRot();
+	// Pitch & Yaw
+	if (sqrt(pow(mX-WIDTH/2, 2) + pow(mY-HEIGHT/2, 2)) > 20) {
+		MainShip.AddYaw( ((mX - WIDTH/2)/float(WIDTH)) * -.04 );
+		MainShip.AddPitch( ((mY - HEIGHT/2)/float(HEIGHT)) * -.04*ASPECT );
+	}
+	
+	// Roll
+	if ( WInput.IsKeyDown(sf::Key::Q) ) {
+		MainShip.AddRoll(-.01);;
+	}
+	if ( WInput.IsKeyDown(sf::Key::E) ) {
+		MainShip.AddRoll(.01);;
+	}
 }
 
 void FlightGame::PhysicalInput() {
 	const sf::Input &WInput = Window.GetInput();
 	
-	//// Main Ship Control
-	// Translate
-	float thrust = 0.001;
-	if ( WInput.IsKeyDown(sf::Key::W) ) {
-		MainShip.PushLocal(0, 0, thrust);
-	}
-	if ( WInput.IsKeyDown(sf::Key::S) ) {
-		MainShip.PushLocal(0, 0, -thrust);
-	}
-	if ( WInput.IsKeyDown(sf::Key::A) ) {
-		MainShip.PushLocal(-thrust, 0, 0);
-	}
-	if ( WInput.IsKeyDown(sf::Key::D) ) {
-		MainShip.PushLocal(thrust, 0, 0);
-	}
-	if ( WInput.IsKeyDown(sf::Key::R) ) {
-		MainShip.PushLocal(0, thrust, 0);
-	}
-	if ( WInput.IsKeyDown(sf::Key::F) ) {
-		MainShip.PushLocal(0, -thrust, 0);
-	}
-	
-	// Roll
-	if ( WInput.IsKeyDown(sf::Key::Q) ) {
-		MainShip.Roll(-.01);;
-	}
-	if ( WInput.IsKeyDown(sf::Key::E) ) {
-		MainShip.Roll(.01);;
-	}
-	
-	// Pitch & Yaw
-	if (sqrt(pow(mX-WIDTH/2, 2) + pow(mY-HEIGHT/2, 2)) > 20) {
-		MainShip.Yaw( ((mX - WIDTH/2)/float(WIDTH)) * -.04 );
-		MainShip.Pitch( ((mY - HEIGHT/2)/float(HEIGHT)) * -.04*ASPECT );
-	}
-	
 	//// BallA Control
-	thrust = 0.0002;
+	float thrust = 0.0002;
 	if ( WInput.IsKeyDown(sf::Key::I) ) {
 		BallA.PushGlobal(0, 0, -thrust);
 	}

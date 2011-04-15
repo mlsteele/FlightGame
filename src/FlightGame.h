@@ -8,6 +8,7 @@
 #include <SFML/Window.hpp>
 
 #include "Oggler.h"
+#include "Arena.h"
 #include "Pushable.h"
 #include "Strand.h"
 #include "Ship.h"
@@ -56,17 +57,12 @@ class FlightGame {
 		// Game Objects
 		/// \brief Primary game camera
 		Oggler Cam;
-		/// \brief View player's ship
-		Ship MainShip;
+		/// \brief Game arena
+		Arena FGArena;
 		Pushable BallA;
 		Pushable BallB;
 		Pushable BallC;
 		Pushable BallD;
-		Strand StrandA;
-		Strand StrandB;
-		Strand StrandC;
-		Strand StrandD;
-		Strand StrandE;
 	
 	public:
 		FlightGame();

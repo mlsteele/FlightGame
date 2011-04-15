@@ -2,6 +2,7 @@
 
 void FlightGame::InputHandler() {
 	const sf::Input &WInput = Window.GetInput();
+	Ship& MainShip = *(FGArena.Ships[0]);
 	
 	// TODO: Find more elegant solution
 	if (nFrame < 2){
@@ -65,6 +66,7 @@ void FlightGame::InputHandler() {
 
 void FlightGame::PhysicalInput() {
 	const sf::Input &WInput = Window.GetInput();
+	Ship& MainShip = *(FGArena.Ships[0]);
 	
 	//// BallA Control
 	float thrust = 0.0002;

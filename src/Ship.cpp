@@ -14,4 +14,4 @@ void Ship::Update() {
 	Yaw(Rot.y);
 	Roll(Rot.z);
 	Pushable::Update();
-};
+}

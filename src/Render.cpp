@@ -101,15 +101,12 @@ void FlightGame::Render3D() {
 	}
 	glPopMatrix();
 	
-	// Render Strands
-	StrandA.Render();
-	StrandB.Render();
-	StrandC.Render();
-	StrandD.Render();
-	StrandE.Render();
+	FGArena.Render();
 }
 
 void FlightGame::Render2D() {
+	Ship& MainShip = *(FGArena.Ships[0]);
+	
 	// Disable Depth
 	glDisable(GL_DEPTH_TEST);
 	

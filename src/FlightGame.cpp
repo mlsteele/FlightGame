@@ -2,16 +2,10 @@
 
 FlightGame::FlightGame() :
 	  Running (false)
-	, MainShip( V3D(), 1 )
 	, BallA ( V3D(0, 0, -6), 1 )
 	, BallB ( V3D(2, 4, -7), 1 )
 	, BallC ( V3D(6, 3, -4), 1 )
 	, BallD ( V3D(1, -4, 2), 1 )
-	, StrandA ( &BallA, &BallB, 10 )
-	, StrandB ( &BallB, &BallC, 10 )
-	, StrandC ( &BallA, &BallC, 10 )
-	, StrandD ( &BallD, &BallA, 10 )
-	, StrandE ( &BallD, &BallB, 10 )
 {
 	nFrame = 0;
 	Clock.Reset();
@@ -35,9 +29,18 @@ FlightGame::FlightGame() :
 	Window.SetCursorPosition(WIDTH/2, HEIGHT/2);
 	mX = WIDTH/2; mY = HEIGHT/2;
 	
+	// Setup Arena
+	FGArena.Register( new Ship( V3D(0, 0, 0), 1 ) );
+	
+	FGArena.Register( new Strand ( &BallA, &BallB, 10 ) );
+	FGArena.Register( new Strand ( &BallB, &BallC, 10 ) );
+	FGArena.Register( new Strand ( &BallA, &BallC, 10 ) );
+	FGArena.Register( new Strand ( &BallD, &BallA, 10 ) );
+	FGArena.Register( new Strand ( &BallD, &BallB, 10 ) );
+	
 	// Camera
 	Cam.Settings(90, ASPECT, .1, 500);
-	Cam.Attach(&MainShip);
+	Cam.Attach(FGArena.Ships[0]);
 	
 	
 	/////////////////////////////////
@@ -132,12 +135,8 @@ void FlightGame::Logic() {
 
 
 void FlightGame::Physics() {
-	MainShip.Update();
-	StrandA.Update();
-	StrandB.Update();
-	StrandC.Update();
-	StrandD.Update();
-	StrandE.Update();
+	FGArena.Update();
+	
 	BallA.Update();
 	BallB.Update();
 	BallC.Update();

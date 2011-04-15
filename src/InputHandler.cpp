@@ -4,7 +4,7 @@ void FlightGame::InputHandler() {
 	const sf::Input &WInput = Window.GetInput();
 	Ship& MainShip = *(FGArena.Ships[0]);
 	
-	// TODO: Find more elegant solution
+	// Initialize or stash mouse position
 	if (nFrame < 2){
 		mX = WIDTH/2;
 		mY = HEIGHT/2;
@@ -67,6 +67,7 @@ void FlightGame::InputHandler() {
 void FlightGame::PhysicalInput() {
 	const sf::Input &WInput = Window.GetInput();
 	Ship& MainShip = *(FGArena.Ships[0]);
+	Orb& BallA = *(FGArena.Orbs[0]);
 	
 	//// BallA Control
 	float thrust = 0.0002;

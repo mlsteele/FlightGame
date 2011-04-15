@@ -52,6 +52,8 @@ void Strand::Update() {
 void Strand::Render() const {
 	float MiniTargL = TargL / Nodes.size();
 	
+	glDisable(GL_LIGHTING);
+	
 	// Draw and influence pairs
 	for (unsigned int n = 1; n < Nodes.size(); ++n) {
 		glPushMatrix();
@@ -74,4 +76,6 @@ void Strand::Render() const {
 		glutSolidSphere(.05, 4, 4);
 		glPopMatrix();
 	}
+	
+	glEnable(GL_LIGHTING);
 }

@@ -6,15 +6,17 @@ void Arena::Update () {
 //	Collide spheres (claws, orbs, ships)
 	
 	
-	// Updates
-	// Strands
+	// Update Strands
 	for(std::vector<Strand*>::iterator it = Strands.begin(); it != Strands.end(); ++it) {
 		(**it).Update();
 	}
 	
-//	Update Sphericals
+	// Update Orbs
+	for(std::vector<Orb*>::iterator it = Orbs.begin(); it != Orbs.end(); ++it) {
+		(**it).Update();
+	}
 
-//	Update Ships
+	// Update Ships
 	for(std::vector<Ship*>::iterator it = Ships.begin(); it != Ships.end(); ++it) {
 		(**it).Update();
 	}
@@ -22,8 +24,14 @@ void Arena::Update () {
 
 void Arena::Render() {
 	// Strands
-	for(std::vector<Strand*>::iterator st = Strands.begin(); st != Strands.end(); ++st) {
-		(**st).Render();
+	for(std::vector<Strand*>::iterator it = Strands.begin(); it != Strands.end(); ++it) {
+		(**it).Render();
+	}
+	
+	// Orbs
+	for(std::vector<Orb*>::iterator it = Orbs.begin(); it != Orbs.end(); ++it) {
+	
+		(**it).Render();
 	}
 }
 

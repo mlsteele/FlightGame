@@ -2,10 +2,6 @@
 
 FlightGame::FlightGame() :
 	  Running (false)
-	, BallA ( V3D(0, 0, -6), 1 )
-	, BallB ( V3D(2, 4, -7), 1 )
-	, BallC ( V3D(6, 3, -4), 1 )
-	, BallD ( V3D(1, -4, 2), 1 )
 {
 	nFrame = 0;
 	Clock.Reset();
@@ -30,14 +26,20 @@ FlightGame::FlightGame() :
 	mX = WIDTH/2; mY = HEIGHT/2;
 	
 	// Setup Arena
+	// Ship
 	FGArena.Register( new Ship( V3D(0, 0, 0), 1 ) );
-	
-	FGArena.Register( new Strand ( &BallA, &BallB, 10 ) );
-	FGArena.Register( new Strand ( &BallB, &BallC, 10 ) );
-	FGArena.Register( new Strand ( &BallA, &BallC, 10 ) );
-	FGArena.Register( new Strand ( &BallD, &BallA, 10 ) );
-	FGArena.Register( new Strand ( &BallD, &BallB, 10 ) );
-	
+	// Orbs
+	Orb* BallA = FGArena.Register( new Orb ( V3D(0, 0, -6), 1 ) );
+	Orb* BallB = FGArena.Register( new Orb ( V3D(2, 4, -7), 1 ) );
+	Orb* BallC = FGArena.Register( new Orb ( V3D(6, 3, -4), 2 ) );
+	Orb* BallD = FGArena.Register( new Orb ( V3D(1, -4, 2), .5 ) );
+	// Strands
+	FGArena.Register( new Strand ( BallA, BallB, 10 ) );
+	FGArena.Register( new Strand ( BallB, BallC, 10 ) );
+	FGArena.Register( new Strand ( BallA, BallC, 2 ) );
+	FGArena.Register( new Strand ( BallD, BallA, 10 ) );
+	FGArena.Register( new Strand ( BallD, BallB, 10 ) );
+		
 	// Camera
 	Cam.Settings(90, ASPECT, .1, 500);
 	Cam.Attach(FGArena.Ships[0]);
@@ -136,13 +138,7 @@ void FlightGame::Logic() {
 
 void FlightGame::Physics() {
 	FGArena.Update();
-	
-	BallA.Update();
-	BallB.Update();
-	BallC.Update();
-	BallD.Update();
 }
-
 
 void FlightGame::Exit() {
 	Running = false;

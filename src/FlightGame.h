@@ -10,6 +10,7 @@
 #include "Oggler.h"
 #include "Arena.h"
 #include "Pushable.h"
+#include "Orb.h"
 #include "Strand.h"
 #include "Ship.h"
 
@@ -59,10 +60,6 @@ class FlightGame {
 		Oggler Cam;
 		/// \brief Game arena
 		Arena FGArena;
-		Pushable BallA;
-		Pushable BallB;
-		Pushable BallC;
-		Pushable BallD;
 	
 	public:
 		FlightGame();

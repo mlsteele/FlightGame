@@ -9,7 +9,7 @@ void FlightGame::Render3D() {
 			
 	// Camera Transformation
 	Cam.View();
-	
+		
 	// Axis visualization
 	glTranslatef(0, 0, -1);
 	glBegin(GL_LINES);
@@ -35,33 +35,8 @@ void FlightGame::Render3D() {
 	glLightfv(GL_LIGHT1, GL_POSITION, light1pos);
 	glLightfv(GL_LIGHT2, GL_POSITION, light2pos);
 	
-	// Draw a sphere (BallA)
-	glPushMatrix();
-	glTranslatef(BallA.Pos.x, BallA.Pos.y, BallA.Pos.z);
-	glColor3f(1, .5, .5);
-	glutSolidSphere(1, 32, 32);
-	glPopMatrix();
-	
-	// Draw a sphere (BallB)
-	glPushMatrix();
-	glTranslatef(BallB.Pos.x, BallB.Pos.y, BallB.Pos.z);
-	glColor3f(1, .5, .5);
-	glutSolidSphere(1, 32, 32);
-	glPopMatrix();
-	
-	// Draw a sphere (BallC)
-	glPushMatrix();
-	glTranslatef(BallC.Pos.x, BallC.Pos.y, BallC.Pos.z);
-	glColor3f(1, .5, .5);
-	glutSolidSphere(1, 32, 32);
-	glPopMatrix();
-	
-	// Draw a sphere (BallD)
-	glPushMatrix();
-	glTranslatef(BallD.Pos.x, BallD.Pos.y, BallD.Pos.z);
-	glColor3f(1, .5, .5);
-	glutSolidSphere(1, 32, 32);
-	glPopMatrix();
+	// Render Arena & Minions
+	FGArena.Render();
 	
 	// Draw a square with colors
 	glPushMatrix();
@@ -100,8 +75,6 @@ void FlightGame::Render3D() {
 		glTranslatef(0, 4, 0);
 	}
 	glPopMatrix();
-	
-	FGArena.Render();
 }
 
 void FlightGame::Render2D() {

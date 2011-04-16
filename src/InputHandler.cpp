@@ -28,24 +28,23 @@ void FlightGame::InputHandler() {
 	// Main Ship Control
 	// Translate
 	MainShip.KillThrust();
-	float thrust = 0.001;
 	if ( WInput.IsKeyDown(sf::Key::W) ) {
-		MainShip.AddThrust(0, 0, thrust);
+		MainShip.AddThrust(0, 0, 1);
 	}
 	if ( WInput.IsKeyDown(sf::Key::S) ) {
-		MainShip.AddThrust(0, 0, -thrust);
+		MainShip.AddThrust(0, 0, -1);
 	}
 	if ( WInput.IsKeyDown(sf::Key::A) ) {
-		MainShip.AddThrust(-thrust, 0, 0);
+		MainShip.AddThrust(-1, 0, 0);
 	}
 	if ( WInput.IsKeyDown(sf::Key::D) ) {
-		MainShip.AddThrust(thrust, 0, 0);
+		MainShip.AddThrust(1, 0, 0);
 	}
 	if ( WInput.IsKeyDown(sf::Key::R) ) {
-		MainShip.AddThrust(0, thrust, 0);
+		MainShip.AddThrust(0, 1, 0);
 	}
 	if ( WInput.IsKeyDown(sf::Key::F) ) {
-		MainShip.AddThrust(0, -thrust, 0);
+		MainShip.AddThrust(0, -1, 0);
 	}
 	
 	MainShip.KillRot();

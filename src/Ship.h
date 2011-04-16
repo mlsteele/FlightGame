@@ -10,6 +10,8 @@ class Ship : public Pushable {
 	public:
 		/// \brief Thrust rate represented as a local vector
 		V3D Thrust;
+		/// \brief Thrust factor of ship
+		float ThrustFactor;
 		/// \brief Rotation [Pitch, yaw, roll] vector representing rate
 		V3D Rot;
 		/// \brief [NOT READY]

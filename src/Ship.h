@@ -1,7 +1,12 @@
 #ifndef _SHIP_H_
 	#define _SHIP_H_
 
+#include <iostream>
+#include <vector>
+using std::vector;
+
 #include "Pushable.h"
+#include "Orb.h"
 
 /// \brief Player avatar
 ///
@@ -14,8 +19,10 @@ class Ship : public Pushable {
 		float ThrustFactor;
 		/// \brief Rotation [Pitch, yaw, roll] vector representing rate
 		V3D Rot;
-		/// \brief [NOT READY]
-		bool IsTractor;
+		/// \brief Direction of tractor beam (positive is forward)
+		int TractorDir;
+		/// \brief Power factor for tractor beam
+		float TractorPower;
 	
 	public:
 		Ship (V3D _pos);
@@ -41,10 +48,16 @@ class Ship : public Pushable {
 		/// \brief Use thrust and rotation and call pushable update
 		void Update();
 		
-		/// \brief [NOT READY]
-		inline void TractorOn () { IsTractor = true; };
-		/// \brief [NOT READY]
-		inline void TractorOff () { IsTractor = false; };
+		/// \brief Paint targeted orbs
+		void PaintTargets (vector<Orb*> objs);
+		/// \brief Effect objects in list with tractor beam
+		void TractorEffect (vector<Pushable*> objs);
+		/// \brief Tell tractor to pull towards ship
+		inline void TractorIn () { TractorDir = -1; };
+		/// \brief Tell tractor to push from ship
+		inline void TractorOut () { TractorDir = 1; };
+		/// \brief Turn tractor beam off
+		inline void TractorOff () { TractorDir = 0; };
 };
 
 #endif

@@ -49,10 +49,10 @@ void FlightGame::InputHandler() {
 	
 	MainShip.KillRot();
 	// Pitch & Yaw
-	if (sqrt(pow(mX-WIDTH/2, 2) + pow(mY-HEIGHT/2, 2)) > 20) {
+//	if (sqrt(pow(mX-WIDTH/2, 2) + pow(mY-HEIGHT/2, 2)) > 20) {
 		MainShip.AddYaw( ((mX - WIDTH/2)/float(WIDTH)) * -.04 );
 		MainShip.AddPitch( ((mY - HEIGHT/2)/float(HEIGHT)) * -.04*ASPECT );
-	}
+//	}
 	
 	// Roll
 	if ( WInput.IsKeyDown(sf::Key::Q) ) {
@@ -61,6 +61,15 @@ void FlightGame::InputHandler() {
 	if ( WInput.IsKeyDown(sf::Key::E) ) {
 		MainShip.AddRoll(.01);;
 	}
+	
+	// Tractor Beam
+	MainShip.TractorOff();
+	if ( WInput.IsKeyDown(sf::Key::LShift) ) {
+		MainShip.TractorIn();
+	}
+	if ( WInput.IsKeyDown(sf::Key::RShift) ) {
+		MainShip.TractorOut();
+	}
 }
 
 void FlightGame::PhysicalInput() {
@@ -68,7 +77,7 @@ void FlightGame::PhysicalInput() {
 	Ship& MainShip = *(FGArena.Ships[0]);
 	Orb& BallA = *(FGArena.Orbs[0]);
 	
-	//// BallA Control
+	// BallA Control
 	float thrust = 0.0002;
 	if ( WInput.IsKeyDown(sf::Key::I) ) {
 		BallA.PushGlobal(0, 0, -thrust);
@@ -89,14 +98,6 @@ void FlightGame::PhysicalInput() {
 		BallA.PushGlobal(0, -thrust, 0);
 	}
 	
-	// Tractor Beam!
-	if ( WInput.IsKeyDown(sf::Key::LShift) ) {
-		if ( ((MainShip.Pos + MainShip.Fd*5) - BallA.Pos).Length() > 2 ) {
-			BallA.PushGlobal( ((MainShip.Pos + MainShip.Fd* 5) - BallA.Pos).Normalized()*.1 );
-		} else {
-			BallA.Vel *= .7;
-		}
-	}
 	if ( WInput.IsKeyDown(sf::Key::RShift) ) {
 		if ( ((MainShip.Pos + MainShip.Fd*5) - BallA.Pos).Length() < 5 ) {
 			BallA.PushGlobal( MainShip.Fd.Normalized()/100 );

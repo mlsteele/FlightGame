@@ -1,17 +1,20 @@
 #include "Arena.h"
 
 void Arena::Update () {	
+	vector<Pushable*> sphericals;
+	sphericals.insert( sphericals.end(), Orbs.begin(), Orbs.end() );
+	sphericals.insert( sphericals.end(), Ships.begin(), Ships.end() );
 	
+	vector<Pushable*> tractorables;
+	tractorables.insert( tractorables.end(), Orbs.begin(), Orbs.end() );
 	
 	// Collision section
-	// Collide orbs with orbs
-	for(std::vector<Orb*>::iterator itA = Orbs.begin(); itA != Orbs.end(); ++itA) {
-		for(std::vector<Orb*>::iterator itB = itA; ++itB != Orbs.end();) {
+	// Collide sphericals
+	for (vector<Pushable*>::iterator itA = sphericals.begin(); itA != sphericals.end(); ++itA) {
+		for(vector<Pushable*>::iterator itB = itA; ++itB != sphericals.end();) {
 			FluffyCollideSpheres( *itA, *itB );
 		}
 	}
-	
-	// TODO: Collide spheres (claws, orbs, ships)
 	
 	// Update Strands
 	for(std::vector<Strand*>::iterator it = Strands.begin(); it != Strands.end(); ++it) {
@@ -26,6 +29,8 @@ void Arena::Update () {
 	// Update Ships
 	for(std::vector<Ship*>::iterator it = Ships.begin(); it != Ships.end(); ++it) {
 		(**it).Update();
+		(**it).PaintTargets(Orbs);
+		(**it).TractorEffect(tractorables);
 	}
 }
 

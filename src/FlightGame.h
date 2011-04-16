@@ -2,6 +2,8 @@
 	#define _FLIGHTGAME_H_
 
 #include <iostream>
+#include <algorithm>
+using std::max;
 #include <OpenGL/gl.h>
 #include <GLUT/glut.h>
 #include <SFML/System.hpp>

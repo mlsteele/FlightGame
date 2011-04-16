@@ -27,18 +27,29 @@ FlightGame::FlightGame() :
 	
 	// Setup Arena
 	// Ship
-	FGArena.Register( new Ship( V3D(0, 0, 0)) );
+	/*Ship* MS = */ FGArena.Register( new Ship( V3D(0, 0, 0)) );
 	// Orbs
 	Orb* BallA = FGArena.Register( new Orb ( V3D(0, 0, -6), 1 ) );
 	Orb* BallB = FGArena.Register( new Orb ( V3D(2, 4, -7), 1 ) );
 	Orb* BallC = FGArena.Register( new Orb ( V3D(6, 3, -4), 2 ) );
 	Orb* BallD = FGArena.Register( new Orb ( V3D(1, -4, 2), .5 ) );
 	// Strands
+//	FGArena.Register( new Strand ( BallA, MS, 3 ) );
 	FGArena.Register( new Strand ( BallA, BallB, 10 ) );
 	FGArena.Register( new Strand ( BallB, BallC, 10 ) );
 	FGArena.Register( new Strand ( BallA, BallC, 5  ) );
 	FGArena.Register( new Strand ( BallD, BallA, 10 ) );
 	FGArena.Register( new Strand ( BallD, BallB, 10 ) );
+	// Random Orbs
+	for (int i = 0; i < 100; ++i) {
+		V3D randpos(
+			  (rand() / static_cast<float>(RAND_MAX) * 200) - 100
+			, (rand() / static_cast<float>(RAND_MAX) * 200) - 100
+			, (rand() / static_cast<float>(RAND_MAX) * 200) - 100
+		);
+		float randsize = max(1.f, float(rand() / static_cast<float>(RAND_MAX) * 4.5));
+		FGArena.Register( new Orb ( randpos, randsize ) );
+	}
 		
 	// Camera
 	Cam.Settings(90, ASPECT, .1, 500);

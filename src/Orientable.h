@@ -47,6 +47,27 @@ class Orientable {
 		
 		/// \brief Unitize directions if they have decayed
 		void Calibrate();
+		
+		/// \brief Convert from local to global space
+		inline V3D LTG(V3D L) const {
+			V3D G = (Rt * L.x) + (Up * L.y) + (Fd * L.z);
+			G += Pos;
+			return G;
+		}
+		/// \brief Convert from global to local space
+		inline V3D GTL(V3D G) const {
+			V3D L(G);
+			L -= Pos;
+			L = V3D(Rt.Dot(L), Up.Dot(L), Fd.Dot(L));
+			return L;
+		}
+		
+		/// \brief Convert from local orientation to global orientation
+		inline V3D OLTG(V3D L) const {
+			V3D G = (Rt * L.x) + (Up * L.y) + (Fd * L.z);
+			return G;
+		}
+
 };
 
 #endif

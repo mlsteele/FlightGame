@@ -9,7 +9,7 @@ void FlightGame::Render3D() {
 			
 	// Camera Transformation
 	Cam.View();
-		
+	
 	// Axis visualization
 	glTranslatef(0, 0, -1);
 	glBegin(GL_LINES);

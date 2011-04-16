@@ -3,10 +3,10 @@
 Ship::Ship (V3D _pos)
 	: Pushable(_pos, 5, 2) // Ship mass and radius compiled in
 	, Thrust(V3D(0, 0, 0))
-	, ThrustFactor(.002)
+	, ThrustFactor(.006)
 	, Rot(V3D(0, 0, 0))
 	, TractorDir(0)
-	, TractorPower(.04) // Tractor beam power compiled in
+	, TractorPower(.004) // Tractor beam power compiled in
 {
 	
 }

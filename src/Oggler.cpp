@@ -39,14 +39,8 @@ void Oggler::Attach(Orientable* _dolly) {
 }
 
 // View
-// Applies openGL transformations to MODLELVIEW
-void Oggler::View() {
-	// Perspective Projection
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	gluPerspective(Fov, Aspect, Near, Far);
-	glMatrixMode(GL_MODELVIEW);
-	
+// Applies openGL transformations to MODLELVIEW and PERSPECTIVE
+void Oggler::ViewModel() {
 	// Modelview Setup
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
@@ -55,4 +49,12 @@ void Oggler::View() {
 		Dolly->Pos.x + Dolly->Fd.x, Dolly->Pos.y + Dolly->Fd.y, Dolly->Pos.z + Dolly->Fd.z,
 		Dolly->Up.x, Dolly->Up.y, Dolly->Up.z
 	);
+}
+
+void Oggler::ViewPerspective() {
+	// Perspective Projection
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	gluPerspective(Fov, Aspect, Near, Far);
+	glMatrixMode(GL_MODELVIEW);
 }

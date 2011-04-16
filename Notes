@@ -1,15 +1,7 @@
 TODO:
 Rear View Mirror
-radar
-asteroids
+
 bullet deletion
-give ship thrusters
-
-Potential source of problems:
-default orientation is 'backwards', handedness is yuck
-
-harpoon
-webbing
 
 networking
 
@@ -20,21 +12,13 @@ tractor beam soccer
 
 fonts:
 http://oglft.sourceforge.net/
+self-made texture map
 
 profile
 
 fuzzbunny
 
 electron level
-
-line to ship position
-
-add mass
-add loc/glob converters
-
-Physics units
-A 1 radius sphere masses 
-The unit of time is 1/100 second
 
 sfml networking
 
@@ -47,3 +31,13 @@ research graphics
 
 Menu GUI Stuff
 Bouncy, wiggly, jiggly UI!
+
+harpoon
+Strand-Ship attach
+Dynamic attach strands
+mid-strand stick and splicing
+
+Tractor occlusion
+Tractor cone
+
+radar

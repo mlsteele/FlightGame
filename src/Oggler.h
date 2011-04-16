@@ -40,8 +40,10 @@ class Oggler {
 		/// \brief Assign sight parameters
 		void Settings(float _fov, float _aspect, float _near, float _far);
 		
-		/// \brief Applies both MODELVIEW and PERSPECTIVE matrices to OpenGL
-		void View();		
+		/// \brief Applies MODELVIEW transformation
+		void ViewModel();
+		/// \brief Applies PERSPECTIVE transformation
+		void ViewPerspective();
 };
 
 #endif

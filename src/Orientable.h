@@ -67,7 +67,12 @@ class Orientable {
 			V3D G = (Rt * L.x) + (Up * L.y) + (Fd * L.z);
 			return G;
 		}
-
+		/// \brief Convert from global orientation to local orientation
+		inline V3D OGTL(V3D G) const {
+			V3D L(G);
+			L = V3D(Rt.Dot(L), Up.Dot(L), Fd.Dot(L));
+			return L;
+		}
 };
 
 #endif

@@ -33,6 +33,7 @@ FlightGame::FlightGame() :
 	Orb* BallB = FGArena.Register( new Orb ( V3D(2, 4, -7), 1 ) );
 	Orb* BallC = FGArena.Register( new Orb ( V3D(6, 3, -4), 2 ) );
 	Orb* BallD = FGArena.Register( new Orb ( V3D(1, -4, 2), .5 ) );
+	Orb* BallE = FGArena.Register( new Orb ( V3D(1, -40, 2), 6 ) );
 	// Strands
 //	FGArena.Register( new Strand ( BallA, MS, 3 ) );
 	FGArena.Register( new Strand ( BallA, BallB, 10 ) );
@@ -48,7 +49,10 @@ FlightGame::FlightGame() :
 			, (rand() / static_cast<float>(RAND_MAX) * 200) - 100
 		);
 		float randsize = max(1.f, float(rand() / static_cast<float>(RAND_MAX) * 4.5));
-		FGArena.Register( new Orb ( randpos, randsize ) );
+		Orb* RB = FGArena.Register( new Orb ( randpos, randsize ) );
+		if (randsize > 4.3) {
+			FGArena.Register( new Strand ( BallE, RB, 15 ) );
+		}
 	}
 		
 	// Camera

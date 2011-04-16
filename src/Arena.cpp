@@ -1,10 +1,17 @@
 #include "Arena.h"
 
-void Arena::Update () {
+void Arena::Update () {	
+	
 	
 	// Collision section
-//	Collide spheres (claws, orbs, ships)
+	// Collide orbs with orbs
+	for(std::vector<Orb*>::iterator itA = Orbs.begin(); itA != Orbs.end(); ++itA) {
+		for(std::vector<Orb*>::iterator itB = itA; ++itB != Orbs.end();) {
+			FluffyCollideSpheres( *itA, *itB );
+		}
+	}
 	
+	// TODO: Collide spheres (claws, orbs, ships)
 	
 	// Update Strands
 	for(std::vector<Strand*>::iterator it = Strands.begin(); it != Strands.end(); ++it) {
@@ -35,36 +42,45 @@ void Arena::Render() {
 	}
 }
 
-/*
-void Arena::CollideSpheres (Pushable* A, Pushable* B) {
-	if ( (A.Pos - B.Pos).Length() > (A.Rad + B.Rad) ) {
+
+/// Uses fluffy collision.\n
+/// If objects are intersecting, use a spring from the farthest intersecting surface.
+void Arena::FluffyCollideSpheres (Pushable* A, Pushable* B) {
+	// Information
+	float distance = (A->Pos - B->Pos).Length();
+	float mindist = (A->Rad + B->Rad);
+	
+	// Do nothing if there is no collision
+	if ( distance > mindist ) {
 		return;
 	}
 	
+	V3D ColAxis = (A->Pos - B->Pos).Normalized();
+	
+	// Fluffy collision
+	float k = 6.1; // Fluffiness constant
+	A->PushGlobal( ColAxis * (distance-mindist) * -k );
+	B->PushGlobal( ColAxis * (distance-mindist) * k );
+}
+
+/* DEPRECATED physically accurate collision
+	
 	// One Dimensional Collision
 	// http://en.wikipedia.org/wiki/Elastic_collision#One-dimensional_Newtonian
-	float mA = A.Mass;
-	float mB = B.Mass;
-	float uA = A.Vel.Dot(ColAxis); // Starting velocity of A
-	float uB = B.Vel.Dot(ColAxis); // Starting velocity of B
-	float vB = ( (uA(mA-mB)) + (2*mB*uB) ) / (mA + mB); // Final 1d velocity of A
-	float vB = ( (uB(mB-mA)) + (2*mB*uB) ) / (mA + mB); // Final 1d velocity of B
-}
-*/
-
-
-/*
-BLOCKING: One Dimensional Collision
-pA = PushableA
-pB = PushableB
-mA = Mass A
-mB = Mass B
-uA = Starting velocity of A
-uB = Starting velocity of B
-vA = Result velocity of A
-vB = Result velocity of B
-
-
-vA = ( (uA(mA-mB)) + (2*mB*uB) ) / (mA + mB)
-vB = ( (uB(mB-mA)) + (2*mB*uB) ) / (mA + mB)
+	float mA = A->Mass;
+	float mB = B->Mass;
+	float uA = A->Vel.Dot(ColAxis); // Starting velocity of A
+	float uB = B->Vel.Dot(ColAxis); // Starting velocity of B
+	
+	// Calculate new velocities
+	float vA = ( (uA*(mA-mB)) + (2*mB*uB) ) / (mA + mB); // Final 1d velocity of A
+	float vB = ( (uB*(mB-mA)) + (2*mA*uA) ) / (mA + mB); // Final 1d velocity of B
+	
+	// Zero velocity in collision axis
+	A->Vel -= ColAxis * uA;
+	B->Vel -= ColAxis * uB;
+	
+	// Apply calculated velocities
+	A->Vel += ColAxis * vA;
+	B->Vel += ColAxis * vB;
 */

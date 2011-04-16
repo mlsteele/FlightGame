@@ -11,11 +11,13 @@
 class Pushable : public Orientable {
 	public:
 		float Mass;
+		/// \brief Radius
+		float Rad;
 		V3D Vel;
 		V3D Accel;
 		
 	public:
-		Pushable (V3D _pos, float _mass);
+		Pushable (V3D _pos, float _mass, float _rad);
 		
 		/// \brief Push along global space
 		void PushGlobal(V3D _force);

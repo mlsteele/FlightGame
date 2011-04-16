@@ -16,7 +16,7 @@ class Ship : public Pushable {
 		bool IsTractor;
 	
 	public:
-		Ship (V3D _pos, float _mass);
+		Ship (V3D _pos);
 		
 		/// \brief Add to thrust
 		inline void AddThrust(V3D _jerk) { Thrust += _jerk; }

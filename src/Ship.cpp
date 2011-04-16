@@ -1,7 +1,7 @@
 #include "Ship.h"
 
-Ship::Ship (V3D _pos, float _mass)
-	: Pushable(_pos, _mass)
+Ship::Ship (V3D _pos)
+	: Pushable(_pos, 5, 2) // Ship mass and radius compiled in
 	, Thrust(V3D(0, 0, 0))
 	, Rot(V3D(0, 0, 0))
 {

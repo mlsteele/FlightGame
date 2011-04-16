@@ -31,7 +31,8 @@ class Arena {
 		/// \brief Render autonomous physical objects
 		void Render();
 		
-//		void CollideSpheres (Pushable* sphereA, Pushable* sphereB);
+		/// \brief Enact a soft elastic collision on two pushables
+		void FluffyCollideSpheres (Pushable* sphereA, Pushable* sphereB);
 };
 
 #endif

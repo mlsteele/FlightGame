@@ -145,10 +145,10 @@ class V3D {
 			return result;
 		};
 		
-		/// \brief Calculate the dot product of two vectors
-//		inline float Dot(const V3D& _v) const {
-//			return (x*_v.x + y*_v.y + z*_v.z)
-//		};
+		/// \brief Dot product of two vectors
+		inline float Dot(const V3D& _v) const {
+			return (x*_v.x + y*_v.y + z*_v.z);
+		};
 };
 
 #endif

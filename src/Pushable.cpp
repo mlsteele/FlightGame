@@ -1,8 +1,9 @@
 #include "Pushable.h"
 #include "iostream"
 
-Pushable::Pushable (V3D _pos, float _mass) {
+Pushable::Pushable (V3D _pos, float _mass, float _rad) {
 	Mass = _mass;
+	Rad = _rad;
 	Pos.Set(_pos);
 	Vel.Zero();
 	Accel.Zero();

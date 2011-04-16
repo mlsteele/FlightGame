@@ -9,10 +9,6 @@
 /// \brief Basic game sphere
 class Orb : public Pushable {
 	public:
-		/// \brief Radius
-		float Rad;
-	
-	public:
 		/// \brief Create with appropriate mass by radius
 		Orb (V3D _pos, float _rad);
 		

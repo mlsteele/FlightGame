@@ -11,8 +11,9 @@ Strand::Strand(Pushable* _head, Pushable* _tail, float _targl)
 	// Create nodes along string
 	Nodes.push_back(_head);
 	for (unsigned int n = 1; n < nNodes+1; ++n) {
-		Nodes.push_back( new Pushable( _head->Pos + shift*n,
-			.05 // Mass of string nodes (compiled in)
+		Nodes.push_back( new Pushable( _head->Pos + shift*n
+			, .05 // Mass of string nodes (compiled in)
+			, .05
 		) );
 	}
 	Nodes.push_back(_tail);

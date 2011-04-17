@@ -3,10 +3,10 @@
 Ship::Ship (V3D _pos)
 	: Pushable(_pos, 5, 2) // Ship mass and radius compiled in
 	, Thrust(V3D(0, 0, 0))
-	, ThrustFactor(.006)
+	, ThrustFactor(.009)
 	, Rot(V3D(0, 0, 0))
 	, TractorDir(0)
-	, TractorPower(.004) // Tractor beam power compiled in
+	, TractorPower(.04) // Tractor beam power compiled in
 {
 	
 }
@@ -25,6 +25,11 @@ void Ship::TractorEffect (vector<Pushable*> objs) {
 	
 	// Effect
 	for (vector<Pushable*>::iterator itA = objs.begin(); itA != objs.end(); ++itA) {
+		// Abort if self
+		if (*itA == this) {
+			continue;
+		}
+		
 		// Local position of target object
 		V3D LP = GTL((**itA).Pos);
 		
@@ -41,9 +46,10 @@ void Ship::TractorEffect (vector<Pushable*> objs) {
 		
 		// Local Force
 		V3D LF(0, 0, TractorDir * TractorPower);
+		V3D GF(OLTG(LF));
 		
 		// Apply
-		(**itA).Vel += (OLTG(LF));
+		(**itA).PushGlobal(GF);
 	}
 }
 

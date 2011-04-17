@@ -39,6 +39,7 @@ void FlightGame::Render3D() {
 	// Camera MODELVIEW Transformation
 	Cam.ViewModel();
 	
+/*
 	// Axis visualization
 	glTranslatef(0, 0, -1);
 	glBegin(GL_LINES);
@@ -57,6 +58,7 @@ void FlightGame::Render3D() {
 		glVertex3f(0, 0, 0);
 		glVertex3f(0, 0, 1);
 	glEnd();
+*/
 	
 	// Enable lighting & update light positions
 	glEnable(GL_LIGHTING);
@@ -67,6 +69,7 @@ void FlightGame::Render3D() {
 	// Render Arena & Minions
 	FGArena.Render();
 	
+/*
 	// Draw a square with colors
 	glPushMatrix();
 	glTranslatef(5.f, 0.f, -10.f);
@@ -80,7 +83,9 @@ void FlightGame::Render3D() {
 		glVertex3f(-1.0f,-1.0f, 0.0f);
 	glEnd();
 	glPopMatrix();
+*/
 	
+/*
 	// Draw a grid
 	glDisable(GL_LIGHTING);
 	glPushMatrix();
@@ -104,6 +109,7 @@ void FlightGame::Render3D() {
 		glTranslatef(0, 4, 0);
 	}
 	glPopMatrix();
+*/
 }
 
 void FlightGame::Render2D() {

@@ -30,14 +30,14 @@ void Strand::Update() {
 		V3D force;
 		
 		// F [varies with] k*x
-		k = .005; // Spring Constant (compiled in)
+		k = .007; // Spring Constant (compiled in)
 		float x = diffp.Length() - MiniTargL;
 		force = diffp.Normalized()*x*k;
 		Nodes[n]->PushGlobal(force);
 		Nodes[n-1]->PushGlobal(-force);
 		
 		// Viscosity
-		k = .01; // Viscosity Constant (compiled in)
+		k = .02; // Viscosity Constant (compiled in)
 		V3D diffvel = Nodes[n-1]->Vel - Nodes[n]->Vel;
 		force = diffvel*k;
 		Nodes[n]->PushGlobal(force);
@@ -69,6 +69,7 @@ void Strand::Render() const {
 		glPopMatrix();
 	}
 	
+/*
 	// Draw all nodes (including ends)
 	for (unsigned int n = 0; n < Nodes.size(); ++n) {
 		glColor3f(.5, .5, .9);
@@ -77,6 +78,7 @@ void Strand::Render() const {
 		glutSolidSphere(.05, 4, 4);
 		glPopMatrix();
 	}
+*/
 	
 	glEnable(GL_LIGHTING);
 }

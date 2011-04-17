@@ -7,6 +7,11 @@ void Arena::Update () {
 	
 	vector<Pushable*> tractorables;
 	tractorables.insert( tractorables.end(), Orbs.begin(), Orbs.end() );
+	tractorables.insert( tractorables.end(), Ships.begin(), Ships.end() );
+	
+	vector<Pushable*> boundables;
+	boundables.insert( boundables.end(), Orbs.begin(), Orbs.end() );
+	boundables.insert( boundables.end(), Ships.begin(), Ships.end() );
 	
 	// Collision section
 	// Collide sphericals
@@ -14,6 +19,11 @@ void Arena::Update () {
 		for(vector<Pushable*>::iterator itB = itA; ++itB != sphericals.end();) {
 			FluffyCollideSpheres( *itA, *itB );
 		}
+	}
+	
+	// Bounding Box
+	for(std::vector<Pushable*>::iterator it = boundables.begin(); it != boundables.end(); ++it) {
+		CollideBounds(*it);
 	}
 	
 	// Update Strands
@@ -31,7 +41,7 @@ void Arena::Update () {
 		(**it).Update();
 		(**it).PaintTargets(Orbs);
 		(**it).TractorEffect(tractorables);
-	}
+	}	
 }
 
 void Arena::Render() {
@@ -45,19 +55,23 @@ void Arena::Render() {
 	
 		(**it).Render();
 	}
+	
+	// Render Bounds
+	glColor3f(.6, .6, .6);
+	glutSolidCube(200);
 }
 
 
 /// Uses fluffy collision.\n
 /// If objects are intersecting, use a spring from the farthest intersecting surface.
-void Arena::FluffyCollideSpheres (Pushable* A, Pushable* B) {
+bool Arena::FluffyCollideSpheres (Pushable* A, Pushable* B) {
 	// Information
 	float distance = (A->Pos - B->Pos).Length();
 	float mindist = (A->Rad + B->Rad);
 	
 	// Do nothing if there is no collision
 	if ( distance > mindist ) {
-		return;
+		return false;
 	}
 	
 	V3D ColAxis = (A->Pos - B->Pos).Normalized();
@@ -66,6 +80,7 @@ void Arena::FluffyCollideSpheres (Pushable* A, Pushable* B) {
 	float k = 6.1; // Fluffiness constant
 	A->PushGlobal( ColAxis * (distance-mindist) * -k );
 	B->PushGlobal( ColAxis * (distance-mindist) * k );
+	return true;
 }
 
 /* DEPRECATED physically accurate collision
@@ -89,3 +104,51 @@ void Arena::FluffyCollideSpheres (Pushable* A, Pushable* B) {
 	A->Vel += ColAxis * vA;
 	B->Vel += ColAxis * vB;
 */
+
+bool Arena::CollideBounds (Pushable* obj) {
+	bool hit = false;
+	float rad = (*obj).Rad;
+	
+	// X
+	if ( (*obj).Pos.x - rad < -100 ) {
+		(*obj).Vel.x = fabs((*obj).Vel.x);
+		(*obj).Pos.x = -100 + rad;
+		hit = true;
+	} else
+	if ( (*obj).Pos.x + rad > 100 ) {
+		(*obj).Vel.x = -fabs((*obj).Vel.x);
+		(*obj).Pos.x = 100 - rad;
+		hit = true;
+	}
+	
+	// Y
+	if ( (*obj).Pos.y - rad < -100 ) {
+		(*obj).Vel.y = fabs((*obj).Vel.y);
+		(*obj).Pos.y = -100 + rad;
+		hit = true;
+	} else
+	if ( (*obj).Pos.y + rad > 100 ) {
+		(*obj).Vel.y = -fabs((*obj).Vel.y);
+		(*obj).Pos.y = 100 - rad;
+		hit = true;
+	}
+	
+	// Z
+	if ( (*obj).Pos.z - rad < -100 ) {
+		(*obj).Vel.z = fabs((*obj).Vel.z);
+		(*obj).Pos.z = -100 + rad;
+		hit = true;
+	} else
+	if ( (*obj).Pos.z + rad > 100 ) {
+		(*obj).Vel.z = -fabs((*obj).Vel.z);
+		(*obj).Pos.z = 100 - rad;
+		hit = true;
+	}
+	
+	// Wall Friction (..., yeah, that)
+	if (hit) {
+		(*obj).Vel *= .9;
+	}
+	
+	return hit;
+}

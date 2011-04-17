@@ -42,17 +42,26 @@ FlightGame::FlightGame() :
 	FGArena.Register( new Strand ( BallD, BallA, 10 ) );
 	FGArena.Register( new Strand ( BallD, BallB, 10 ) );
 	// Random Orbs
-	for (int i = 0; i < 100; ++i) {
+	for (int i = 0; i < 20; ++i) {
 		V3D randpos(
-			  (rand() / static_cast<float>(RAND_MAX) * 200) - 100
-			, (rand() / static_cast<float>(RAND_MAX) * 200) - 100
-			, (rand() / static_cast<float>(RAND_MAX) * 200) - 100
+			  (rand() / static_cast<float>(RAND_MAX) * 100) - 50
+			, (rand() / static_cast<float>(RAND_MAX) * 100) - 50
+			, (rand() / static_cast<float>(RAND_MAX) * 100) - 50
 		);
 		float randsize = max(1.f, float(rand() / static_cast<float>(RAND_MAX) * 4.5));
 		Orb* RB = FGArena.Register( new Orb ( randpos, randsize ) );
 		if (randsize > 4.3) {
 			FGArena.Register( new Strand ( BallE, RB, 15 ) );
 		}
+	}
+	for (int i = 0; i < 4; ++i) {
+		V3D randpos(
+			  (rand() / static_cast<float>(RAND_MAX) * 100) - 50
+			, (rand() / static_cast<float>(RAND_MAX) * 100) - 50
+			, (rand() / static_cast<float>(RAND_MAX) * 100) - 50
+		);
+		float randsize = max(10.f, float(rand() / static_cast<float>(RAND_MAX) * 30));
+		FGArena.Register( new Orb ( randpos, randsize ) );
 	}
 		
 	// Camera
@@ -78,12 +87,12 @@ FlightGame::FlightGame() :
 //	glFogf(GL_FOG_DENSITY, .05);
 	glFogi(GL_FOG_MODE, GL_LINEAR);
 	glFogf(GL_FOG_START, 40.f);
-	glFogf(GL_FOG_END, 500.f);
+	glFogf(GL_FOG_END, 400.f);
 	float FogCol[3]={0, 0, 0};
 	glFogfv(GL_FOG_COLOR, FogCol);
 	
 	// Lighting
-	GLfloat ambientcolor[] = {.15, .15, .15, 1};
+	GLfloat ambientcolor[] = {.6, .6, .6, 1};
 	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambientcolor);
 	glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);
 	glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_FALSE);
@@ -93,16 +102,20 @@ FlightGame::FlightGame() :
 	// Lights
 	glEnable(GL_LIGHT0);
 		light0pos[0] = 0; light0pos[1] = 0; light0pos[2] = 1; light0pos[3] = 1;
-		light0dif[0] = 1; light0dif[1] = .8; light0dif[2] = .8; light0dif[3] = 1;
+		light0dif[0] = .3; light0dif[1] = .15; light0dif[2] = .15; light0dif[3] = 1;
 		glLightfv(GL_LIGHT0, GL_DIFFUSE, light0dif);
 	glEnable(GL_LIGHT1);
 		light1pos[0] = 5; light1pos[1] = -2; light1pos[2] = 8; light1pos[3] = 1;
-		light1dif[0] = .4; light1dif[1] = 1; light1dif[2] = .2; light1dif[3] = 1;
+		light1dif[0] = .3; light1dif[1] = .8; light1dif[2] = .1; light1dif[3] = 1;
 		glLightfv(GL_LIGHT1, GL_DIFFUSE, light1dif);
 	glEnable(GL_LIGHT2);
 		light2pos[0] = -2; light2pos[1] = 10; light2pos[2] = -1; light2pos[3] = 1;
 		light2dif[0] = .3; light2dif[1] = .2; light2dif[2] = 1;  light2dif[3] = 1;
 		glLightfv(GL_LIGHT2, GL_DIFFUSE, light2dif);
+	glEnable(GL_LIGHT3);
+		light3pos[0] = -140; light3pos[1] = -110; light3pos[2] = 70; light3pos[3] = 1;
+		light3dif[0] = .3; light3dif[1] = 0; light3dif[2] = 0;  light3dif[3] = 1;
+		glLightfv(GL_LIGHT3, GL_DIFFUSE, light3dif);
 	
 	// Quadric (Misc)
 	GLUQ = gluNewQuadric();

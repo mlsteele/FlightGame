@@ -28,11 +28,15 @@ class Arena {
 		
 		/// \brief Run physics updates on all objects in arena
 		void Update();
-		/// \brief Render autonomous physical objects
+		/// \brief Render physical objects
 		void Render();
 		
 		/// \brief Enact a soft elastic collision on two pushables
-		void FluffyCollideSpheres (Pushable* sphereA, Pushable* sphereB);
+		/// \return Whether collision occured
+		bool FluffyCollideSpheres (Pushable* sphereA, Pushable* sphereB);
+		/// \brief Collide with arena walls
+		/// \return Whether collision occured
+		bool CollideBounds (Pushable* obj);
 };
 
 #endif

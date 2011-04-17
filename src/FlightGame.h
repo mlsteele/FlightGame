@@ -55,6 +55,8 @@ class FlightGame {
 		GLfloat light1dif[4];
 		GLfloat light2pos[4];
 		GLfloat light2dif[4];
+		GLfloat light3pos[4];
+		GLfloat light3dif[4];
 		GLUquadric* GLUQ;
 		
 		// Game Objects

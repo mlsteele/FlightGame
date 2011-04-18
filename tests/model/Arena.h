@@ -3,6 +3,7 @@
 
 #include <vector>
 using std::vector;
+#include <fstream>
 #include <OpenGL/gl.h>
 #include <GLUT/glut.h>
 
@@ -18,10 +19,17 @@ class Arena {
 		vector<Ship*>		Ships;
 //		vector<Claw*>		Claws;
 		vector<Strand*> 	Strands;
+		
+		/// \brief Graphis have been setup
+		bool BB_COMPILED;
+		/// \brief Bounding Box List ID
+		GLuint BB_DL;
 	
 	public:
 		/// \brief Constructor loads bounding model
 		Arena();
+		/// \brief Compile display list (call after lighting!)
+		void GraphicsSetup();
 		
 		/// \brief Run physics updates on all objects in arena
 		void Update();

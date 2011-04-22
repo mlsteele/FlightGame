@@ -20,9 +20,13 @@ using std::min;
 /// \n Constants compiled in: Node Mass, Spring Constant, Viscosity Constant, Density
 
 class Strand {
-	private:
-		/// \brief Container for nodes and ends along strand
+	public:
+		/// \brief Container for in-between nodes
 		vector<Pushable*> Nodes;
+		/// \brief Pointer to head end
+		Pushable* Head;
+		/// \brief Pointer to tail end
+		Pushable* Tail;
 		/// \brief Target length of whole strand
 		float TargL;
 	
@@ -40,6 +44,12 @@ class Strand {
 		
 		/// \brief Visualize
 		void Render() const;
+		
+		// \brief Calculate target length of each partition
+		inline float MiniTargL() const {return TargL / Nodes.size();};
+	
+	private:
+		void InfluencePair(Pushable* A, Pushable* B);
 };
 
 #endif

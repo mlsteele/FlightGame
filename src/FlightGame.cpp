@@ -63,6 +63,22 @@ FlightGame::FlightGame() :
 		float randsize = max(10.f, float(rand() / static_cast<float>(RAND_MAX) * 30));
 		FGArena.Register( new Orb ( randpos, randsize ) );
 	}
+	// Floating strand
+	Orb* FloatingBA = FGArena.Register (
+		new Orb( V3D(40, 40, 40)
+			, .22853907486704164 // Radius of string nodes (compiled in)
+		)
+	);
+	Orb* FloatingBB = FGArena.Register (
+		new Orb( V3D(50, 40, 40)
+			, .22853907486704164 // Radius of string nodes (compiled in)
+		)
+	);
+	FGArena.Register(
+		new Strand(
+			FloatingBA, FloatingBB, 10
+		)
+	);
 		
 	// Camera
 	Cam.Settings(90, ASPECT, .1, 500);

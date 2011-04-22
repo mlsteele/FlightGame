@@ -23,6 +23,8 @@ class Ship : public Pushable {
 		int TractorDir;
 		/// \brief Power factor for tractor beam
 		float TractorPower;
+		// Brake value
+		bool BrakeVal;
 	
 	public:
 		Ship (V3D _pos);
@@ -45,7 +47,13 @@ class Ship : public Pushable {
 		/// \brief Zero out rotation
 		inline void KillRot() { Rot.Zero(); };
 		
-		/// \brief Use thrust and rotation and call pushable update
+		// AirBrake
+		/// \brief Turn on the air brake
+		inline void BrakeOn()  {BrakeVal = true;};
+		/// \brief Turn off the air brake
+		inline void BrakeOff() {BrakeVal = false;};
+		
+		/// \brief Physics Update
 		void Update();
 		
 		/// \brief Paint targeted orbs

@@ -7,15 +7,26 @@ Ship::Ship (V3D _pos)
 	, Rot(V3D(0, 0, 0))
 	, TractorDir(0)
 	, TractorPower(.04) // Tractor beam power compiled in
+	, BrakeVal(false)
 {
 	
 }
 
 void Ship::Update() {
+	// Translation
 	PushLocal(Thrust * ThrustFactor);
+	
+	// Rotation
 	Pitch(Rot.x);
 	Yaw(Rot.y);
 	Roll(Rot.z);
+	
+	// AirBrake
+	if (BrakeVal){
+		Vel += -Vel.Normalized()*.001;
+	}
+	
+	// Update Physics
 	Pushable::Update();
 }
 

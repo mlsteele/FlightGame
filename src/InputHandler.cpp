@@ -47,6 +47,12 @@ void FlightGame::InputHandler() {
 		MainShip.AddThrust(0, -1, 0);
 	}
 	
+	// Brake
+	MainShip.BrakeOff();
+	if ( WInput.IsKeyDown(sf::Key::Space) ) {
+		MainShip.BrakeOn();
+	}
+	
 	MainShip.KillRot();
 	// Pitch & Yaw
 //	if (sqrt(pow(mX-WIDTH/2, 2) + pow(mY-HEIGHT/2, 2)) > 20) {

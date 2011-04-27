@@ -7,9 +7,10 @@ using std::vector;
 #include <GLUT/glut.h>
 
 #include "Pushable.h"
-#include "Ship.h"
 #include "Orb.h"
 #include "Strand.h"
+
+class Ship;
 
 /// \brief Physical object container
 class Arena {

@@ -27,7 +27,7 @@ FlightGame::FlightGame() :
 	
 	// Setup Arena
 	// Ship
-	/*Ship* MS = */ FGArena.Register( new Ship( V3D(0, 0, 0)) );
+	/*Ship* MS = */ FGArena.Register( new Ship( V3D(0, 0, 0), &FGArena) );
 	// Orbs
 	Orb* BallA = FGArena.Register( new Orb ( V3D(0, 0, -6), 1 ) );
 	Orb* BallB = FGArena.Register( new Orb ( V3D(2, 4, -7), 1 ) );

@@ -1,15 +1,19 @@
 #include "Ship.h"
 
-Ship::Ship (V3D _pos)
+#include "Arena.h"
+
+Ship::Ship (V3D _pos, Arena* _arena)
 	: Pushable(_pos, 5, 2) // Ship mass and radius compiled in
 	, Thrust(V3D(0, 0, 0))
 	, ThrustFactor(.009)
 	, Rot(V3D(0, 0, 0))
+	, BrakeVal(false)
 	, TractorDir(0)
 	, TractorPower(.04) // Tractor beam power compiled in
-	, BrakeVal(false)
+	, Firing(false)
+	, FiringTimer(0)
 {
-	
+	SArena = _arena;
 }
 
 void Ship::Update() {
@@ -24,6 +28,13 @@ void Ship::Update() {
 	// AirBrake
 	if (BrakeVal){
 		Vel += -Vel.Normalized()*.001;
+	}
+	
+	// Handle Weaponry
+	++FiringTimer;
+	if ( Firing and (FiringTimer > 20) ) { // FireRate Limit in Phyics Ticks
+		FireEffect();
+		FiringTimer = 0;
 	}
 	
 	// Update Physics
@@ -85,4 +96,12 @@ void Ship::PaintTargets (vector<Orb*> objs) {
 		// Paint
 		(**itA).SetColor(.5, 1, .5);
 	}
+}
+
+void Ship::FireEffect() {
+	Orb* Proj = SArena->Register( new Orb (
+		Pos + Fd * 8// Position
+	, 1 ) );
+	
+	Proj->Vel = Vel + Fd;
 }

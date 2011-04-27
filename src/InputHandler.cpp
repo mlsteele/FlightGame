@@ -20,6 +20,15 @@ void FlightGame::InputHandler() {
 		else if (Event.Type == sf::Event::Resized) {
 			glViewport(0, 0, Event.Size.Width, Event.Size.Height);
 		}
+		
+		// MainShip
+		// Firing on mouse
+		else if (Event.Type == sf::Event::MouseButtonPressed) {
+			MainShip.FireOn();
+		}
+		else if (Event.Type == sf::Event::MouseButtonReleased) {
+			MainShip.FireOff();
+		}
 	}
 	if ( WInput.IsKeyDown(sf::Key::Escape) ) {
 		Exit();

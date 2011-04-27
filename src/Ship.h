@@ -8,26 +8,37 @@ using std::vector;
 #include "Pushable.h"
 #include "Orb.h"
 
+class Arena;
+
 /// \brief Player avatar
 ///
 /// Knows about thrust and and handles its own
 class Ship : public Pushable {
 	public:
+		/// \brief World it's in
+		Arena* SArena;
+		
 		/// \brief Thrust rate represented as a local vector
 		V3D Thrust;
 		/// \brief Thrust factor of ship
 		float ThrustFactor;
 		/// \brief Rotation [Pitch, yaw, roll] vector representing rate
 		V3D Rot;
+		/// \brief Whether or not the brake is on
+		bool BrakeVal;
+		
 		/// \brief Direction of tractor beam (positive is forward)
 		int TractorDir;
 		/// \brief Power factor for tractor beam
 		float TractorPower;
-		// Brake value
-		bool BrakeVal;
+		
+		/// \brief Firing weapon?
+		bool Firing;
+		/// \brief Timer since last fired weapon
+		unsigned int FiringTimer;
 	
 	public:
-		Ship (V3D _pos);
+		Ship (V3D _pos, Arena* _arena);
 		
 		/// \brief Add to thrust
 		inline void AddThrust(V3D _jerk) { Thrust += _jerk; }
@@ -66,6 +77,13 @@ class Ship : public Pushable {
 		inline void TractorOut () { TractorDir = 1; };
 		/// \brief Turn tractor beam off
 		inline void TractorOff () { TractorDir = 0; };
+		
+		/// \brief Fire Weapon
+		void FireEffect();
+		inline void FireOn () {Firing = true;};
+		inline void FireOff () {Firing = false;};
+		
+		
 };
 
 #endif

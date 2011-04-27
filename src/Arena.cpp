@@ -1,5 +1,7 @@
 #include "Arena.h"
 
+#include "Ship.h"
+
 Arena::Arena()
 {
 }

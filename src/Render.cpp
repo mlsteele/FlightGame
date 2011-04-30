@@ -171,11 +171,27 @@ void FlightGame::Render2D() {
 	gluDisk(GLUQ, 0, thrad, 32, 1);
 	glPopMatrix();
 		
-	// Mid-Screen Circle
+	// Mid-Screen
 	glPushMatrix();
 	glTranslatef(WIDTH/2, HEIGHT/2, 0);
+	
+	// Reticle
 	glColor3f(.1, .05, .3);
 	gluDisk(GLUQ, 17, 20, 32, 1);
+	
+	// Accel Indicator
+	glColor3f(.05, .4, .1);
+	gluPartialDisk(GLUQ, 21, 23, 32, 1, 0, MainShip.Vel.Length()*500);
+	glColor3f(0.7, .1, .7); // Purple
+	gluPartialDisk(GLUQ, 24, 26, 32, 1, 0, MainShip.Fd.Dot(MainShip.Vel) *500);
+	
+	// Airbrake Indicator
+	if (MainShip.BrakeVal != 0) {
+		glColor3f(.5, .1, .1);
+		gluDisk(GLUQ, 27, 30, 32, 1);
+	}
+	
+	
 	glPopMatrix();
 	
 	// Mouse Cursor
@@ -192,5 +208,4 @@ void FlightGame::Render2D() {
 	glColor3f(.4, .2, 1);
 	gluDisk(GLUQ, 15, 20, 4, 1);
 	glPopMatrix();
-
 }

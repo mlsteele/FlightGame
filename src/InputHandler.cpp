@@ -86,36 +86,3 @@ void FlightGame::InputHandler() {
 		MainShip.TractorOut();
 	}
 }
-
-void FlightGame::PhysicalInput() {
-	const sf::Input &WInput = Window.GetInput();
-	Ship& MainShip = *(FGArena.Ships[0]);
-	Orb& BallA = *(FGArena.Orbs[0]);
-	
-	// BallA Control
-	float thrust = 0.0002;
-	if ( WInput.IsKeyDown(sf::Key::I) ) {
-		BallA.PushGlobal(0, 0, -thrust);
-	}
-	if ( WInput.IsKeyDown(sf::Key::K) ) {
-		BallA.PushGlobal(0, 0, thrust);
-	}
-	if ( WInput.IsKeyDown(sf::Key::J) ) {
-		BallA.PushGlobal(-thrust, 0, 0);
-	}
-	if ( WInput.IsKeyDown(sf::Key::L) ) {
-		BallA.PushGlobal(thrust, 0, 0);
-	}
-	if ( WInput.IsKeyDown(sf::Key::U) ) {
-		BallA.PushGlobal(0, thrust, 0);
-	}
-	if ( WInput.IsKeyDown(sf::Key::O) ) {
-		BallA.PushGlobal(0, -thrust, 0);
-	}
-	
-	if ( WInput.IsKeyDown(sf::Key::RShift) ) {
-		if ( ((MainShip.Pos + MainShip.Fd*5) - BallA.Pos).Length() < 5 ) {
-			BallA.PushGlobal( MainShip.Fd.Normalized()/100 );
-		}
-	}
-}

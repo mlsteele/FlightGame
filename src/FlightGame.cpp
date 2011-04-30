@@ -27,7 +27,8 @@ FlightGame::FlightGame() :
 	
 	// Setup Arena
 	// Ship
-	/*Ship* MS = */ FGArena.Register( new Ship( V3D(0, 0, 0), &FGArena) );
+	Ship& MainShip = *FGArena.Register( new Ship( V3D(0, 0, 0), &FGArena) );
+	MainShip.Pos.Zero();
 	// Orbs
 	Orb* BallA = FGArena.Register( new Orb ( V3D(0, 0, -6), 1 ) );
 	Orb* BallB = FGArena.Register( new Orb ( V3D(2, 4, -7), 1 ) );
@@ -158,7 +159,6 @@ int FlightGame::Execute() {
 			std::cerr << "ERROR: " << __TIME__ << ": Physics Safety Valve Tripped!\n";
 		}
 		while (TimeStack >= 1/100.f) {
-			PhysicalInput();
 			Physics();
 			TimeStack -= 1/100.f;
 		}

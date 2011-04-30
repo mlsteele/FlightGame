@@ -94,16 +94,5 @@ void Strand::Render() const {
 		glVertex3f(Tail->Pos.x, Tail->Pos.y, Tail->Pos.z);
 	glEnd();
 	
-/*
-	// Draw all nodes (including ends)
-	for (unsigned int n = 0; n < Nodes.size(); ++n) {
-		glColor3f(.5, .5, .9);
-		glPushMatrix();
-		glTranslatef(Nodes[n]->Pos.x, Nodes[n]->Pos.y, Nodes[n]->Pos.z);
-		glutSolidSphere(.05, 4, 4);
-		glPopMatrix();
-	}
-*/
-	
 	glEnable(GL_LIGHTING);
 }

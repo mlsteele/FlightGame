@@ -39,27 +39,6 @@ void FlightGame::Render3D() {
 	// Camera MODELVIEW Transformation
 	Cam.ViewModel();
 	
-/*
-	// Axis visualization
-	glTranslatef(0, 0, -1);
-	glBegin(GL_LINES);
-		// Red X
-		glColor3f(1, 0, 0);
-		glVertex3f(0, 0, 0);
-		glVertex3f(1, 0, 0);
-		
-		// Green Y
-		glColor3f(0, 1, 0);
-		glVertex3f(0, 0, 0);
-		glVertex3f(0, 1, 0);
-		
-		// Blue Z
-		glColor3f(0, 0, 1);
-		glVertex3f(0, 0, 0);
-		glVertex3f(0, 0, 1);
-	glEnd();
-*/
-	
 	// Enable lighting & update light positions
 	glEnable(GL_LIGHTING);
 	glLightfv(GL_LIGHT0, GL_POSITION, light0pos);
@@ -69,47 +48,6 @@ void FlightGame::Render3D() {
 	// Render Arena & Minions
 	FGArena.Render();
 	
-/*
-	// Draw a square with colors
-	glPushMatrix();
-	glTranslatef(5.f, 0.f, -10.f);
-	glBegin(GL_QUADS);
-		glColor3f(1, .2, .2);
-		glVertex3f(-1.0f, 1.0f, 0.0f);
-		glVertex3f( 1.0f, 1.0f, 0.0f);
-		glColor3f(.2, .2, 1);
-		glVertex3f( 1.0f,-1.0f, 0.0f);
-		glColor3f(.2, 1, .2);
-		glVertex3f(-1.0f,-1.0f, 0.0f);
-	glEnd();
-	glPopMatrix();
-*/
-	
-/*
-	// Draw a grid
-	glDisable(GL_LIGHTING);
-	glPushMatrix();
-	glColor3f(1.0f, 0.80f, 0.90f);
-	int griddims[3] = {25, 25, 25};
-	glTranslatef(-griddims[0], -griddims[1], -griddims[2]);
-	for (int gridx = 0; gridx < griddims[0]; ++gridx) {
-		for (int gridy = 0; gridy < griddims[1]; ++gridy) {
-			for (int gridx = 0; gridx < griddims[0]; ++gridx) {
-				
-				glBegin(GL_POINTS);
-					glVertex3f(0, 0, 0);
-				glEnd();
-				
-				glTranslatef(0, 0, 4);
-			}
-			glTranslatef(4, 0, 0);
-			glTranslatef(0, 0, -4*griddims[2]);
-		}
-		glTranslatef(-4*griddims[1], 0, 0);
-		glTranslatef(0, 4, 0);
-	}
-	glPopMatrix();
-*/
 }
 
 void FlightGame::Render2D() {

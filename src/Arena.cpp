@@ -107,28 +107,6 @@ bool Arena::FluffyCollideSpheres (Pushable* A, Pushable* B) {
 	return true;
 }
 
-/* DEPRECATED physically accurate collision
-	
-	// One Dimensional Collision
-	// http://en.wikipedia.org/wiki/Elastic_collision#One-dimensional_Newtonian
-	float mA = A->Mass;
-	float mB = B->Mass;
-	float uA = A->Vel.Dot(ColAxis); // Starting velocity of A
-	float uB = B->Vel.Dot(ColAxis); // Starting velocity of B
-	
-	// Calculate new velocities
-	float vA = ( (uA*(mA-mB)) + (2*mB*uB) ) / (mA + mB); // Final 1d velocity of A
-	float vB = ( (uB*(mB-mA)) + (2*mA*uA) ) / (mA + mB); // Final 1d velocity of B
-	
-	// Zero velocity in collision axis
-	A->Vel -= ColAxis * uA;
-	B->Vel -= ColAxis * uB;
-	
-	// Apply calculated velocities
-	A->Vel += ColAxis * vA;
-	B->Vel += ColAxis * vB;
-*/
-
 bool Arena::CollideBounds (Pushable* obj) {
 	bool hit = false;
 	float rad = (*obj).Rad;

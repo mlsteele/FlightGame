@@ -48,6 +48,8 @@ void FlightGame::Render3D() {
 	// Render Arena & Minions
 	FGArena.Render();
 	
+	// Color Targets
+	MainShip.PaintTargets();
 }
 
 void FlightGame::Render2D() {

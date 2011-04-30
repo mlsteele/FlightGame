@@ -7,7 +7,6 @@ using std::vector;
 
 #include "Pushable.h"
 #include "Orb.h"
-#include "Claw.h"
 #include "Strand.h"
 
 class Arena;
@@ -34,8 +33,7 @@ class Ship : public Pushable {
 		/// \brief Power factor for tractor beam
 		float TractorPower;
 		
-		Claw* FiredClaw;
-		Strand* ActiveStrand;
+		Orb* ActiveBall;
 	
 	public:
 		Ship (V3D _pos, Arena* _arena);
@@ -68,7 +66,7 @@ class Ship : public Pushable {
 		void Update();
 		
 		/// \brief Paint targeted orbs
-		void PaintTargets (vector<Orb*> objs);
+		void PaintTargets();
 		/// \brief Effect objects in list with tractor beam
 		void TractorEffect (vector<Pushable*> objs);
 		/// \brief Tell tractor to pull towards ship
@@ -81,7 +79,8 @@ class Ship : public Pushable {
 		void FireOn();
 		void FireOff();
 		
-		
+		private:
+			Orb* FirstInScope();
 };
 
 #endif

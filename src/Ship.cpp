@@ -10,8 +10,7 @@ Ship::Ship (V3D _pos, Arena* _arena)
 	, BrakeVal(false)
 	, TractorDir(0)
 	, TractorPower(.04) // Tractor beam power compiled in
-	, FiredClaw(NULL)
-	, ActiveStrand(NULL)
+	, ActiveBall(NULL)
 {
 	SArena = _arena;
 }
@@ -69,9 +68,48 @@ void Ship::TractorEffect (vector<Pushable*> objs) {
 }
 
 // Should sync with TractorEffect();
-void Ship::PaintTargets (vector<Orb*> objs) {
-	// Effect
-	for (vector<Orb*>::iterator itA = objs.begin(); itA != objs.end(); ++itA) {
+void Ship::PaintTargets() {
+	
+	// Default Colors
+	for (vector<Orb*>::iterator itA = SArena->Orbs.begin(); itA != SArena->Orbs.end(); ++itA) {
+		(**itA).ColorDefault();
+	}
+	
+	// Color Scoped
+	Orb* ToPaint = FirstInScope();
+	if (ToPaint != NULL) { ToPaint->SetColor(.5, 1, .5); }
+	
+	// Color Active
+	if (ActiveBall != NULL) { ActiveBall->SetColor(.5, 1, .5); }
+}
+
+void Ship::FireOn() {
+	ActiveBall = FirstInScope();
+}
+
+void Ship::FireOff() {
+	Orb* SecondBall = FirstInScope();
+	
+	// Safeties
+	if (ActiveBall == NULL)       {ActiveBall = NULL; return;}
+	if (SecondBall == NULL)       {ActiveBall = NULL; return;}
+	if (ActiveBall == SecondBall) {ActiveBall = NULL; return;}
+	
+	// Creation of projectile
+	SArena->Register( new Strand (
+			  ActiveBall
+			, SecondBall
+			, 4
+	));
+	
+	ActiveBall = NULL;
+}
+
+Orb* Ship::FirstInScope() {
+	Orb* theOne = NULL;
+	float theZ = 1e40;
+	
+	for (vector<Orb*>::iterator itA = SArena->Orbs.begin(); itA != SArena->Orbs.end(); ++itA) {
 		// Local position of target object
 		V3D LP = GTL((**itA).Pos);
 		
@@ -82,38 +120,15 @@ void Ship::PaintTargets (vector<Orb*> objs) {
 		if (not(
 			0 < rmax/LP.z && rmin/LP.z < .1 // Define region
 		)) {
-			(**itA).ColorDefault();
 			continue;
 		}
 		
-		// Paint
-		(**itA).SetColor(.5, 1, .5);
+		// Pick the closest
+		if (LP.z < theZ) {
+			theOne = (*itA);
+			theZ = LP.z;
+		}
 	}
-}
-
-void Ship::FireOn() {
-	// Creation of projectile
-	FiredClaw = SArena->Register( new Claw (
-		Pos + Fd * (Rad+2) // Position
-		, (Fd * 1.4)
-	) );
 	
-	ActiveStrand = SArena->Register( new Strand (
-			  FiredClaw
-			, this
-			, 20
-	));
-}
-
-void Ship::FireOff() {
-	// Creation of projectile
-	FiredClaw = SArena->Register( new Claw (
-		Pos + Fd * (Rad+2) // Position
-		, (Fd * 1.4)
-	) );
-	
-	ActiveStrand->Tail = FiredClaw;
-	
-	ActiveStrand = NULL;
-	FiredClaw = NULL;
+	return theOne;
 }

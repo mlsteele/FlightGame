@@ -31,15 +31,7 @@ void Arena::Update () {
 	for(std::vector<Pushable*>::iterator it = boundables.begin(); it != boundables.end(); ++it) {
 		CollideBounds(*it);
 	}
-	
-	// Freeze Out of Bounds Claws
-	vector<Claw*> clawsToFreeze;
-	for (vector<Claw*>::iterator itA = Claws.begin(); itA != Claws.end(); ++itA) {
-		if ( CollideBounds(*itA) ) {
-			(**itA).Freeze();
-		}
-	}
-	
+		
 	// Update Strands
 	for(std::vector<Strand*>::iterator it = Strands.begin(); it != Strands.end(); ++it) {
 		(**it).Update();
@@ -53,14 +45,7 @@ void Arena::Update () {
 	// Update Ships
 	for(std::vector<Ship*>::iterator it = Ships.begin(); it != Ships.end(); ++it) {
 		(**it).Update();
-		(**it).PaintTargets(Orbs);
 		(**it).TractorEffect(tractorables);
-	}
-	
-	// Claw Attachment Checks and Updates
-	for (vector<Claw*>::iterator itA = Claws.begin(); itA != Claws.end(); ++itA) {
-		(**itA).AttachmentCheck(sphericals);
-		(**itA).Update();
 	}
 }
 
@@ -74,13 +59,7 @@ void Arena::Render() {
 	for(std::vector<Orb*>::iterator it = Orbs.begin(); it != Orbs.end(); ++it) {	
 		(**it).Render();
 	}
-	
-	// Claws
-	for(std::vector<Claw*>::iterator it = Claws.begin(); it != Claws.end(); ++it) {
-		(**it).Render();
-	}
-
-	
+		
 	// Render Bounds
 	glColor3f(.6, .6, .6);
 	glutSolidCube(200);

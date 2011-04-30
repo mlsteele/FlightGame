@@ -7,6 +7,8 @@ using std::vector;
 
 #include "Pushable.h"
 #include "Orb.h"
+#include "Claw.h"
+#include "Strand.h"
 
 class Arena;
 
@@ -32,10 +34,8 @@ class Ship : public Pushable {
 		/// \brief Power factor for tractor beam
 		float TractorPower;
 		
-		/// \brief Firing weapon?
-		bool Firing;
-		/// \brief Timer since last fired weapon
-		unsigned int FiringTimer;
+		Claw* FiredClaw;
+		Strand* ActiveStrand;
 	
 	public:
 		Ship (V3D _pos, Arena* _arena);
@@ -78,10 +78,8 @@ class Ship : public Pushable {
 		/// \brief Turn tractor beam off
 		inline void TractorOff () { TractorDir = 0; };
 		
-		/// \brief Fire Weapon
-		void FireEffect();
-		inline void FireOn () {Firing = true;};
-		inline void FireOff () {Firing = false;};
+		void FireOn();
+		void FireOff();
 		
 		
 };

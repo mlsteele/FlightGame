@@ -20,7 +20,7 @@ Strand::Strand(Pushable* _head, Pushable* _tail, float _targl)
 }
 
 // Private helper function
-void Strand::InfluencePair(Pushable* A, Pushable* B) {
+void Strand::InfluencePair(Pushable* A, Pushable* B, bool viscize) {
 	float k;
 	V3D diffp = B->Pos - A->Pos;
 	V3D force;
@@ -33,22 +33,24 @@ void Strand::InfluencePair(Pushable* A, Pushable* B) {
 	B->PushGlobal(-force);
 	
 	// Viscosity
-	k = .02; // Viscosity Constant (compiled in)
-	V3D diffvel = B->Vel - A->Vel;
-	force = diffvel*k;
-	A->PushGlobal(force);
-	B->PushGlobal(-force);
+	if (viscize) {
+		k = .02; // Viscosity Constant (compiled in)
+		V3D diffvel = B->Vel - A->Vel;
+		force = diffvel*k;
+		A->PushGlobal(force);
+		B->PushGlobal(-force);
+	}
 }
 
 void Strand::Update() {
 	// Influence all by pairs
 	for (unsigned int n = 1; n < Nodes.size(); ++n) {
-		InfluencePair( Nodes[n], Nodes[n-1] );
+		InfluencePair( Nodes[n], Nodes[n-1], true );
 	}
 	
 	// Influence end pairs
-	InfluencePair( Nodes[0], Head );
-	InfluencePair( Nodes[Nodes.size()-1], Tail );
+	InfluencePair( Nodes[0], Head, false );
+	InfluencePair( Nodes[Nodes.size()-1], Tail, false );
 	
 	// Update all internal (not ends)
 	for (vector<Pushable*>::iterator itA = Nodes.begin(); itA != Nodes.end(); ++itA) {
@@ -59,10 +61,12 @@ void Strand::Update() {
 void Strand::Render() const {
 	glDisable(GL_LIGHTING);
 	
+	// Reusable Container
+	V3D diffv;
+	
 	// Draw and influence pairs
 	for (unsigned int n = 1; n < Nodes.size(); ++n) {
-		glPushMatrix();
-		V3D diffv = Nodes[n-1]->Pos - Nodes[n]->Pos;
+		diffv = Nodes[n-1]->Pos - Nodes[n]->Pos;
 		float x = diffv.Length() - MiniTargL();
 		x = min(abs(x)/3.f, 1.f);
 		glColor3f(x, 1-x, 0);
@@ -70,8 +74,25 @@ void Strand::Render() const {
 			glVertex3f(Nodes[n]->Pos.x, Nodes[n]->Pos.y, Nodes[n]->Pos.z);
 			glVertex3f(Nodes[n-1]->Pos.x, Nodes[n-1]->Pos.y, Nodes[n-1]->Pos.z);
 		glEnd();
-		glPopMatrix();
 	}
+	
+	glBegin(GL_LINES);
+		diffv = Nodes[0]->Pos - Head->Pos;
+		float x = diffv.Length() - MiniTargL();
+		x = min(abs(x)/3.f, 1.f);
+		glColor3f(x, 1-x, 0);
+		glVertex3f(Nodes[0]->Pos.x, Nodes[0]->Pos.y, Nodes[0]->Pos.z);
+		glVertex3f(Head->Pos.x, Head->Pos.y, Head->Pos.z);
+	glEnd();
+	
+	glBegin(GL_LINES);
+		diffv = Nodes[0]->Pos - Tail->Pos;
+		x = diffv.Length() - MiniTargL();
+		x = min(abs(x)/3.f, 1.f);
+		glColor3f(x, 1-x, 0);
+		glVertex3f(Nodes[Nodes.size()-1]->Pos.x, Nodes[Nodes.size()-1]->Pos.y, Nodes[Nodes.size()-1]->Pos.z);
+		glVertex3f(Tail->Pos.x, Tail->Pos.y, Tail->Pos.z);
+	glEnd();
 	
 /*
 	// Draw all nodes (including ends)

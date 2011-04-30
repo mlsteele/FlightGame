@@ -10,8 +10,8 @@ Ship::Ship (V3D _pos, Arena* _arena)
 	, BrakeVal(false)
 	, TractorDir(0)
 	, TractorPower(.04) // Tractor beam power compiled in
-	, Firing(false)
-	, FiringTimer(0)
+	, FiredClaw(NULL)
+	, ActiveStrand(NULL)
 {
 	SArena = _arena;
 }
@@ -27,14 +27,7 @@ void Ship::Update() {
 	
 	// AirBrake
 	if (BrakeVal){
-		Vel += -Vel.Normalized()*.001;
-	}
-	
-	// Handle Weaponry
-	++FiringTimer;
-	if ( Firing and (FiringTimer > 20) ) { // FireRate Limit in Phyics Ticks
-		FireEffect();
-		FiringTimer = 0;
+		Vel += -Vel.Normalized()*.002;
 	}
 	
 	// Update Physics
@@ -98,10 +91,29 @@ void Ship::PaintTargets (vector<Orb*> objs) {
 	}
 }
 
-void Ship::FireEffect() {
-	Orb* Proj = SArena->Register( new Orb (
-		Pos + Fd * 8// Position
-	, 1 ) );
+void Ship::FireOn() {
+	// Creation of projectile
+	FiredClaw = SArena->Register( new Claw (
+		Pos + Fd * (Rad+2) // Position
+		, (Fd * 1.4)
+	) );
 	
-	Proj->Vel = Vel + Fd;
+	ActiveStrand = SArena->Register( new Strand (
+			  FiredClaw
+			, this
+			, 20
+	));
+}
+
+void Ship::FireOff() {
+	// Creation of projectile
+	FiredClaw = SArena->Register( new Claw (
+		Pos + Fd * (Rad+2) // Position
+		, (Fd * 1.4)
+	) );
+	
+	ActiveStrand->Tail = FiredClaw;
+	
+	ActiveStrand = NULL;
+	FiredClaw = NULL;
 }

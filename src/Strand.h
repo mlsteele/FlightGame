@@ -49,7 +49,7 @@ class Strand {
 		inline float MiniTargL() const {return TargL / Nodes.size();};
 	
 	private:
-		void InfluencePair(Pushable* A, Pushable* B);
+		void InfluencePair(Pushable* A, Pushable* B, bool Viscize);
 };
 
 #endif

@@ -45,7 +45,7 @@ void Arena::Update () {
 	// Update Ships
 	for(std::vector<Ship*>::iterator it = Ships.begin(); it != Ships.end(); ++it) {
 		(**it).Update();
-		(**it).TractorEffect(tractorables);
+		(**it).TractorEffect();
 	}
 }
 
@@ -62,7 +62,7 @@ void Arena::Render() {
 		
 	// Render Bounds
 	glColor3f(.6, .6, .6);
-	glutSolidCube(200);
+	glutSolidCube(100);
 }
 
 /// Uses fluffy collision.\n
@@ -91,38 +91,38 @@ bool Arena::CollideBounds (Pushable* obj) {
 	float rad = (*obj).Rad;
 	
 	// X
-	if ( (*obj).Pos.x - rad < -100 ) {
+	if ( (*obj).Pos.x - rad < -50 ) {
 		(*obj).Vel.x = fabs((*obj).Vel.x);
-		(*obj).Pos.x = -100 + rad;
+		(*obj).Pos.x = -50 + rad;
 		hit = true;
 	} else
-	if ( (*obj).Pos.x + rad > 100 ) {
+	if ( (*obj).Pos.x + rad > 50 ) {
 		(*obj).Vel.x = -fabs((*obj).Vel.x);
-		(*obj).Pos.x = 100 - rad;
+		(*obj).Pos.x = 50 - rad;
 		hit = true;
 	}
 	
 	// Y
-	if ( (*obj).Pos.y - rad < -100 ) {
+	if ( (*obj).Pos.y - rad < -50 ) {
 		(*obj).Vel.y = fabs((*obj).Vel.y);
-		(*obj).Pos.y = -100 + rad;
+		(*obj).Pos.y = -50 + rad;
 		hit = true;
 	} else
-	if ( (*obj).Pos.y + rad > 100 ) {
+	if ( (*obj).Pos.y + rad > 50 ) {
 		(*obj).Vel.y = -fabs((*obj).Vel.y);
-		(*obj).Pos.y = 100 - rad;
+		(*obj).Pos.y = 50 - rad;
 		hit = true;
 	}
 	
 	// Z
-	if ( (*obj).Pos.z - rad < -100 ) {
+	if ( (*obj).Pos.z - rad < -50 ) {
 		(*obj).Vel.z = fabs((*obj).Vel.z);
-		(*obj).Pos.z = -100 + rad;
+		(*obj).Pos.z = -50 + rad;
 		hit = true;
 	} else
-	if ( (*obj).Pos.z + rad > 100 ) {
+	if ( (*obj).Pos.z + rad > 50 ) {
 		(*obj).Vel.z = -fabs((*obj).Vel.z);
-		(*obj).Pos.z = 100 - rad;
+		(*obj).Pos.z = 50 - rad;
 		hit = true;
 	}
 	

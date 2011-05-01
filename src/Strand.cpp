@@ -26,7 +26,7 @@ void Strand::InfluencePair(Pushable* A, Pushable* B, bool viscize) {
 	V3D force;
 	
 	// F [varies with] k*x
-	k = .007; // Spring Constant (compiled in)
+	k = .009; // Spring Constant (compiled in)
 	float x = diffp.Length() - MiniTargL();
 	force = diffp.Normalized()*x*k;
 	A->PushGlobal(force);
@@ -50,7 +50,7 @@ void Strand::Update() {
 	
 	// Influence end pairs
 	InfluencePair( Nodes[0], Head, false );
-	InfluencePair( Nodes[Nodes.size()-1], Tail, false );
+	InfluencePair( *Nodes.rbegin(), Tail, false );
 	
 	// Update all internal (not ends)
 	for (vector<Pushable*>::iterator itA = Nodes.begin(); itA != Nodes.end(); ++itA) {
@@ -59,17 +59,16 @@ void Strand::Update() {
 }
 
 void Strand::Render() const {
-	glDisable(GL_LIGHTING);
-	
-	// Reusable Container
+	// Reusables
 	V3D diffv;
+	float x;
 	
 	// Draw and influence pairs
 	for (unsigned int n = 1; n < Nodes.size(); ++n) {
 		diffv = Nodes[n-1]->Pos - Nodes[n]->Pos;
-		float x = diffv.Length() - MiniTargL();
-		x = min(abs(x)/3.f, 1.f);
-		glColor3f(x, 1-x, 0);
+		x = diffv.Length() - MiniTargL();
+		x = fmin(abs(x)/3.f, 1.f);
+		glColor3f(x, 1.f-x, 0);
 		glBegin(GL_LINES);
 			glVertex3f(Nodes[n]->Pos.x, Nodes[n]->Pos.y, Nodes[n]->Pos.z);
 			glVertex3f(Nodes[n-1]->Pos.x, Nodes[n-1]->Pos.y, Nodes[n-1]->Pos.z);
@@ -78,21 +77,19 @@ void Strand::Render() const {
 	
 	glBegin(GL_LINES);
 		diffv = Nodes[0]->Pos - Head->Pos;
-		float x = diffv.Length() - MiniTargL();
-		x = min(abs(x)/3.f, 1.f);
-		glColor3f(x, 1-x, 0);
+		x = diffv.Length() - MiniTargL();
+		x = fmin(fabs(x)/3.f, 1.f);
+		glColor3f(x, 1.f-x, 0);
 		glVertex3f(Nodes[0]->Pos.x, Nodes[0]->Pos.y, Nodes[0]->Pos.z);
 		glVertex3f(Head->Pos.x, Head->Pos.y, Head->Pos.z);
 	glEnd();
 	
 	glBegin(GL_LINES);
-		diffv = Nodes[0]->Pos - Tail->Pos;
+		diffv = (*Nodes.rbegin())->Pos - Head->Pos;
 		x = diffv.Length() - MiniTargL();
-		x = min(abs(x)/3.f, 1.f);
-		glColor3f(x, 1-x, 0);
-		glVertex3f(Nodes[Nodes.size()-1]->Pos.x, Nodes[Nodes.size()-1]->Pos.y, Nodes[Nodes.size()-1]->Pos.z);
+		x = fmin(fabs(x)/3.f, 1.f);
+		glColor3f(x, 1.f-x, 0);
+		glVertex3f((*Nodes.rbegin())->Pos.x, (*Nodes.rbegin())->Pos.y, (*Nodes.rbegin())->Pos.z);
 		glVertex3f(Tail->Pos.x, Tail->Pos.y, Tail->Pos.z);
 	glEnd();
-	
-	glEnable(GL_LIGHTING);
 }

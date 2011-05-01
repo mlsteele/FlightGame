@@ -27,60 +27,62 @@ FlightGame::FlightGame() :
 	
 	// Setup Arena
 	// Ship
-	Ship& MainShip = *FGArena.Register( new Ship( V3D(0, 0, 0), &FGArena) );
-	MainShip.Pos.Zero();
-	// Orbs
-	Orb* BallA = FGArena.Register( new Orb ( V3D(0, 0, -6), 1 ) );
-	Orb* BallB = FGArena.Register( new Orb ( V3D(2, 4, -7), 1 ) );
-	Orb* BallC = FGArena.Register( new Orb ( V3D(6, 3, -4), 2 ) );
-	Orb* BallD = FGArena.Register( new Orb ( V3D(1, -4, 2), .5 ) );
-	Orb* BallE = FGArena.Register( new Orb ( V3D(1, -40, 2), 6 ) );
-	// Strands
-//	FGArena.Register( new Strand ( BallA, MS, 3 ) );
-	FGArena.Register( new Strand ( BallA, BallB, 10 ) );
-	FGArena.Register( new Strand ( BallB, BallC, 10 ) );
-	FGArena.Register( new Strand ( BallA, BallC, 5  ) );
-	FGArena.Register( new Strand ( BallD, BallA, 10 ) );
-	FGArena.Register( new Strand ( BallD, BallB, 10 ) );
-	// Random Orbs
-	for (int i = 0; i < 20; ++i) {
-		V3D randpos(
-			  (rand() / static_cast<float>(RAND_MAX) * 100) - 50
-			, (rand() / static_cast<float>(RAND_MAX) * 100) - 50
-			, (rand() / static_cast<float>(RAND_MAX) * 100) - 50
-		);
-		float randsize = max(1.f, float(rand() / static_cast<float>(RAND_MAX) * 4.5));
-		Orb* RB = FGArena.Register( new Orb ( randpos, randsize ) );
-		if (randsize > 4.3) {
-			FGArena.Register( new Strand ( BallE, RB, 15 ) );
+	Ship& MainShip = *FGArena.Register( new Ship( V3D(0, 0, 100), &FGArena) );
+	
+	
+	// Strand Sets
+	for (float s = 1, ax = -40; s < 2; s += .1, ax += 5) {
+		Orb* OA = FGArena.Register( new Orb ( V3D(ax, -4, 0), s ) );
+		OA->Vel.z -= .05;
+		Orb* OB = FGArena.Register( new Orb ( V3D(ax, 4, 0), s ) );
+		FGArena.Register( new Strand ( OA, OB, 2 ) );
+		
+		std::cout << "Pair X: " << ax << "\tScale: " << s << "\n";
+	}
+	
+	
+	// Orb Fabric
+	int fdx = 10;
+	int fdy = 20;
+	float headx = -40; float heady = -40; float headz = -20;
+	float fspace = 4;
+	Orb *FabricOrbs[fdx][fdy];
+	
+	// Place Orbs
+	for (int x = 0; x < fdx; ++x, headx += fspace) {
+		for (int y = 0; y < fdy; ++y, heady += fspace) {
+			FabricOrbs[x][y] = FGArena.Register( new Orb ( V3D(headx, heady, headz), 1 ) );
+		} heady -= fdy*fspace;
+	} headx -= fdx*fspace;
+	
+	// Attach Strands
+	for (int x = 0; x < fdx-1; ++x) {
+		for (int y = 0; y < fdy-1; ++y) {
+			FGArena.Register( new Strand (
+				  FabricOrbs[x][y]
+				, FabricOrbs[x+1][y]
+			, fspace ) );
+			
+			FGArena.Register( new Strand (
+				  FabricOrbs[x][y]
+				, FabricOrbs[x][y+1]
+			, fspace ) );
 		}
 	}
-	for (int i = 0; i < 4; ++i) {
-		V3D randpos(
-			  (rand() / static_cast<float>(RAND_MAX) * 100) - 50
-			, (rand() / static_cast<float>(RAND_MAX) * 100) - 50
-			, (rand() / static_cast<float>(RAND_MAX) * 100) - 50
-		);
-		float randsize = max(10.f, float(rand() / static_cast<float>(RAND_MAX) * 30));
-		FGArena.Register( new Orb ( randpos, randsize ) );
+	for (int x = 0; x < fdx-1; ++x) {
+		FGArena.Register( new Strand (
+			  FabricOrbs[x]  [fdy-1]
+			, FabricOrbs[x+1][fdy-1]
+		, fspace ) );
 	}
-	// Floating strand
-	Orb* FloatingBA = FGArena.Register (
-		new Orb( V3D(40, 40, 40)
-			, .22853907486704164 // Radius of string nodes (compiled in)
-		)
-	);
-	Orb* FloatingBB = FGArena.Register (
-		new Orb( V3D(50, 40, 40)
-			, .22853907486704164 // Radius of string nodes (compiled in)
-		)
-	);
-	FGArena.Register(
-		new Strand(
-			FloatingBA, FloatingBB, 10
-		)
-	);
-		
+	for (int y = 0; y < fdy-1; ++y) {
+		FGArena.Register( new Strand (
+			  FabricOrbs[fdx-1][y]
+			, FabricOrbs[fdx-1][y+1]
+		, fspace ) );
+	}
+	
+	
 	// Camera
 	Cam.Settings(90, ASPECT, .1, 500);
 	Cam.Attach(FGArena.Ships[0]);
@@ -98,16 +100,6 @@ FlightGame::FlightGame() :
 	glEnable(GL_DEPTH_TEST);
 	glDepthMask(GL_TRUE);
 	
-	// Fog
-	glEnable(GL_FOG);
-//	glFogi(GL_FOG_MODE, GL_EXP2);
-//	glFogf(GL_FOG_DENSITY, .05);
-	glFogi(GL_FOG_MODE, GL_LINEAR);
-	glFogf(GL_FOG_START, 40.f);
-	glFogf(GL_FOG_END, 400.f);
-	float FogCol[3]={0, 0, 0};
-	glFogfv(GL_FOG_COLOR, FogCol);
-	
 	// Lighting
 	GLfloat ambientcolor[] = {.6, .6, .6, 1};
 	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambientcolor);
@@ -115,6 +107,16 @@ FlightGame::FlightGame() :
 	glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_FALSE);
 	glEnable(GL_LIGHTING);
 	glEnable(GL_COLOR_MATERIAL);
+	
+	// Fog
+	glEnable(GL_FOG);
+	glFogi(GL_FOG_MODE, GL_EXP2);
+	glFogf(GL_FOG_DENSITY, .010);
+//	glFogi(GL_FOG_MODE, GL_LINEAR);
+//	glFogf(GL_FOG_START, 40.f);
+//	glFogf(GL_FOG_END, 100.f);
+	float FogCol[3] = {0, 0, 0};
+	glFogfv(GL_FOG_COLOR, FogCol);
 	
 	// Lights
 	glEnable(GL_LIGHT0);

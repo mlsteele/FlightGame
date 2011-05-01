@@ -9,34 +9,8 @@ void FlightGame::Render3D() {
 	// Clear screen
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	
-	// Camera PERSPECTIVE Transformation
+	// Camera MODELVIEW & PERSPECTIVE Transformations
 	Cam.ViewPerspective();
-	
-	// Velocity Visualizer
-	V3D vdv = MainShip.Vel * 1;
-	vdv = MainShip.OGTL(vdv);
-	glPushMatrix();
-	glTranslatef(-1.5, -1.5, -2);
-	glBegin(GL_LINES);
-		glColor3f(1, .2, .2);
-		glVertex3f(0, 0, 0);
-		glVertex3f(vdv.x, 0, 0);
-		
-		glColor3f(.2, 1, .2);
-		glVertex3f(0, 0, 0);
-		glVertex3f(0, vdv.y, 0);
-		
-		glColor3f(.2, .2, 1);
-		glVertex3f(0, 0, 0);
-		glVertex3f(0, 0, -vdv.z);
-		
-		glColor3f(.8, .8, .8);
-		glVertex3f(0, 0, 0);
-		glVertex3f(vdv.x, vdv.y, -vdv.z);
-	glEnd();
-	glPopMatrix();
-	
-	// Camera MODELVIEW Transformation
 	Cam.ViewModel();
 	
 	// Enable lighting & update light positions
@@ -68,41 +42,21 @@ void FlightGame::Render2D() {
 	// Lighting Disable
 	glDisable(GL_LIGHTING);
 	
-	// Reusable Bar Variables
-	float BarWidth;
-	float VizQ;
-	
-	// Speed Visualizer
-	BarWidth = 15;
-	VizQ = MainShip.Speed();
-	VizQ *= 500; // Visualization scale
-	glPushMatrix();
-	glTranslatef(BarWidth, HEIGHT, 0);
-	glRotatef(170, 0, 0, -1);
-	glColor3f(.3, .3, 1);
-	glBegin(GL_QUADS);
-		glVertex3f(0,			0, 0);
-		glVertex3f(BarWidth,	0, 0);
-		glVertex3f(BarWidth,	VizQ, 0);
-		glVertex3f(0,			VizQ, 0);
-	glEnd();
-	glPopMatrix();
 	
 	// Tractor HUD
 	float thrad = 5;
 	float thpad = 5;
 	glPushMatrix();
-	glTranslatef(WIDTH/2 - 2*thrad - thpad, thrad + 5, 0);
+	glTranslatef(WIDTH/2, thrad + 5, 0);
 	if (MainShip.TractorDir == 0) {
 		// Tractor is off
 		glColor3f(0, 0, .8);
 	} else if (MainShip.TractorDir == 1) {
 		// Tractor is push
-		glTranslatef(2*thrad + thpad, 0, 0);
+		glTranslatef(-2*thrad - thpad, 0, 0);
 		glColor3f(0, .8, 0);
 	} else if (MainShip.TractorDir == -1) {
 		// Tractor is pull
-		glTranslatef(2*thrad + thpad, 0, 0);
 		glTranslatef(2*thrad + thpad, 0, 0);
 		glColor3f(.8, 0, 0);
 	} else {
@@ -131,7 +85,7 @@ void FlightGame::Render2D() {
 		gluDisk(GLUQ, 27, 30, 32, 1);
 	}
 	
-	
+	// End Mid-Screen
 	glPopMatrix();
 	
 	// Mouse Cursor

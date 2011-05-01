@@ -9,7 +9,15 @@ Orb::Orb (V3D _pos, float _rad)
 	)
 	, Color(1, .5, .5)
 {
+//	float SurfaceArea = 4*M_PI*pow(_rad,2);
+	int res = 8;
 	
+	// Setup Rendering Display List
+	DL = glGenLists(1);
+	
+	glNewList(DL, GL_COMPILE);
+	glutSolidSphere(Rad, res, res);
+	glEndList();
 }
 
 void Orb::Render() const {
@@ -17,7 +25,7 @@ void Orb::Render() const {
 	glPushMatrix();
 	glTranslatef(Pos.x, Pos.y, Pos.z);
 	Color.Apply();
-	glutSolidSphere(Rad, 32, 32);
+	glCallList(DL);
 	glPopMatrix();
 }
 

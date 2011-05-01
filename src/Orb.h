@@ -11,6 +11,7 @@
 class Orb : public Pushable {
 	private:
 		glColor Color;
+		GLuint DL;
 	
 	public:
 		/// \brief Create with appropriate mass by radius

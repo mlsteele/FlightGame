@@ -68,7 +68,7 @@ class Ship : public Pushable {
 		/// \brief Paint targeted orbs
 		void PaintTargets();
 		/// \brief Effect objects in list with tractor beam
-		void TractorEffect (vector<Pushable*> objs);
+		void TractorEffect();
 		/// \brief Tell tractor to pull towards ship
 		inline void TractorIn () { TractorDir = -1; };
 		/// \brief Tell tractor to push from ship

@@ -11,7 +11,6 @@
 #include "Pushable.h"
 
 using std::vector;
-using std::min;
 
 /// \brief Stretchy tension device
 ///

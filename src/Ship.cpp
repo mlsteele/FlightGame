@@ -26,45 +26,29 @@ void Ship::Update() {
 	
 	// AirBrake
 	if (BrakeVal){
-		Vel += -Vel.Normalized()*.002;
+		if (Vel.Length() > 0) {
+			Vel += -Vel.Normalized()*.002;
+		}
 	}
 	
 	// Update Physics
 	Pushable::Update();
 }
 
-void Ship::TractorEffect (vector<Pushable*> objs) {
+void Ship::TractorEffect() {
 	// Power switch
 	if (TractorDir == 0) {return;}
 	
-	// Effect
-	for (vector<Pushable*>::iterator itA = objs.begin(); itA != objs.end(); ++itA) {
-		// Abort if self
-		if (*itA == this) {
-			continue;
-		}
-		
-		// Local position of target object
-		V3D LP = GTL((**itA).Pos);
-		
-		// Abort if out of region
-		float r = sqrt( (LP.x)*(LP.x) + (LP.y)*(LP.y) ); // pythagorean theorem
-		float rmax = r + (**itA).Rad;
-		float rmin = r - (**itA).Rad;
-		if (not(
-			// TODO: Define smarter cone
-			0 < rmax/LP.z && rmin/LP.z < .1 // Define region
-		)) {
-			continue;
-		}
-		
-		// Local Force
-		V3D LF(0, 0, TractorDir * TractorPower);
-		V3D GF(OLTG(LF));
-		
-		// Apply
-		(**itA).PushGlobal(GF);
-	}
+	// Ball Safety
+	Orb* TractorBall = FirstInScope();
+	if (TractorBall == NULL) {return;}
+	
+	// Local Force
+	V3D LF(0, 0, TractorDir * TractorPower);
+	V3D GF(OLTG(LF));
+	
+	// Apply Force
+	TractorBall->PushGlobal(GF);
 }
 
 // Should sync with TractorEffect();
@@ -118,7 +102,7 @@ Orb* Ship::FirstInScope() {
 		float rmax = r + (**itA).Rad;
 		float rmin = r - (**itA).Rad;
 		if (not(
-			0 < rmax/LP.z && rmin/LP.z < .1 // Define region
+			0 < rmax/LP.z && rmin/LP.z < .05 // Define region
 		)) {
 			continue;
 		}

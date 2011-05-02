@@ -61,7 +61,7 @@ void Arena::Render() {
 	}
 		
 	// Render Bounds
-	glColor3f(.6, .6, .6);
+	glColor3f(0.176, 0.094, 0.035);
 	glutSolidCube(100);
 }
 

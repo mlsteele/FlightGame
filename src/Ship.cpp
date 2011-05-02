@@ -61,7 +61,7 @@ void Ship::PaintTargets() {
 	
 	// Color Scoped
 	Orb* ToPaint = FirstInScope();
-	if (ToPaint != NULL) { ToPaint->SetColor(.5, 1, .5); }
+	if (ToPaint != NULL) { ToPaint->SetColor(0.263, 0.525, 0.745); }
 	
 	// Color Active
 	if (ActiveBall != NULL) { ActiveBall->SetColor(.5, 1, .5); }
@@ -79,7 +79,7 @@ void Ship::FireOff() {
 	if (SecondBall == NULL)       {ActiveBall = NULL; return;}
 	if (ActiveBall == SecondBall) {ActiveBall = NULL; return;}
 	
-	// Creation of projectile
+	// Creation of Strand
 	SArena->Register( new Strand (
 			  ActiveBall
 			, SecondBall

@@ -41,5 +41,5 @@ void Orb::SetColor(float r, float g, float b) {
 }
 
 void Orb::ColorDefault() {
-	Color = glColor(0.164, 0.180, 0.471);
+	Color = glColor(0.263, 0.525, 0.745);
 }

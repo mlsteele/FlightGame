@@ -62,7 +62,8 @@ void Ship::PaintTargets() {
 	
 	// Color Scoped
 	Orb* ToPaint = FirstInScope();
-	if (ToPaint != NULL) { ToPaint->SetColor(0.263, 0.525, 0.745); }
+	float bt = .1;
+	if (ToPaint != NULL) { ToPaint->SetColor(0.263+bt, 0.525+bt, 0.745+bt); }
 	
 	// Color Active
 	if (ActiveBall != NULL) { ActiveBall->SetColor(.5, 1, .5); }

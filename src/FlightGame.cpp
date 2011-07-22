@@ -29,63 +29,28 @@ FlightGame::FlightGame() :
 	// Ship
 	Ship& MainShip = *FGArena.Register( new Ship( V3D(0, 0, 100), &FGArena) );
 	
-	
-	// Strand Sets
-	for (float s = 1, ax = -40; s < 2; s += .1, ax += 5) {
-		Orb* OA = FGArena.Register( new Orb ( V3D(ax, -4, 0), s ) );
-		OA->Vel.z -= .05;
-		Orb* OB = FGArena.Register( new Orb ( V3D(ax, 4, 0), s ) );
-		FGArena.Register( new Strand ( OA, OB, 2 ) );
-		
-		std::cout << "Pair X: " << ax << "\tScale: " << s << "\n";
+	// Random Orbs
+	for (int i = 0; i < 40; ++i) {
+		V3D randpos(
+			  (rand() / static_cast<float>(RAND_MAX) * 50) - 25
+			, (rand() / static_cast<float>(RAND_MAX) * 50) - 25
+			, (rand() / static_cast<float>(RAND_MAX) * 50) - 25
+		);
+		FGArena.Register( new Orb ( randpos, 1.f ) );
 	}
 	
-	
-	// Orb Fabric
-	int fdx = 10;
-	int fdy = 20;
-	float headx = -40; float heady = -40; float headz = -20;
-	float fspace = 4;
-	Orb *FabricOrbs[fdx][fdy];
-	
-	// Place Orbs
-	for (int x = 0; x < fdx; ++x, headx += fspace) {
-		for (int y = 0; y < fdy; ++y, heady += fspace) {
-			FabricOrbs[x][y] = FGArena.Register( new Orb ( V3D(headx, heady, headz), 1 ) );
-		} heady -= fdy*fspace;
-	} headx -= fdx*fspace;
-	
-	// Attach Strands
-	for (int x = 0; x < fdx-1; ++x) {
-		for (int y = 0; y < fdy-1; ++y) {
-			FGArena.Register( new Strand (
-				  FabricOrbs[x][y]
-				, FabricOrbs[x+1][y]
-			, fspace ) );
-			
-			FGArena.Register( new Strand (
-				  FabricOrbs[x][y]
-				, FabricOrbs[x][y+1]
-			, fspace ) );
-		}
+	for (int i = 0; i < 4; ++i) {
+		V3D randpos(
+			  (rand() / static_cast<float>(RAND_MAX) * 50) - 25
+			, (rand() / static_cast<float>(RAND_MAX) * 50) - 25
+			, (rand() / static_cast<float>(RAND_MAX) * 50) - 25
+		);
+		FGArena.Register( new Orb ( randpos, 5.f ) );
 	}
-	for (int x = 0; x < fdx-1; ++x) {
-		FGArena.Register( new Strand (
-			  FabricOrbs[x]  [fdy-1]
-			, FabricOrbs[x+1][fdy-1]
-		, fspace ) );
-	}
-	for (int y = 0; y < fdy-1; ++y) {
-		FGArena.Register( new Strand (
-			  FabricOrbs[fdx-1][y]
-			, FabricOrbs[fdx-1][y+1]
-		, fspace ) );
-	}
-	
 	
 	// Camera
 	Cam.Settings(90, ASPECT, .1, 500);
-	Cam.Attach(FGArena.Ships[0]);
+	Cam.Attach(*FGArena.Ships.begin());
 	
 	
 	/////////////////////////////////

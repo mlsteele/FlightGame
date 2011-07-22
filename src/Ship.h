@@ -34,6 +34,7 @@ class Ship : public Pushable {
 		float TractorPower;
 		
 		Orb* ActiveBall;
+		Strand* GrappleStrand;
 	
 	public:
 		Ship (V3D _pos, Arena* _arena);
@@ -78,6 +79,9 @@ class Ship : public Pushable {
 		
 		void FireOn();
 		void FireOff();
+		
+		void GrappleOn();
+		void GrappleOff();
 		
 		private:
 			Orb* FirstInScope();

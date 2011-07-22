@@ -1,6 +1,7 @@
 #ifndef _ORB_H_
 	#define _ORB_H_
 
+#include <iostream>
 #include <OpenGL/gl.h>
 #include <GLUT/glut.h>
 

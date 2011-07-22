@@ -10,7 +10,14 @@ Orb::Orb (V3D _pos, float _rad)
 	, Color( 0.164, 0.180, 0.471 )
 {
 //	float SurfaceArea = 4*M_PI*pow(_rad,2);
-	int res = 8;
+	int res = 2;
+	if (_rad <= 3.) {
+		res = 16;
+	} else if (_rad <= 20.) {
+		res = 20;
+	} else {
+		std::cerr << "ERROR: Sphere bigger than I know how to draw!\n\t" << __FILE__ << ": " << __LINE__ << "\n";
+	}
 	
 	// Setup Rendering Display List
 	DL = glGenLists(1);

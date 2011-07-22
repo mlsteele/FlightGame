@@ -1,8 +1,8 @@
 #ifndef _ARENA_H_
 	#define _ARENA_H_
 
-#include <vector>
-using std::vector;
+#include <list>
+using std::list;
 #include <OpenGL/gl.h>
 #include <GLUT/glut.h>
 
@@ -15,9 +15,9 @@ class Ship;
 /// \brief Physical object container
 class Arena {
 	public:
-		vector<Orb*>		Orbs;
-		vector<Ship*>		Ships;
-		vector<Strand*> 	Strands;
+		list<Orb*>		Orbs;
+		list<Ship*>		Ships;
+		list<Strand*> 	Strands;
 	
 	public:
 		/// \brief Constructor loads bounding model
@@ -34,6 +34,7 @@ class Arena {
 		inline Ship* 	Register(Ship* _op)		{ Ships.push_back(_op); return _op; };
 		/// \brief Register Strand into arena
 		inline Strand* 	Register(Strand* _op)	{ Strands.push_back(_op); return _op; };
+		inline Strand*  DeRegister(Strand* _op) { Strands.remove(_op); return _op; };
 		
 		/// \brief Enact a soft elastic collision on two pushables
 		/// \return Whether collision occured

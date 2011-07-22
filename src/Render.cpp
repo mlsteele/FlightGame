@@ -1,7 +1,7 @@
 #include "FlightGame.h"
 
 void FlightGame::Render3D() {
-	Ship& MainShip = *(FGArena.Ships[0]);
+	Ship& MainShip = *(*FGArena.Ships.begin());
 	
 	// Enable Depth
 	glEnable(GL_DEPTH_TEST);
@@ -27,7 +27,7 @@ void FlightGame::Render3D() {
 }
 
 void FlightGame::Render2D() {
-	Ship& MainShip = *(FGArena.Ships[0]);
+	Ship& MainShip = *(*FGArena.Ships.begin());
 	
 	// Depth Disable
 	glDisable(GL_DEPTH_TEST);

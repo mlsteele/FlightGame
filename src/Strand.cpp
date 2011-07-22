@@ -26,7 +26,7 @@ void Strand::InfluencePair(Pushable* A, Pushable* B, bool viscize) {
 	V3D force;
 	
 	// F [varies with] k*x
-	k = .009; // Spring Constant (compiled in)
+	k = .012; // Spring Constant (compiled in)
 	float x = diffp.Length() - MiniTargL();
 	force = diffp.Normalized()*x*k;
 	A->PushGlobal(force);
@@ -42,7 +42,7 @@ void Strand::InfluencePair(Pushable* A, Pushable* B, bool viscize) {
 	}
 }
 
-void Strand::Update() {
+void Strand::Update() { for (int c = 0; c < 5; ++c) {
 	// Influence all by pairs
 	for (unsigned int n = 1; n < Nodes.size(); ++n) {
 		InfluencePair( Nodes[n], Nodes[n-1], true );
@@ -52,11 +52,12 @@ void Strand::Update() {
 	InfluencePair( Nodes[0], Head, false );
 	InfluencePair( *Nodes.rbegin(), Tail, false );
 	
+	
 	// Update all internal (not ends)
 	for (vector<Pushable*>::iterator itA = Nodes.begin(); itA != Nodes.end(); ++itA) {
 		(**itA).Update();
 	}
-}
+}}
 
 void Strand::Render() const {
 	glDisable(GL_LIGHTING);

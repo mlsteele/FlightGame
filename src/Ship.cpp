@@ -11,6 +11,7 @@ Ship::Ship (V3D _pos, Arena* _arena)
 	, TractorDir(0)
 	, TractorPower(.04) // Tractor beam power compiled in
 	, ActiveBall(NULL)
+	, GrappleStrand(NULL)
 {
 	SArena = _arena;
 }
@@ -55,7 +56,7 @@ void Ship::TractorEffect() {
 void Ship::PaintTargets() {
 	
 	// Default Colors
-	for (vector<Orb*>::iterator itA = SArena->Orbs.begin(); itA != SArena->Orbs.end(); ++itA) {
+	for (list<Orb*>::iterator itA = SArena->Orbs.begin(); itA != SArena->Orbs.end(); ++itA) {
 		(**itA).ColorDefault();
 	}
 	
@@ -65,6 +66,11 @@ void Ship::PaintTargets() {
 	
 	// Color Active
 	if (ActiveBall != NULL) { ActiveBall->SetColor(.5, 1, .5); }
+	
+	// Color Grappled
+	if (GrappleStrand) {
+		static_cast<Orb*>(GrappleStrand->Head)->SetColor(1, .5, .5);
+	}
 }
 
 void Ship::FireOn() {
@@ -89,11 +95,31 @@ void Ship::FireOff() {
 	ActiveBall = NULL;
 }
 
+void Ship::GrappleOn() {
+	Orb* GrappleBall = FirstInScope();
+	
+	// Safety
+	if (GrappleBall == NULL) {return;}
+	
+	GrappleStrand = SArena->Register( new Strand(GrappleBall, this, (GrappleBall->Pos - Pos).Length() ) );
+//	GrappleStrand = SArena->Register( new Strand(GrappleBall, this, 4 ) );
+}
+
+void Ship::GrappleOff() {
+	// Safety
+	if (GrappleStrand == NULL) {return;}
+	
+	SArena->DeRegister(GrappleStrand);
+	
+	GrappleStrand = NULL;
+}
+
+
 Orb* Ship::FirstInScope() {
 	Orb* theOne = NULL;
 	float theZ = 1e40;
 	
-	for (vector<Orb*>::iterator itA = SArena->Orbs.begin(); itA != SArena->Orbs.end(); ++itA) {
+	for (list<Orb*>::iterator itA = SArena->Orbs.begin(); itA != SArena->Orbs.end(); ++itA) {
 		// Local position of target object
 		V3D LP = GTL((**itA).Pos);
 		

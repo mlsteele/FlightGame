@@ -2,7 +2,7 @@
 
 void FlightGame::InputHandler() {
 	const sf::Input &WInput = Window.GetInput();
-	Ship& MainShip = *(FGArena.Ships[0]);
+	Ship& MainShip = *(*FGArena.Ships.begin());
 	
 	// Initialize or stash mouse position
 	if (nFrame < 2){
@@ -28,6 +28,17 @@ void FlightGame::InputHandler() {
 		}
 		else if (Event.Type == sf::Event::MouseButtonReleased) {
 			MainShip.FireOff();
+		}
+		
+		else if (Event.Type == sf::Event::KeyPressed) {
+			if (Event.Key.Code == sf::Key::RAlt) {
+				MainShip.GrappleOn();
+			}
+		}
+		else if (Event.Type == sf::Event::KeyReleased) {
+			if (Event.Key.Code == sf::Key::RAlt) {
+				MainShip.GrappleOff();
+			}
 		}
 	}
 	if ( WInput.IsKeyDown(sf::Key::Escape) ) {

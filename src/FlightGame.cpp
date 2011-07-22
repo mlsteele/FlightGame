@@ -15,12 +15,22 @@ FlightGame::FlightGame() :
 		4,	// antialiasing
 		2,	// major
 		0);	// minor
-	WIDTH = DesktopMode.Width;
-	HEIGHT = DesktopMode.Height;
-	ASPECT = float(WIDTH)/float(HEIGHT);
-	Window.Create(DesktopMode, "FlightGame", sf::Style::Fullscreen, OGLContext);
-	Window.SetActive();
+	std::string windowName = "FlightGame";
 	
+	// Fullscreen Switch
+	if (true) {
+		WIDTH = DesktopMode.Width;
+		HEIGHT = DesktopMode.Height;
+		ASPECT = WIDTH/HEIGHT;
+		Window.Create(DesktopMode, windowName, sf::Style::Fullscreen, OGLContext);
+	} else {
+		WIDTH = 800;
+		HEIGHT = 600;
+		ASPECT = WIDTH/HEIGHT;
+		Window.Create(sf::VideoMode(WIDTH, HEIGHT), windowName, sf::Style::Default, OGLContext);
+	}
+	
+	Window.SetActive();
 	Window.ShowMouseCursor(false);
 	Window.SetCursorPosition(WIDTH/2, HEIGHT/2);
 	mX = WIDTH/2; mY = HEIGHT/2;

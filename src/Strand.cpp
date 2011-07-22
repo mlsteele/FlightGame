@@ -71,7 +71,7 @@ void Strand::Render() const {
 		diffv = Nodes[n-1]->Pos - Nodes[n]->Pos;
 		x = diffv.Length() - MiniTargL();
 		x = fmin(abs(x)/3.f, 1.f);
-		glColor3f(0.867, 0.420, 0.0);
+		glColor3f(0.867, 0.867, 0.867);
 		glBegin(GL_LINES);
 			glVertex3f(Nodes[n]->Pos.x, Nodes[n]->Pos.y, Nodes[n]->Pos.z);
 			glVertex3f(Nodes[n-1]->Pos.x, Nodes[n-1]->Pos.y, Nodes[n-1]->Pos.z);
@@ -82,7 +82,7 @@ void Strand::Render() const {
 		diffv = Nodes[0]->Pos - Head->Pos;
 		x = diffv.Length() - MiniTargL();
 		x = fmin(fabs(x)/3.f, 1.f);
-		glColor3f(0.867, 0.420, 0.0);
+		glColor3f(0.867, 0.867, 0.867);
 		glVertex3f(Nodes[0]->Pos.x, Nodes[0]->Pos.y, Nodes[0]->Pos.z);
 		glVertex3f(Head->Pos.x, Head->Pos.y, Head->Pos.z);
 	glEnd();
@@ -91,7 +91,7 @@ void Strand::Render() const {
 		diffv = (*Nodes.rbegin())->Pos - Head->Pos;
 		x = diffv.Length() - MiniTargL();
 		x = fmin(fabs(x)/3.f, 1.f);
-		glColor3f(0.867, 0.420, 0.0);
+		glColor3f(0.867, 0.867, 0.867);
 		glVertex3f((*Nodes.rbegin())->Pos.x, (*Nodes.rbegin())->Pos.y, (*Nodes.rbegin())->Pos.z);
 		glVertex3f(Tail->Pos.x, Tail->Pos.y, Tail->Pos.z);
 	glEnd();

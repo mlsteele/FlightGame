@@ -50,15 +50,15 @@ void FlightGame::Render2D() {
 	glTranslatef(WIDTH/2, thrad + 5, 0);
 	if (MainShip.TractorDir == 0) {
 		// Tractor is off
-		glColor3f(0, 0, .8);
+		glColor3f(.5, .5, .5);
 	} else if (MainShip.TractorDir == 1) {
 		// Tractor is push
 		glTranslatef(-2*thrad - thpad, 0, 0);
-		glColor3f(0, .8, 0);
+		glColor3f(1, 1, 1);
 	} else if (MainShip.TractorDir == -1) {
 		// Tractor is pull
 		glTranslatef(2*thrad + thpad, 0, 0);
-		glColor3f(.8, 0, 0);
+		glColor3f(0, 0, 0);
 	} else {
 		std::cout << "Strange, the tractor beam is not going the right way\t" << __LINE__ << "\n";
 	}
@@ -70,18 +70,18 @@ void FlightGame::Render2D() {
 	glTranslatef(WIDTH/2, HEIGHT/2, 0);
 	
 	// Reticle
-	glColor3f(.1, .05, .3);
+	glColor3f(.1, .1, .1);
 	gluDisk(GLUQ, 17, 20, 32, 1);
 	
 	// Accel Indicator
-	glColor3f(.05, .4, .1);
+	glColor3f(.25, .25, .25);
 	gluPartialDisk(GLUQ, 21, 23, 32, 1, 0, MainShip.Vel.Length()*500);
-	glColor3f(0.7, .1, .7); // Purple
+	glColor3f(0.6, .6, .6); // Purple
 	gluPartialDisk(GLUQ, 24, 26, 32, 1, 0, MainShip.Fd.Dot(MainShip.Vel) *500);
 	
 	// Airbrake Indicator
 	if (MainShip.BrakeVal != 0) {
-		glColor3f(.5, .1, .1);
+		glColor3f(.2, .2, .2);
 		gluDisk(GLUQ, 27, 30, 32, 1);
 	}
 	
@@ -93,13 +93,13 @@ void FlightGame::Render2D() {
 	glLoadIdentity();
 	glTranslatef(mX, mY, 0);
 	glScalef(.7, .7, 1);
-	glColor3f(.7, .3, .8);
+	glColor3f(.4, .4, .4);
 	glBegin(GL_TRIANGLES);
 		glVertex3f(10, 0, 0);
 		glVertex3f(-10, 0, 0);
 		glVertex3f(0, 10, 0);
 	glEnd();
-	glColor3f(.4, .2, 1);
+	glColor3f(.23, .23, .23);
 	gluDisk(GLUQ, 15, 20, 4, 1);
 	glPopMatrix();
 }

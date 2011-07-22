@@ -7,7 +7,7 @@ Orb::Orb (V3D _pos, float _rad)
 		, (1 /*Density*/ ) * (4.f/3.f) * M_PI * pow(_rad, 3) // Orb density compiled in
 		, _rad
 	)
-	, Color( 0.164, 0.180, 0.471 )
+	, Color( 0.525, 0.525, 0.525 )
 {
 //	float SurfaceArea = 4*M_PI*pow(_rad,2);
 	int res = 2;
@@ -41,5 +41,5 @@ void Orb::SetColor(float r, float g, float b) {
 }
 
 void Orb::ColorDefault() {
-	Color = glColor(0.263, 0.525, 0.745);
+	Color = glColor(0.525, 0.525, 0.525);
 }

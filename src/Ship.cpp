@@ -63,14 +63,14 @@ void Ship::PaintTargets() {
 	// Color Scoped
 	Orb* ToPaint = FirstInScope();
 	float bt = .1;
-	if (ToPaint != NULL) { ToPaint->SetColor(0.263+bt, 0.525+bt, 0.745+bt); }
+	if (ToPaint != NULL) { ToPaint->SetColor(0.525+bt, 0.525+bt, 0.525+bt); }
 	
 	// Color Active
-	if (ActiveBall != NULL) { ActiveBall->SetColor(.5, 1, .5); }
+	if (ActiveBall != NULL) { ActiveBall->SetColor(.33, .33, .33); }
 	
 	// Color Grappled
 	if (GrappleStrand) {
-		static_cast<Orb*>(GrappleStrand->Head)->SetColor(1, .5, .5);
+		static_cast<Orb*>(GrappleStrand->Head)->SetColor(.33, .33, .33);
 	}
 }
 

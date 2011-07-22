@@ -1,0 +1,298 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 45;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0200C32F13D95F0F0025DF78 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0200C32E13D95F0F0025DF78 /* OpenGL.framework */; };
+		0200C33313D95F130025DF78 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0200C33213D95F130025DF78 /* GLUT.framework */; };
+		0200C3AC13D9676D0025DF78 /* libsfml-system.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0200C33D13D961530025DF78 /* libsfml-system.dylib */; };
+		0200C3AD13D9676D0025DF78 /* libsfml-window.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0200C33F13D961530025DF78 /* libsfml-window.dylib */; };
+		0200C5B713D992E30025DF78 /* Arena.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0200C5A213D992E30025DF78 /* Arena.cpp */; };
+		0200C5B813D992E30025DF78 /* FlightGame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0200C5A413D992E30025DF78 /* FlightGame.cpp */; };
+		0200C5B913D992E30025DF78 /* InputHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0200C5A713D992E30025DF78 /* InputHandler.cpp */; };
+		0200C5BA13D992E30025DF78 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0200C5A813D992E30025DF78 /* main.cpp */; };
+		0200C5BB13D992E30025DF78 /* Oggler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0200C5A913D992E30025DF78 /* Oggler.cpp */; };
+		0200C5BC13D992E30025DF78 /* Orb.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0200C5AB13D992E30025DF78 /* Orb.cpp */; };
+		0200C5BD13D992E30025DF78 /* Orientable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0200C5AD13D992E30025DF78 /* Orientable.cpp */; };
+		0200C5BE13D992E30025DF78 /* Pushable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0200C5AF13D992E30025DF78 /* Pushable.cpp */; };
+		0200C5BF13D992E30025DF78 /* Render.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0200C5B113D992E30025DF78 /* Render.cpp */; };
+		0200C5C013D992E30025DF78 /* Ship.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0200C5B213D992E30025DF78 /* Ship.cpp */; };
+		0200C5C113D992E30025DF78 /* Strand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0200C5B413D992E30025DF78 /* Strand.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		8DD76F690486A84900D96B5E /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 8;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		0200C29013D95C180025DF78 /* src */ = {isa = PBXFileReference; lastKnownFileType = folder; path = src; sourceTree = "<group>"; };
+		0200C32E13D95F0F0025DF78 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		0200C33213D95F130025DF78 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
+		0200C33D13D961530025DF78 /* libsfml-system.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libsfml-system.dylib"; path = "usr/local/lib/libsfml-system.dylib"; sourceTree = SDKROOT; };
+		0200C33F13D961530025DF78 /* libsfml-window.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libsfml-window.dylib"; path = "usr/local/lib/libsfml-window.dylib"; sourceTree = SDKROOT; };
+		0200C4FB13D98BE20025DF78 /* Notes */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Notes; sourceTree = "<group>"; };
+		0200C4FC13D98BE20025DF78 /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
+		0200C5A213D992E30025DF78 /* Arena.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Arena.cpp; path = src/Arena.cpp; sourceTree = "<group>"; };
+		0200C5A313D992E30025DF78 /* Arena.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Arena.h; path = src/Arena.h; sourceTree = "<group>"; };
+		0200C5A413D992E30025DF78 /* FlightGame.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FlightGame.cpp; path = src/FlightGame.cpp; sourceTree = "<group>"; };
+		0200C5A513D992E30025DF78 /* FlightGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FlightGame.h; path = src/FlightGame.h; sourceTree = "<group>"; };
+		0200C5A613D992E30025DF78 /* glColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = glColor.h; path = src/glColor.h; sourceTree = "<group>"; };
+		0200C5A713D992E30025DF78 /* InputHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = InputHandler.cpp; path = src/InputHandler.cpp; sourceTree = "<group>"; };
+		0200C5A813D992E30025DF78 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = src/main.cpp; sourceTree = "<group>"; };
+		0200C5A913D992E30025DF78 /* Oggler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Oggler.cpp; path = src/Oggler.cpp; sourceTree = "<group>"; };
+		0200C5AA13D992E30025DF78 /* Oggler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Oggler.h; path = src/Oggler.h; sourceTree = "<group>"; };
+		0200C5AB13D992E30025DF78 /* Orb.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Orb.cpp; path = src/Orb.cpp; sourceTree = "<group>"; };
+		0200C5AC13D992E30025DF78 /* Orb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Orb.h; path = src/Orb.h; sourceTree = "<group>"; };
+		0200C5AD13D992E30025DF78 /* Orientable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Orientable.cpp; path = src/Orientable.cpp; sourceTree = "<group>"; };
+		0200C5AE13D992E30025DF78 /* Orientable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Orientable.h; path = src/Orientable.h; sourceTree = "<group>"; };
+		0200C5AF13D992E30025DF78 /* Pushable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Pushable.cpp; path = src/Pushable.cpp; sourceTree = "<group>"; };
+		0200C5B013D992E30025DF78 /* Pushable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Pushable.h; path = src/Pushable.h; sourceTree = "<group>"; };
+		0200C5B113D992E30025DF78 /* Render.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Render.cpp; path = src/Render.cpp; sourceTree = "<group>"; };
+		0200C5B213D992E30025DF78 /* Ship.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Ship.cpp; path = src/Ship.cpp; sourceTree = "<group>"; };
+		0200C5B313D992E30025DF78 /* Ship.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Ship.h; path = src/Ship.h; sourceTree = "<group>"; };
+		0200C5B413D992E30025DF78 /* Strand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Strand.cpp; path = src/Strand.cpp; sourceTree = "<group>"; };
+		0200C5B513D992E30025DF78 /* Strand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Strand.h; path = src/Strand.h; sourceTree = "<group>"; };
+		0200C5B613D992E30025DF78 /* V3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = V3D.h; path = src/V3D.h; sourceTree = "<group>"; };
+		0200C5C213D992EE0025DF78 /* Doxyfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Doxyfile; path = src/Doxyfile; sourceTree = "<group>"; };
+		8DD76F6C0486A84900D96B5E /* FlightGame */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = FlightGame; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8DD76F660486A84900D96B5E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0200C32F13D95F0F0025DF78 /* OpenGL.framework in Frameworks */,
+				0200C33313D95F130025DF78 /* GLUT.framework in Frameworks */,
+				0200C3AC13D9676D0025DF78 /* libsfml-system.dylib in Frameworks */,
+				0200C3AD13D9676D0025DF78 /* libsfml-window.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0200C50113D98C010025DF78 /* Misc */ = {
+			isa = PBXGroup;
+			children = (
+				0200C4FB13D98BE20025DF78 /* Notes */,
+				0200C4FC13D98BE20025DF78 /* README */,
+				0200C5C213D992EE0025DF78 /* Doxyfile */,
+			);
+			name = Misc;
+			sourceTree = "<group>";
+		};
+		0200C5A113D992CE0025DF78 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				0200C5A213D992E30025DF78 /* Arena.cpp */,
+				0200C5A313D992E30025DF78 /* Arena.h */,
+				0200C5A413D992E30025DF78 /* FlightGame.cpp */,
+				0200C5A513D992E30025DF78 /* FlightGame.h */,
+				0200C5A613D992E30025DF78 /* glColor.h */,
+				0200C5A713D992E30025DF78 /* InputHandler.cpp */,
+				0200C5A813D992E30025DF78 /* main.cpp */,
+				0200C5A913D992E30025DF78 /* Oggler.cpp */,
+				0200C5AA13D992E30025DF78 /* Oggler.h */,
+				0200C5AB13D992E30025DF78 /* Orb.cpp */,
+				0200C5AC13D992E30025DF78 /* Orb.h */,
+				0200C5AD13D992E30025DF78 /* Orientable.cpp */,
+				0200C5AE13D992E30025DF78 /* Orientable.h */,
+				0200C5AF13D992E30025DF78 /* Pushable.cpp */,
+				0200C5B013D992E30025DF78 /* Pushable.h */,
+				0200C5B113D992E30025DF78 /* Render.cpp */,
+				0200C5B213D992E30025DF78 /* Ship.cpp */,
+				0200C5B313D992E30025DF78 /* Ship.h */,
+				0200C5B413D992E30025DF78 /* Strand.cpp */,
+				0200C5B513D992E30025DF78 /* Strand.h */,
+				0200C5B613D992E30025DF78 /* V3D.h */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+		08FB7794FE84155DC02AAC07 /* FlightGame */ = {
+			isa = PBXGroup;
+			children = (
+				0200C5A113D992CE0025DF78 /* Source */,
+				0200C50113D98C010025DF78 /* Misc */,
+				0200C29013D95C180025DF78 /* src */,
+				1AB674ADFE9D54B511CA2CBB /* Products */,
+				0200C32E13D95F0F0025DF78 /* OpenGL.framework */,
+				0200C33213D95F130025DF78 /* GLUT.framework */,
+				0200C33D13D961530025DF78 /* libsfml-system.dylib */,
+				0200C33F13D961530025DF78 /* libsfml-window.dylib */,
+			);
+			name = FlightGame;
+			sourceTree = "<group>";
+		};
+		1AB674ADFE9D54B511CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8DD76F6C0486A84900D96B5E /* FlightGame */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8DD76F620486A84900D96B5E /* FlightGame */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1DEB923108733DC60010E9CD /* Build configuration list for PBXNativeTarget "FlightGame" */;
+			buildPhases = (
+				8DD76F640486A84900D96B5E /* Sources */,
+				8DD76F660486A84900D96B5E /* Frameworks */,
+				8DD76F690486A84900D96B5E /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = FlightGame;
+			productInstallPath = "$(HOME)/bin";
+			productName = FlightGame;
+			productReference = 8DD76F6C0486A84900D96B5E /* FlightGame */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		08FB7793FE84155DC02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 1DEB923508733DC60010E9CD /* Build configuration list for PBXProject "FlightGame" */;
+			compatibilityVersion = "Xcode 3.1";
+			developmentRegion = English;
+			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+			);
+			mainGroup = 08FB7794FE84155DC02AAC07 /* FlightGame */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8DD76F620486A84900D96B5E /* FlightGame */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8DD76F640486A84900D96B5E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0200C5B713D992E30025DF78 /* Arena.cpp in Sources */,
+				0200C5B813D992E30025DF78 /* FlightGame.cpp in Sources */,
+				0200C5B913D992E30025DF78 /* InputHandler.cpp in Sources */,
+				0200C5BA13D992E30025DF78 /* main.cpp in Sources */,
+				0200C5BB13D992E30025DF78 /* Oggler.cpp in Sources */,
+				0200C5BC13D992E30025DF78 /* Orb.cpp in Sources */,
+				0200C5BD13D992E30025DF78 /* Orientable.cpp in Sources */,
+				0200C5BE13D992E30025DF78 /* Pushable.cpp in Sources */,
+				0200C5BF13D992E30025DF78 /* Render.cpp in Sources */,
+				0200C5C013D992E30025DF78 /* Ship.cpp in Sources */,
+				0200C5C113D992E30025DF78 /* Strand.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		1DEB923208733DC60010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				HEADER_SEARCH_PATHS = /usr/local/include;
+				INSTALL_PATH = /usr/local/bin;
+				LD_RUNPATH_SEARCH_PATHS = "";
+				LIBRARY_SEARCH_PATHS = /usr/local/lib/;
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = FlightGame;
+			};
+			name = Debug;
+		};
+		1DEB923308733DC60010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_MODEL_TUNING = G5;
+				HEADER_SEARCH_PATHS = /usr/local/include;
+				INSTALL_PATH = /usr/local/bin;
+				LD_RUNPATH_SEARCH_PATHS = "";
+				LIBRARY_SEARCH_PATHS = /usr/local/lib/;
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = FlightGame;
+			};
+			name = Release;
+		};
+		1DEB923608733DC60010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PREBINDING = NO;
+				SDKROOT = macosx10.6;
+			};
+			name = Debug;
+		};
+		1DEB923708733DC60010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PREBINDING = NO;
+				SDKROOT = macosx10.6;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1DEB923108733DC60010E9CD /* Build configuration list for PBXNativeTarget "FlightGame" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB923208733DC60010E9CD /* Debug */,
+				1DEB923308733DC60010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1DEB923508733DC60010E9CD /* Build configuration list for PBXProject "FlightGame" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB923608733DC60010E9CD /* Debug */,
+				1DEB923708733DC60010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 08FB7793FE84155DC02AAC07 /* Project object */;
+}

@@ -125,14 +125,12 @@ Orb* Ship::FirstInScope() {
 		V3D LP = GTL((**itA).Pos);
 		
 		// Abort if out of region
-		float r = sqrt( (LP.x)*(LP.x) + (LP.y)*(LP.y) ); // pythagorean theorem
+		float r = sqrt( (LP.x)*(LP.x) + (LP.y)*(LP.y) ); // Cylindrical coordinate. Cylinder long axis from eyes to back of head.
 		float rmax = r + (**itA).Rad;
 		float rmin = r - (**itA).Rad;
 		if (not(
 			0 < rmax/LP.z && rmin/LP.z < .05 // Define region
-		)) {
-			continue;
-		}
+		)) {continue;}
 		
 		// Pick the closest
 		if (LP.z < theZ) {

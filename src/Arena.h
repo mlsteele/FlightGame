@@ -15,6 +15,7 @@ class Ship;
 /// \brief Physical object container
 class Arena {
 	public:
+		const float asize;
 		list<Orb*>		Orbs;
 		list<Ship*>		Ships;
 		list<Strand*> 	Strands;

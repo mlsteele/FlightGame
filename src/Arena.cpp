@@ -2,9 +2,7 @@
 
 #include "Ship.h"
 
-Arena::Arena()
-{
-}
+Arena::Arena() : asize(25) {}
 
 void Arena::Update () {	
 	list<Pushable*> sphericals;
@@ -62,18 +60,18 @@ void Arena::Render() {
 		
 	// Render Bounds
 	glColor3f(.6, .6, .6);
-	glutSolidCube(50);
+	glutSolidCube(asize*2);
 }
 
 /// Uses fluffy collision.\n
 /// If objects are intersecting, use a spring from the farthest intersecting surface.
 bool Arena::FluffyCollideSpheres (Pushable* A, Pushable* B) {
 	// Information
-	float distance = (A->Pos - B->Pos).Length();
-	float mindist = (A->Rad + B->Rad);
+	float distanceSq = (A->Pos - B->Pos).LengthSq();
+	float mindistSq = (A->Rad + B->Rad) * (A->Rad + B->Rad);
 	
 	// Do nothing if there is no collision
-	if ( distance > mindist ) {
+	if ( distanceSq > mindistSq ) {
 		return false;
 	}
 	
@@ -127,38 +125,38 @@ bool Arena::CollideBounds (Pushable* obj) {
 	float rad = (*obj).Rad;
 	
 	// X
-	if ( (*obj).Pos.x - rad < -25 ) {
+	if ( (*obj).Pos.x - rad < -asize ) {
 		(*obj).Vel.x = fabs((*obj).Vel.x);
-		(*obj).Pos.x = -25 + rad;
+		(*obj).Pos.x = -asize + rad;
 		hit = true;
 	} else
-	if ( (*obj).Pos.x + rad > 25 ) {
+	if ( (*obj).Pos.x + rad > asize ) {
 		(*obj).Vel.x = -fabs((*obj).Vel.x);
-		(*obj).Pos.x = 25 - rad;
+		(*obj).Pos.x = asize - rad;
 		hit = true;
 	}
 	
 	// Y
-	if ( (*obj).Pos.y - rad < -25 ) {
+	if ( (*obj).Pos.y - rad < -asize ) {
 		(*obj).Vel.y = fabs((*obj).Vel.y);
-		(*obj).Pos.y = -25 + rad;
+		(*obj).Pos.y = -asize + rad;
 		hit = true;
 	} else
-	if ( (*obj).Pos.y + rad > 25 ) {
+	if ( (*obj).Pos.y + rad > asize ) {
 		(*obj).Vel.y = -fabs((*obj).Vel.y);
-		(*obj).Pos.y = 25 - rad;
+		(*obj).Pos.y = asize - rad;
 		hit = true;
 	}
 	
 	// Z
-	if ( (*obj).Pos.z - rad < -25 ) {
+	if ( (*obj).Pos.z - rad < -asize ) {
 		(*obj).Vel.z = fabs((*obj).Vel.z);
-		(*obj).Pos.z = -25 + rad;
+		(*obj).Pos.z = -asize + rad;
 		hit = true;
 	} else
-	if ( (*obj).Pos.z + rad > 25 ) {
+	if ( (*obj).Pos.z + rad > asize ) {
 		(*obj).Vel.z = -fabs((*obj).Vel.z);
-		(*obj).Pos.z = 25 - rad;
+		(*obj).Pos.z = asize - rad;
 		hit = true;
 	}
 	

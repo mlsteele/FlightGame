@@ -59,3 +59,5 @@ osmos style
 
 parse object and configuration files
 using python?
+
+fix collision embedding at near-zero velocities

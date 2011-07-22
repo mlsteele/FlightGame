@@ -125,9 +125,14 @@ class V3D {
 			Set(nx, ny, nz);
 		};
 		
-		/// \brief Computer the length of a vector
+		/// \brief Compute the length of a vector
 		inline float Length() const {
-			return sqrt( pow(x,2) + pow(y,2) + pow(z,2) );
+			return sqrt( x*x + y*y + z*z );
+		};
+		
+		/// \brief Compute the length squared of a vector
+		inline float LengthSq() const {
+			return x*x + y*y + z*z;
 		};
 		
 		/// \brief Normalize vector into unit (set)

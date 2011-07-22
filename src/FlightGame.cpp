@@ -37,23 +37,24 @@ FlightGame::FlightGame() :
 	
 	// Setup Arena
 	// Ship
-	Ship& MainShip = *FGArena.Register( new Ship( V3D(0, 0, 100), &FGArena) );
+	// Ship& MainShip = *FGArena.Register( new Ship( V3D(0, 0, 100), &FGArena) );
+	*FGArena.Register( new Ship( V3D(0, 0, 100), &FGArena) );
 	
 	// Random Orbs
-	for (int i = 0; i < 40; ++i) {
+	for (int i = 0; i < 40*4; ++i) {
 		V3D randpos(
-			  (rand() / static_cast<float>(RAND_MAX) * 50) - 25
-			, (rand() / static_cast<float>(RAND_MAX) * 50) - 25
-			, (rand() / static_cast<float>(RAND_MAX) * 50) - 25
+			  (rand() / static_cast<float>(RAND_MAX) * FGArena.asize*2) - FGArena.asize
+			, (rand() / static_cast<float>(RAND_MAX) * FGArena.asize*2) - FGArena.asize
+			, (rand() / static_cast<float>(RAND_MAX) * FGArena.asize*2) - FGArena.asize
 		);
 		FGArena.Register( new Orb ( randpos, 1.f ) );
 	}
 	
-	for (int i = 0; i < 4; ++i) {
+	for (int i = 0; i < 4*4; ++i) {
 		V3D randpos(
-			  (rand() / static_cast<float>(RAND_MAX) * 50) - 25
-			, (rand() / static_cast<float>(RAND_MAX) * 50) - 25
-			, (rand() / static_cast<float>(RAND_MAX) * 50) - 25
+			  (rand() / static_cast<float>(RAND_MAX) * FGArena.asize*2) - FGArena.asize
+			, (rand() / static_cast<float>(RAND_MAX) * FGArena.asize*2) - FGArena.asize
+			, (rand() / static_cast<float>(RAND_MAX) * FGArena.asize*2) - FGArena.asize
 		);
 		FGArena.Register( new Orb ( randpos, 5.f ) );
 	}

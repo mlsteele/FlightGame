@@ -34,6 +34,7 @@ class Strand {
 		/// \param _tail Tail end of strand
 		/// \param _targl Target length
 		Strand(Pushable* _head, Pushable* _tail, float _targl);
+		~Strand();
 		
 		/// \brief Update hidden members
 		///

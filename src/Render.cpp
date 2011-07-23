@@ -60,7 +60,7 @@ void FlightGame::Render2D() {
 		glTranslatef(2*thrad + thpad, 0, 0);
 		glColor3f(0, 0, 0);
 	} else {
-		std::cout << "Strange, the tractor beam is not going the right way\t" << __LINE__ << "\n";
+		std::cout << "Strange, the tractor beam is not going the right way\t" << __FILE__ << ": " << __LINE__ << "\n";
 	}
 	gluDisk(GLUQ, 0, thrad, 32, 1);
 	glPopMatrix();

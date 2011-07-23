@@ -19,6 +19,12 @@ Strand::Strand(Pushable* _head, Pushable* _tail, float _targl)
 	}
 }
 
+Strand::~Strand() {
+	for(std::vector<Pushable*>::iterator it = Nodes.begin(); it != Nodes.end(); ++it) {
+		delete *it;
+	}
+}
+
 // Private helper function
 void Strand::InfluencePair(Pushable* A, Pushable* B, bool viscize) {
 	float k;

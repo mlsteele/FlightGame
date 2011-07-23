@@ -10,8 +10,13 @@ all: FlightGame
 r:
 	$(TARGET)
 
+d:
+	gdb $(TARGET)
+
 cr: FlightGame r
 	
+
+cd: FlightGame d
 
 FlightGame:
 	$(CC) $(CFLAGS) $(CREQS) $(SRCROOT)/*.cpp -o $(TARGET)

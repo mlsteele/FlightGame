@@ -6,6 +6,8 @@ External dependencies are as follows:
 	- Doxygen for documentation generation (http://www.stack.nl/~dimitri/doxygen/index.html)
 
 Instructions:
-./compile-run # Compiles and runs application
+./make # Compiles
+./make cr # Compiles and runs
 ./build/FlightGame # Runs application
 ./doxyfy # Generate documentation
+Xcode project # magic

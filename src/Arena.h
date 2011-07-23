@@ -35,7 +35,8 @@ class Arena {
 		inline Ship* 	Register(Ship* _op)		{ Ships.push_back(_op); return _op; };
 		/// \brief Register Strand into arena
 		inline Strand* 	Register(Strand* _op)	{ Strands.push_back(_op); return _op; };
-		inline Strand*  DeRegister(Strand* _op) { Strands.remove(_op); return _op; };
+		/// \brief Unegister Strand from arena
+		inline Strand*  Unregister(Strand* _op) { Strands.remove(_op); return _op; };
 		
 		/// \brief Enact a soft elastic collision on two pushables
 		/// \return Whether collision occured

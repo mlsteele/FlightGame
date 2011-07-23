@@ -110,8 +110,9 @@ void Ship::GrappleOff() {
 	// Safety
 	if (GrappleStrand == NULL) {return;}
 	
-	SArena->DeRegister(GrappleStrand);
+	SArena->Unregister(GrappleStrand);
 	
+	delete GrappleStrand;
 	GrappleStrand = NULL;
 }
 
@@ -121,19 +122,13 @@ Orb* Ship::FirstInScope() {
 	float theZ = 1e40;
 	
 	for (list<Orb*>::iterator itA = SArena->Orbs.begin(); itA != SArena->Orbs.end(); ++itA) {
-		// Local position of target object
-		V3D LP = GTL((**itA).Pos);
-		
-		// Abort if out of region
+		V3D LP = GTL((**itA).Pos); // Local position of target object
 		float r = sqrt( (LP.x)*(LP.x) + (LP.y)*(LP.y) ); // Cylindrical coordinate. Cylinder long axis from eyes to back of head.
 		float rmax = r + (**itA).Rad;
 		float rmin = r - (**itA).Rad;
-		if (not(
-			0 < rmax/LP.z && rmin/LP.z < .05 // Define region
-		)) {continue;}
 		
-		// Pick the closest
-		if (LP.z < theZ) {
+		// Select if in region & closer than candidate
+		if (0 < rmax/LP.z && rmin/LP.z < .05 && LP.z < theZ) {
 			theOne = (*itA);
 			theZ = LP.z;
 		}

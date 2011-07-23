@@ -77,6 +77,11 @@ bool Arena::FluffyCollideSpheres (Pushable* A, Pushable* B) {
 	
 	V3D ColAxis = (A->Pos - B->Pos).Normalized();
 	
+//	// Operate directly on position to eliminate overlap
+//	float offBy = sqrt(mindistSq) - sqrt(distanceSq);
+//	A->Pos += ColAxis * offBy;
+//	B->Pos -= ColAxis * offBy;
+	
 	// Fluffy collision
 //	float k = 6.1; // Fluffiness constant
 //	A->PushGlobal( ColAxis * (distance-mindist) * -k );
@@ -89,7 +94,7 @@ bool Arena::FluffyCollideSpheres (Pushable* A, Pushable* B) {
 	// Abort if going in the right direction (kiss efficiency goodbye!)
 	// TODO: Verify
 	if ( A->Vel.Dot(ColAxis) > B->Vel.Dot(ColAxis) and (A->Vel.Dot(ColAxis) > 0) ) {
-		// Hit, but carry on.
+		// Report a hit(, a very palpable hit), but carry on.
 		return true;
 	}
 	
@@ -105,7 +110,7 @@ bool Arena::FluffyCollideSpheres (Pushable* A, Pushable* B) {
 	
 	// Physically Inelastic Elastic (1D) Collision
 	// http://en.wikipedia.org/wiki/Inelastic_collision
-	float Cr = .5;
+	float Cr = .5; // Coefficient of elasticity
 	float vA = ( Cr*mB*(uB-uA) + (mA*uA) +(mB*uB) ) / (mA + mB); // Final 1d velocity of A
 	float vB = ( Cr*mA*(uA-uB) + (mA*uA) +(mB*uB) ) / (mA + mB); // Final 1d velocity of B
 	

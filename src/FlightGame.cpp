@@ -18,7 +18,7 @@ FlightGame::FlightGame() :
 	std::string windowName = "FlightGame";
 	
 	// Fullscreen Switch
-	if (true) {
+	if (false) {
 		WIDTH = DesktopMode.Width;
 		HEIGHT = DesktopMode.Height;
 		ASPECT = WIDTH/HEIGHT;
@@ -38,7 +38,7 @@ FlightGame::FlightGame() :
 	// Setup Arena
 	// Ship
 	// Ship& MainShip = *FGArena.Register( new Ship( V3D(0, 0, 100), &FGArena) );
-	*FGArena.Register( new Ship( V3D(0, 0, 100), &FGArena) );
+	*FGArena.Register( new Ship( V3D(0, 0, FGArena.asize), &FGArena) );
 	
 	// Random Orbs
 	for (int i = 0; i < 40*4; ++i) {

@@ -59,7 +59,7 @@ void Strand::Update() { for (int c = 0; c < 5; ++c) {
 	InfluencePair( *Nodes.rbegin(), Tail, false );
 	
 	
-	// Update all internal (not ends)
+	// Update all internal nodes (not ends)
 	for (vector<Pushable*>::iterator itA = Nodes.begin(); itA != Nodes.end(); ++itA) {
 		(**itA).Update();
 	}

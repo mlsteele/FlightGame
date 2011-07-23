@@ -18,7 +18,7 @@ FlightGame::FlightGame() :
 	std::string windowName = "FlightGame";
 	
 	// Fullscreen Switch
-	if (false) {
+	if (true) {
 		WIDTH = DesktopMode.Width;
 		HEIGHT = DesktopMode.Height;
 		ASPECT = WIDTH/HEIGHT;

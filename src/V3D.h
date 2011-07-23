@@ -7,6 +7,7 @@
 #ifndef _V3D_H_
 	#define _V3D_H_
 
+#include <iostream>
 #include <cmath>
 
 class V3D {
@@ -103,7 +104,7 @@ class V3D {
 		
 		/// \brief Scalar Multiplication (no set)
 		inline const V3D operator* (const float &s) const {
-			return V3D(x*s, y*s, z*s);
+			return V3D(*this) *= s;
 		};
 		
 		/// \brief Scalar Divison (no set)
@@ -154,6 +155,14 @@ class V3D {
 		inline float Dot(const V3D& _v) const {
 			return (x*_v.x + y*_v.y + z*_v.z);
 		};
+		
+		inline void Print(std::string ID) const {
+			std::cout << ID << " -> V3D( " << x << ", " << y << ", " << z << " )\n";
+		}
+		
+		inline void Print() const {
+			std::cout << "V3D( " << x << ", " << y << ", " << z << " )\n";
+		}
 };
 
 #endif

@@ -93,7 +93,7 @@ bool Arena::FluffyCollideSpheres (Pushable* A, Pushable* B) {
 	
 	// Abort if going in the right direction (kiss efficiency goodbye!)
 	// TODO: Verify
-	if ( A->Vel.Dot(ColAxis) > B->Vel.Dot(ColAxis) and (A->Vel.Dot(ColAxis) > 0) ) {
+	if ( B->Vel.Dot(ColAxis) < A->Vel.Dot(ColAxis) ) {
 		// Report a hit(, a very palpable hit), but carry on.
 		return true;
 	}

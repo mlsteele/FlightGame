@@ -6,6 +6,21 @@
 	objectVersion = 45;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		0204938113DAD65100F517B4 /* Doxygen */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 0204938413DAD66F00F517B4 /* Build configuration list for PBXAggregateTarget "Doxygen" */;
+			buildPhases = (
+				0204938013DAD65100F517B4 /* ShellScript */,
+			);
+			dependencies = (
+				020493A513DAD6D200F517B4 /* PBXTargetDependency */,
+			);
+			name = Doxygen;
+			productName = Doxygen;
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
 		0200C32F13D95F0F0025DF78 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0200C32E13D95F0F0025DF78 /* OpenGL.framework */; };
 		0200C33313D95F130025DF78 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0200C33213D95F130025DF78 /* GLUT.framework */; };
@@ -23,6 +38,16 @@
 		0200C5C013D992E30025DF78 /* Ship.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0200C5B213D992E30025DF78 /* Ship.cpp */; };
 		0200C5C113D992E30025DF78 /* Strand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0200C5B413D992E30025DF78 /* Strand.cpp */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		020493A413DAD6D200F517B4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 08FB7793FE84155DC02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8DD76F620486A84900D96B5E;
+			remoteInfo = FlightGame;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		8DD76F690486A84900D96B5E /* CopyFiles */ = {
@@ -186,9 +211,26 @@
 			projectRoot = "";
 			targets = (
 				8DD76F620486A84900D96B5E /* FlightGame */,
+				0204938113DAD65100F517B4 /* Doxygen */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		0204938013DAD65100F517B4 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cd $SOURCE_ROOT/src\n/opt/local/bin/doxygen Doxyfile\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		8DD76F640486A84900D96B5E /* Sources */ = {
@@ -211,7 +253,36 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		020493A513DAD6D200F517B4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8DD76F620486A84900D96B5E /* FlightGame */;
+			targetProxy = 020493A413DAD6D200F517B4 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		0204938213DAD65100F517B4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				PRODUCT_NAME = Doxygen;
+			};
+			name = Debug;
+		};
+		0204938313DAD65100F517B4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				PRODUCT_NAME = Doxygen;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
 		1DEB923208733DC60010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -274,6 +345,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		0204938413DAD66F00F517B4 /* Build configuration list for PBXAggregateTarget "Doxygen" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0204938213DAD65100F517B4 /* Debug */,
+				0204938313DAD65100F517B4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		1DEB923108733DC60010E9CD /* Build configuration list for PBXNativeTarget "FlightGame" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

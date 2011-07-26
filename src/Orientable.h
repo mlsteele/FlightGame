@@ -12,13 +12,13 @@
 class Orientable {
 	public:
 		/// Position Vector
-		V3D Pos;
+		V3D<float> Pos;
 		/// Rotation right component
-		V3D Rt;
+		V3D<float> Rt;
 		/// Rotation up component
-		V3D Up;
+		V3D<float> Up;
 		/// Rotation forward component
-		V3D Fd;
+		V3D<float> Fd;
 	
 	public:
 		Orientable();
@@ -26,12 +26,12 @@ class Orientable {
 		// Translation
 		
 		/// \brief Translates along global space
-		void TranslateGlobal(V3D _offset);
-		inline void TranslateGlobal (float _x, float _y, float _z) {TranslateGlobal(V3D(_x, _y, _z));};
+		void TranslateGlobal(V3D<float> _offset);
+		inline void TranslateGlobal (float _x, float _y, float _z) {TranslateGlobal(V3D<float>(_x, _y, _z));};
 		
 		/// \brief Translates along local space
-		void TranslateLocal(V3D _offset);
-		inline void TranslateLocal (float _x, float _y, float _z) {TranslateLocal(V3D(_x, _y, _z));};
+		void TranslateLocal(V3D<float> _offset);
+		inline void TranslateLocal (float _x, float _y, float _z) {TranslateLocal(V3D<float>(_x, _y, _z));};
 		
 		// Rotation
 		
@@ -49,28 +49,28 @@ class Orientable {
 		void Calibrate();
 		
 		/// \brief Convert from local to global space
-		inline V3D LTG(V3D L) const {
-			V3D G = (Rt * L.x) + (Up * L.y) + (Fd * L.z);
+		inline V3D<float> LTG(V3D<float> L) const {
+			V3D<float> G = (Rt * L.x) + (Up * L.y) + (Fd * L.z);
 			G += Pos;
 			return G;
 		}
 		/// \brief Convert from global to local space
-		inline V3D GTL(V3D G) const {
-			V3D L(G);
+		inline V3D<float> GTL(V3D<float> G) const {
+			V3D<float> L(G);
 			L -= Pos;
-			L = V3D(Rt.Dot(L), Up.Dot(L), Fd.Dot(L));
+			L = V3D<float>(Rt.Dot(L), Up.Dot(L), Fd.Dot(L));
 			return L;
 		}
 		
 		/// \brief Convert from local orientation to global orientation
-		inline V3D OLTG(V3D L) const {
-			V3D G = (Rt * L.x) + (Up * L.y) + (Fd * L.z);
+		inline V3D<float> OLTG(V3D<float> L) const {
+			V3D<float> G = (Rt * L.x) + (Up * L.y) + (Fd * L.z);
 			return G;
 		}
 		/// \brief Convert from global orientation to local orientation
-		inline V3D OGTL(V3D G) const {
-			V3D L(G);
-			L = V3D(Rt.Dot(L), Up.Dot(L), Fd.Dot(L));
+		inline V3D<float> OGTL(V3D<float> G) const {
+			V3D<float> L(G);
+			L = V3D<float>(Rt.Dot(L), Up.Dot(L), Fd.Dot(L));
 			return L;
 		}
 };

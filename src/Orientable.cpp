@@ -17,7 +17,7 @@ void Orientable::Zero() {
 
 // TranslateGlobal
 // Translates the camera along the global space
-void Orientable::TranslateGlobal(V3D _offset) {
+void Orientable::TranslateGlobal(V3D<float> _offset) {
 	Pos.x += _offset.x;
 	Pos.y += _offset.y;
 	Pos.z += _offset.z;
@@ -25,7 +25,7 @@ void Orientable::TranslateGlobal(V3D _offset) {
 
 // TranslateLocal
 // Translates the camera along local space
-void Orientable::TranslateLocal(V3D _offset) {
+void Orientable::TranslateLocal(V3D<float> _offset) {
 	Pos += Rt * _offset.x;
 	Pos += Up * _offset.y;
 	Pos += Fd * _offset.z;

@@ -75,7 +75,7 @@ bool Arena::FluffyCollideSpheres (Pushable* A, Pushable* B) {
 		return false;
 	}
 	
-	V3D ColAxis = (A->Pos - B->Pos).Normalized();
+	V3D<float> ColAxis = (A->Pos - B->Pos).Normalized();
 	
 //	// Operate directly on position to eliminate overlap
 //	float offBy = sqrt(mindistSq) - sqrt(distanceSq);

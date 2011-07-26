@@ -13,19 +13,19 @@ class Pushable : public Orientable {
 		float Mass;
 		/// \brief Radius
 		float Rad;
-		V3D Vel;
-		V3D Accel;
+		V3D<float> Vel;
+		V3D<float> Accel;
 		
 	public:
-		Pushable (V3D _pos, float _mass, float _rad);
+		Pushable (V3D<float> _pos, float _mass, float _rad);
 		
 		/// \brief Push along global space
-		void PushGlobal(V3D _force);
-		inline void PushGlobal(float _x, float _y, float _z) {PushGlobal(V3D(_x, _y, _z));};
+		void PushGlobal(V3D<float> _force);
+		inline void PushGlobal(float _x, float _y, float _z) {PushGlobal(V3D<float>(_x, _y, _z));};
 		
 		/// \brief Push along local space
-		void PushLocal(V3D _force);
-		inline void PushLocal (float _x, float _y, float _z) {PushLocal(V3D(_x, _y, _z));};
+		void PushLocal(V3D<float> _force);
+		inline void PushLocal (float _x, float _y, float _z) {PushLocal(V3D<float>(_x, _y, _z));};
 		
 		/// \brief Physics integration method
 		virtual void Update ();

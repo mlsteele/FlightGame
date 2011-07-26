@@ -1,8 +1,8 @@
 // 3 dimensional vector
-// Comprised of floats
+// Comprised of Ts
 /// \brief 3 Dimensional Vector
 /// 
-/// Holder for 3 floats as well as common vector operations
+/// Holder for 3 Ts as well as common vector operations
 
 #ifndef _V3D_H_
 	#define _V3D_H_
@@ -10,30 +10,31 @@
 #include <iostream>
 #include <cmath>
 
+template <class T>
 class V3D {
 	
-	// Base floats
+	// Base Ts
 	public:
 		/// \brief x-axis component
-		float x;
+		T x;
 		/// \brief y-axis component
-		float y;
+		T y;
 		/// \brief z-axis component
-		float z;
+		T z;
 	
 	
 	// Public Operations
 	public:
 	
-		/// \brief Constructs a default zero vector
+		/// \brief Default zero constructor
 		inline V3D() {
 			x = 0;
 			y = 0;
 			z = 0;
 		};
 		
-		/// \brief Constructor sets vector to floats
-		inline V3D(float _x, float _y, float _z) {
+		/// \brief Initial values constructor
+		inline V3D(T _x, T _y, T _z) {
 			x = _x;
 			y = _y;
 			z = _z;
@@ -47,7 +48,7 @@ class V3D {
 		};
 		
 		/// \brief Set vector value
-		inline void Set(float _x, float _y, float _z) {Set(V3D(_x, _y, _z));};
+		inline void Set(T _x, T _y, T _z) {Set(V3D(_x, _y, _z));};
 		/// \brief Set vector value
 		inline void Set(V3D _in) {
 			x = _in.x;
@@ -72,7 +73,7 @@ class V3D {
 		};
 		
 		/// \brief Scalar multiplication (set)
-		inline V3D& operator*= (const float &s) {
+		inline V3D& operator*= (const T &s) {
 			x *= s;
 			y *= s;
 			z *= s;
@@ -80,7 +81,7 @@ class V3D {
 		};
 		
 		/// \brief Scalar division (set)
-		inline V3D& operator/= (const float &s) {
+		inline V3D& operator/= (const T &s) {
 			x /= s;
 			y /= s;
 			z /= s;
@@ -103,42 +104,42 @@ class V3D {
 		};
 		
 		/// \brief Scalar Multiplication (no set)
-		inline const V3D operator* (const float &s) const {
+		inline const V3D operator* (const T &s) const {
 			return V3D(*this) *= s;
 		};
 		
 		/// \brief Scalar Divison (no set)
-		inline const V3D operator/ (const float &s) const {
-			return V3D(x/s, y/s, z/s);
+		inline const V3D operator/ (const T &s) const {
+			return V3D(*this) /= s;
 		};
 		
 		/// \brief Spins around the given UNIT vector
-		inline void SpinAxis(float _theta, V3D _axis) {
-			float u = _axis.x;
-			float v = _axis.y;
-			float w = _axis.z;
+		inline void SpinAxis(T _theta, V3D _axis) {
+			T u = _axis.x;
+			T v = _axis.y;
+			T w = _axis.z;
 			
 			// http://inside.mines.edu/~gmurray/ArbitraryAxisRotation/ArbitraryAxisRotation.html
-			float nx = u*(u*x + v*y + w*z)*(1 - cos(_theta)) + x*cos(_theta) + (- w*y + v*z)*sin(_theta);
-			float ny = v*(u*x + v*y + w*z)*(1 - cos(_theta)) + y*cos(_theta) + (w*x - u*z)*sin(_theta);
-			float nz = w*(u*x + v*y + w*z)*(1 - cos(_theta)) + z*cos(_theta) + (- v*x + u*y)*sin(_theta);
+			T nx = u*(u*x + v*y + w*z)*(1 - cos(_theta)) + x*cos(_theta) + (- w*y + v*z)*sin(_theta);
+			T ny = v*(u*x + v*y + w*z)*(1 - cos(_theta)) + y*cos(_theta) + (w*x - u*z)*sin(_theta);
+			T nz = w*(u*x + v*y + w*z)*(1 - cos(_theta)) + z*cos(_theta) + (- v*x + u*y)*sin(_theta);
 			
 			Set(nx, ny, nz);
 		};
 		
 		/// \brief Compute the length of a vector
-		inline float Length() const {
+		inline T Length() const {
 			return sqrt( x*x + y*y + z*z );
 		};
 		
 		/// \brief Compute the length squared of a vector
-		inline float LengthSq() const {
+		inline T LengthSq() const {
 			return x*x + y*y + z*z;
 		};
 		
 		/// \brief Normalize vector into unit (set)
 		inline void Normalize() {
-			float len = Length();
+			T len = Length();
 			x /= len;
 			y /= len;
 			z /= len;
@@ -152,7 +153,7 @@ class V3D {
 		};
 		
 		/// \brief Dot product of two vectors
-		inline float Dot(const V3D& _v) const {
+		inline T Dot(const V3D& _v) const {
 			return (x*_v.x + y*_v.y + z*_v.z);
 		};
 		

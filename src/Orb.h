@@ -16,7 +16,7 @@ class Orb : public Pushable {
 	
 	public:
 		/// \brief Create with appropriate mass by radius
-		Orb (V3D _pos, float _rad);
+		Orb (V3D<float> _pos, float _rad);
 		
 		/// \brief Render with appropriate radius
 		void Render() const;

@@ -37,12 +37,12 @@ FlightGame::FlightGame() :
 	
 	// Setup Arena
 	// Ship
-	// Ship& MainShip = *FGArena.Register( new Ship( V3D(0, 0, 100), &FGArena) );
-	*FGArena.Register( new Ship( V3D(0, 0, FGArena.asize), &FGArena) );
+	// Ship& MainShip = *FGArena.Register( new Ship( V3D<float>(0, 0, 100), &FGArena) );
+	*FGArena.Register( new Ship( V3D<float>(0, 0, FGArena.asize), &FGArena) );
 	
 	// Random Orbs
 	for (int i = 0; i < 40*4; ++i) {
-		V3D randpos(
+		V3D<float> randpos(
 			  (rand() / static_cast<float>(RAND_MAX) * FGArena.asize*2) - FGArena.asize
 			, (rand() / static_cast<float>(RAND_MAX) * FGArena.asize*2) - FGArena.asize
 			, (rand() / static_cast<float>(RAND_MAX) * FGArena.asize*2) - FGArena.asize
@@ -51,7 +51,7 @@ FlightGame::FlightGame() :
 	}
 	
 	for (int i = 0; i < 4*4; ++i) {
-		V3D randpos(
+		V3D<float> randpos(
 			  (rand() / static_cast<float>(RAND_MAX) * FGArena.asize*2) - FGArena.asize
 			, (rand() / static_cast<float>(RAND_MAX) * FGArena.asize*2) - FGArena.asize
 			, (rand() / static_cast<float>(RAND_MAX) * FGArena.asize*2) - FGArena.asize
@@ -134,7 +134,7 @@ int FlightGame::Execute() {
 		// Safety for spiral of death
 		if (TimeStack >= .2) {
 			TimeStack = .2;
-			std::cerr << "ERROR: " << __TIME__ << ": Physics Safety Valve Tripped!\n";
+			std::cerr << "WARN: " << __TIME__ << ": Physics Safety Valve Tripped!\n";
 		}
 		while (TimeStack >= 1/100.f) {
 			Physics();

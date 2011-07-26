@@ -7,7 +7,7 @@ Strand::Strand(Pushable* _head, Pushable* _tail, float _targl)
 {
 	// nNodes is the number of nodes in between the two ends
 	unsigned int nNodes = ceil(TargL* 2 ); // Density of nodes (compiled in)
-	V3D shift = _tail->Pos - _head->Pos;
+	V3D<float> shift = _tail->Pos - _head->Pos;
 	shift /= nNodes+1;
 	
 	// Create nodes along string
@@ -28,8 +28,8 @@ Strand::~Strand() {
 // Private helper function
 void Strand::InfluencePair(Pushable* A, Pushable* B, bool viscize) {
 	float k;
-	V3D diffp = B->Pos - A->Pos;
-	V3D force;
+	V3D<float> diffp = B->Pos - A->Pos;
+	V3D<float> force;
 	
 	// F [varies with] k*x
 	k = .012; // Spring Constant (compiled in)
@@ -41,7 +41,7 @@ void Strand::InfluencePair(Pushable* A, Pushable* B, bool viscize) {
 	// Viscosity
 	if (viscize) {
 		k = .02; // Viscosity Constant (compiled in)
-		V3D diffvel = B->Vel - A->Vel;
+		V3D<float> diffvel = B->Vel - A->Vel;
 		force = diffvel*k;
 		A->PushGlobal(force);
 		B->PushGlobal(-force);
@@ -69,7 +69,7 @@ void Strand::Render() const {
 	glDisable(GL_LIGHTING);
 	
 	// Reusables
-	V3D diffv;
+	V3D<float> diffv;
 	float x;
 	
 	// Draw and influence pairs

@@ -20,11 +20,11 @@ class Ship : public Pushable {
 		Arena* SArena;
 		
 		/// \brief Thrust rate represented as a local vector
-		V3D Thrust;
+		V3D<float> Thrust;
 		/// \brief Thrust factor of ship
 		float ThrustFactor;
 		/// \brief Rotation [Pitch, yaw, roll] vector representing rate
-		V3D Rot;
+		V3D<float> Rot;
 		/// \brief Whether or not the brake is on
 		bool BrakeVal;
 		
@@ -37,17 +37,17 @@ class Ship : public Pushable {
 		Strand* GrappleStrand;
 	
 	public:
-		Ship (V3D _pos, Arena* _arena);
+		Ship (V3D<float> _pos, Arena* _arena);
 		
 		/// \brief Add to thrust
-		inline void AddThrust(V3D _jerk) { Thrust += _jerk; }
-		inline void AddThrust(float _x, float _y, float _z) {AddThrust(V3D(_x,_y,_z));};
+		inline void AddThrust(V3D<float> _jerk) { Thrust += _jerk; }
+		inline void AddThrust(float _x, float _y, float _z) {AddThrust(V3D<float>(_x,_y,_z));};
 		/// \brief Zero out thrust
 		inline void KillThrust() { Thrust.Zero(); };
 		
 		/// \brief Add to rotation [pitch, yaw, roll]
-		inline void AddRot(V3D _rot) { Rot += _rot;};
-		inline void AddRot(float _pitch, float _yaw, float _roll) {AddRot(V3D(_pitch,_yaw,_roll));};
+		inline void AddRot(V3D<float> _rot) { Rot += _rot;};
+		inline void AddRot(float _pitch, float _yaw, float _roll) {AddRot(V3D<float>(_pitch,_yaw,_roll));};
 		/// \brief Add to pitch
 		inline void AddPitch(float _pitch) { Rot.x += _pitch; };
 		/// \brief Add to yaw

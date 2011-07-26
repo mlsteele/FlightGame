@@ -2,11 +2,11 @@
 
 #include "Arena.h"
 
-Ship::Ship (V3D _pos, Arena* _arena)
+Ship::Ship (V3D<float> _pos, Arena* _arena)
 	: Pushable(_pos, 5, 2) // Ship mass and radius compiled in
-	, Thrust(V3D(0, 0, 0))
+	, Thrust(V3D<float>(0, 0, 0))
 	, ThrustFactor(.009)
-	, Rot(V3D(0, 0, 0))
+	, Rot(V3D<float>(0, 0, 0))
 	, BrakeVal(false)
 	, TractorDir(0)
 	, TractorPower(.04) // Tractor beam power compiled in
@@ -45,8 +45,8 @@ void Ship::TractorEffect() {
 	if (TractorBall == NULL) {return;}
 	
 	// Local Force
-	V3D LF(0, 0, TractorDir * TractorPower);
-	V3D GF(OLTG(LF));
+	V3D<float> LF(0, 0, TractorDir * TractorPower);
+	V3D<float> GF(OLTG(LF));
 	
 	// Apply Force
 	TractorBall->PushGlobal(GF);
@@ -122,7 +122,7 @@ Orb* Ship::FirstInScope() {
 	float theZ = 1e40;
 	
 	for (list<Orb*>::iterator itA = SArena->Orbs.begin(); itA != SArena->Orbs.end(); ++itA) {
-		V3D LP = GTL((**itA).Pos); // Local position of target object
+		V3D<float> LP = GTL((**itA).Pos); // Local position of target object
 		float r = sqrt( (LP.x)*(LP.x) + (LP.y)*(LP.y) ); // Cylindrical coordinate. Cylinder long axis from eyes to back of head.
 		float rmax = r + (**itA).Rad;
 		float rmin = r - (**itA).Rad;

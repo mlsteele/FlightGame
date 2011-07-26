@@ -14,7 +14,6 @@
 				0204938013DAD65100F517B4 /* ShellScript */,
 			);
 			dependencies = (
-				020493A513DAD6D200F517B4 /* PBXTargetDependency */,
 			);
 			name = Doxygen;
 			productName = Doxygen;
@@ -38,16 +37,6 @@
 		0200C5C013D992E30025DF78 /* Ship.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0200C5B213D992E30025DF78 /* Ship.cpp */; };
 		0200C5C113D992E30025DF78 /* Strand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0200C5B413D992E30025DF78 /* Strand.cpp */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		020493A413DAD6D200F517B4 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 08FB7793FE84155DC02AAC07 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 8DD76F620486A84900D96B5E;
-			remoteInfo = FlightGame;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		8DD76F690486A84900D96B5E /* CopyFiles */ = {
@@ -252,14 +241,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		020493A513DAD6D200F517B4 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 8DD76F620486A84900D96B5E /* FlightGame */;
-			targetProxy = 020493A413DAD6D200F517B4 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		0204938213DAD65100F517B4 /* Debug */ = {

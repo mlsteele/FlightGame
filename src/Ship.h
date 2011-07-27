@@ -68,6 +68,8 @@ class Ship : public Pushable {
 		/// \brief Physics Update
 		void Update();
 		
+		/// \brief Shoot!
+		void Shoot();
 		/// \brief Paint targeted orbs
 		void PaintTargets();
 		/// \brief Effect objects in list with tractor beam
@@ -79,8 +81,8 @@ class Ship : public Pushable {
 		/// \brief Turn tractor beam off
 		inline void TractorOff () { TractorDir = 0; };
 		
-		void FireOn();
-		void FireOff();
+		void ConnectOn();
+		void ConnectOff();
 		
 		void GrappleOn();
 		void GrappleOff();

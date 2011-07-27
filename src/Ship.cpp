@@ -56,6 +56,14 @@ void Ship::TractorEffect() {
 	TractorBall->PushGlobal(GF);
 }
 
+void Ship::Shoot() {
+	Orb* a = SArena->Register( new Orb(Pos + Rt*3 - Up*3, .5) );
+	Orb* b = SArena->Register( new Orb(Pos + Rt*3 + Up*3, .5) );
+	a->Vel = Vel + Fd + Rt * (rand()/static_cast<float>(RAND_MAX)*.3 -0.15);
+	b->Vel = Vel + Fd + Rt * (rand()/static_cast<float>(RAND_MAX)*.3 -0.15);
+	SArena->Register(new Strand(a, b, 6));
+}
+
 // Should sync with TractorEffect();
 void Ship::PaintTargets() {
 	
@@ -78,11 +86,11 @@ void Ship::PaintTargets() {
 	}
 }
 
-void Ship::FireOn() {
+void Ship::ConnectOn() {
 	ActiveBall = FirstInScope();
 }
 
-void Ship::FireOff() {
+void Ship::ConnectOff() {
 	Orb* SecondBall = FirstInScope();
 	
 	// Safeties

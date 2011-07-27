@@ -24,11 +24,11 @@ void FlightGame::InputHandler() {
 		// MainShip
 		// Firing on mouse
 		else if (Event.Type == sf::Event::MouseButtonPressed) {
-			MainShip.FireOn();
+			MainShip.Shoot();
 		}
-		else if (Event.Type == sf::Event::MouseButtonReleased) {
-			MainShip.FireOff();
-		}
+//		else if (Event.Type == sf::Event::MouseButtonReleased) {
+//			MainShip.ConnectOff();
+//		}
 		
 		else if (Event.Type == sf::Event::KeyPressed) {
 			if (Event.Key.Code == sf::Key::RAlt) {

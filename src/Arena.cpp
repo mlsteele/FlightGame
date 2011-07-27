@@ -2,7 +2,7 @@
 
 #include "Ship.h"
 
-Arena::Arena() : asize(25) {}
+Arena::Arena() : asize(100) {}
 
 void Arena::Update () {	
 	list<Pushable*> sphericals;
@@ -92,7 +92,6 @@ bool Arena::FluffyCollideSpheres (Pushable* A, Pushable* B) {
 //	B->Pos -= ColAxis * ( B->Mass / (A->Mass + B->Mass) ) * (mindist - distance);
 	
 	// Abort if going in the right direction (kiss efficiency goodbye!)
-	// TODO: Verify
 	if ( B->Vel.Dot(ColAxis) < A->Vel.Dot(ColAxis) ) {
 		// Report a hit(, a very palpable hit), but carry on.
 		return true;

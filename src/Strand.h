@@ -27,13 +27,13 @@ class Strand {
 		/// \brief Pointer to tail end
 		Pushable* Tail;
 		/// \brief Target length of whole strand
-		float TargL;
+		const float TargL;
 	
 	public:
 		/// \param _head Head end ([0]) of strand
 		/// \param _tail Tail end of strand
-		/// \param _targl Target length
-		Strand(Pushable* _head, Pushable* _tail, float _targl);
+		/// \param _targl Target length. If negative, represents fraction of auto-distance. Defaults to auto-distance * 1.
+		Strand(Pushable* _head, Pushable* _tail, float _targl = -1);
 		~Strand();
 		
 		/// \brief Update hidden members

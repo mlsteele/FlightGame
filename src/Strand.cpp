@@ -3,7 +3,8 @@
 Strand::Strand(Pushable* _head, Pushable* _tail, float _targl) 
 	: Head(_head)
 	, Tail(_tail)
-	, TargL(_targl)
+	// If negative, represents fraction of auto-distance
+	, TargL(_targl >= 0 ? _targl : (_tail->Pos - _head->Pos).Length() * -_targl)
 {
 	// nNodes is the number of nodes in between the two ends
 	unsigned int nNodes = ceil(TargL* 2 ); // Density of nodes (compiled in)
@@ -32,7 +33,7 @@ void Strand::InfluencePair(Pushable* A, Pushable* B, bool viscize) {
 	V3D<float> force;
 	
 	// F [varies with] k*x
-	k = .012; // Spring Constant (compiled in)
+	k = .012; // Spring Constant
 	float x = diffp.Length() - MiniTargL();
 	force = diffp.Normalized()*x*k;
 	A->PushGlobal(force);
@@ -40,7 +41,7 @@ void Strand::InfluencePair(Pushable* A, Pushable* B, bool viscize) {
 	
 	// Viscosity
 	if (viscize) {
-		k = .02; // Viscosity Constant (compiled in)
+		k = .015; // Viscosity Constant
 		V3D<float> diffvel = B->Vel - A->Vel;
 		force = diffvel*k;
 		A->PushGlobal(force);

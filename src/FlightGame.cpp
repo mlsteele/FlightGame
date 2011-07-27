@@ -1,7 +1,7 @@
 #include "FlightGame.h"
 
 FlightGame::FlightGame() :
-	  Running (false)
+	Running (false)
 {
 	nFrame = 0;
 	Clock.Reset();
@@ -40,24 +40,44 @@ FlightGame::FlightGame() :
 	// Ship& MainShip = *FGArena.Register( new Ship( V3D<float>(0, 0, 100), &FGArena) );
 	*FGArena.Register( new Ship( V3D<float>(0, 0, FGArena.asize), &FGArena) );
 	
-	// Random Orbs
-	for (int i = 0; i < 40*4; ++i) {
+	// Create random orbs
+	int smalln = 320;
+	Orb* smalls[smalln];
+	int bign = 32;
+	Orb* bigs[bign];
+	int rcons = 10;
+	
+	// smalls
+	for (int i = 0; i < smalln; ++i) {
 		V3D<float> randpos(
 			  (rand() / static_cast<float>(RAND_MAX) * FGArena.asize*2) - FGArena.asize
 			, (rand() / static_cast<float>(RAND_MAX) * FGArena.asize*2) - FGArena.asize
 			, (rand() / static_cast<float>(RAND_MAX) * FGArena.asize*2) - FGArena.asize
 		);
-		FGArena.Register( new Orb ( randpos, 1.f ) );
+		smalls[i] = FGArena.Register( new Orb ( randpos, 1.f ) );
 	}
 	
-	for (int i = 0; i < 4*4; ++i) {
+	// bigs
+	for (int i = 0; i < bign; ++i) {
 		V3D<float> randpos(
 			  (rand() / static_cast<float>(RAND_MAX) * FGArena.asize*2) - FGArena.asize
 			, (rand() / static_cast<float>(RAND_MAX) * FGArena.asize*2) - FGArena.asize
 			, (rand() / static_cast<float>(RAND_MAX) * FGArena.asize*2) - FGArena.asize
 		);
-		FGArena.Register( new Orb ( randpos, 5.f ) );
+		bigs[i] = FGArena.Register( new Orb ( randpos, 5.f ) );
 	}
+	
+	// random connections
+	floop:
+	for (int i = 0; i < smalln; ++i)
+		for (int j = i+1; j < smalln; ++j)
+			if ( ((smalls[i]->Pos - smalls[j]->Pos).Length() < 70) && (rcons > 0) ) {
+				FGArena.Register(new Strand(smalls[i], smalls[j], 10));
+				--rcons;
+				if (j-i > 2)
+					++i;
+			}
+	
 	
 	// Camera
 	Cam.Settings(90, ASPECT, .1, 500);
@@ -87,7 +107,7 @@ FlightGame::FlightGame() :
 	// Fog
 	glEnable(GL_FOG);
 	glFogi(GL_FOG_MODE, GL_EXP2);
-	glFogf(GL_FOG_DENSITY, .01);
+	glFogf(GL_FOG_DENSITY, .005);
 //	glFogi(GL_FOG_MODE, GL_LINEAR);
 //	glFogf(GL_FOG_START, 40.f);
 //	glFogf(GL_FOG_END, 100.f);

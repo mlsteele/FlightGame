@@ -23,8 +23,10 @@ class Ship : public Pushable {
 		V3D<float> Thrust;
 		/// \brief Thrust factor of ship
 		float ThrustFactor;
-		/// \brief Rotation [Pitch, yaw, roll] vector representing rate
-		V3D<float> Rot;
+		/// \brief Rotation [Pitch, yaw, roll] vector representing command rate
+		V3D<float> RotCmd;
+		/// \brief Rotational roll velocity store
+		float RollStore;
 		/// \brief Whether or not the brake is on
 		bool BrakeVal;
 		
@@ -46,16 +48,16 @@ class Ship : public Pushable {
 		inline void KillThrust() { Thrust.Zero(); };
 		
 		/// \brief Add to rotation [pitch, yaw, roll]
-		inline void AddRot(V3D<float> _rot) { Rot += _rot;};
+		inline void AddRot(V3D<float> _rot) { RotCmd += _rot;};
 		inline void AddRot(float _pitch, float _yaw, float _roll) {AddRot(V3D<float>(_pitch,_yaw,_roll));};
 		/// \brief Add to pitch
-		inline void AddPitch(float _pitch) { Rot.x += _pitch; };
+		inline void AddPitch(float _pitch) { RotCmd.x += _pitch; };
 		/// \brief Add to yaw
-		inline void AddYaw(float _yaw) { Rot.y += _yaw; };
+		inline void AddYaw(float _yaw) { RotCmd.y += _yaw; };
 		/// \brief Add to roll
-		inline void AddRoll(float _roll) { Rot.z += _roll; };
+		inline void AddRoll(float _roll) { RotCmd.z += _roll; };
 		/// \brief Zero out rotation
-		inline void KillRot() { Rot.Zero(); };
+		inline void KillRot() { RotCmd.Zero(); };
 		
 		// AirBrake
 		/// \brief Turn on the air brake

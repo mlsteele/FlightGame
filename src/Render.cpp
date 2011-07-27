@@ -74,10 +74,11 @@ void FlightGame::Render2D() {
 	gluDisk(GLUQ, 17, 20, 32, 1);
 	
 	// Accel Indicator
-	glColor3f(.25, .25, .25);
-	gluPartialDisk(GLUQ, 21, 23, 32, 1, 0, MainShip.Vel.Length()*500);
-	glColor3f(0.6, .6, .6); // Purple
-	gluPartialDisk(GLUQ, 24, 26, 32, 1, 0, MainShip.Fd.Dot(MainShip.Vel) *500);
+	// gluPartialDisk(quad, inner, outer, slices, loops, start, sweep)
+	//glColor3f(.25, .25, .25);
+	//gluPartialDisk(GLUQ, 21, 23, 32, 1, 0, MainShip.Vel.Length()*500);
+	//glColor3f(0.6, .6, .6); // Purple
+	//gluPartialDisk(GLUQ, 24, 26, 32, 1, .5, MainShip.Fd.Dot(MainShip.Vel) *500);
 	
 	// Airbrake Indicator
 	if (MainShip.BrakeVal != 0) {

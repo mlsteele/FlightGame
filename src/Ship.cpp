@@ -3,13 +3,14 @@
 #include "Arena.h"
 
 Ship::Ship (V3D<float> _pos, Arena* _arena)
-	: Pushable(_pos, 5, 2) // Ship mass and radius compiled in
+	: Pushable(_pos, 5, 2) // Ship mass and radius
 	, Thrust(V3D<float>(0, 0, 0))
 	, ThrustFactor(.009)
-	, Rot(V3D<float>(0, 0, 0))
+	, RotCmd(V3D<float>(0, 0, 0))
+	, RollStore(0)
 	, BrakeVal(false)
 	, TractorDir(0)
-	, TractorPower(.04) // Tractor beam power compiled in
+	, TractorPower(.04) // Tractor beam power
 	, ActiveBall(NULL)
 	, GrappleStrand(NULL)
 {
@@ -20,10 +21,13 @@ void Ship::Update() {
 	// Translation
 	PushLocal(Thrust * ThrustFactor);
 	
+	RollStore *= .99;
+	RollStore += RotCmd.z * .04;
+	
 	// Rotation
-	Pitch(Rot.x);
-	Yaw(Rot.y);
-	Roll(Rot.z);
+	Pitch(RotCmd.x);
+	Yaw(RotCmd.y);
+	Roll(RollStore);
 	
 	// AirBrake
 	if (BrakeVal){

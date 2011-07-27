@@ -10,4 +10,5 @@ Instructions:
 ./make cr # Compiles and runs
 ./build/FlightGame # Runs application
 ./doxyfy # Generate documentation
+or
 Xcode project # magic

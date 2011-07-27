@@ -54,7 +54,7 @@ FlightGame::FlightGame() :
 			, (rand() / static_cast<float>(RAND_MAX) * FGArena.asize*2) - FGArena.asize
 			, (rand() / static_cast<float>(RAND_MAX) * FGArena.asize*2) - FGArena.asize
 		);
-		smalls[i] = FGArena.Register( new Orb ( randpos, 1.f ) );
+		smalls[i] = FGArena.Register( new Orb ( randpos, 1 ) );
 	}
 	
 	// bigs
@@ -64,7 +64,7 @@ FlightGame::FlightGame() :
 			, (rand() / static_cast<float>(RAND_MAX) * FGArena.asize*2) - FGArena.asize
 			, (rand() / static_cast<float>(RAND_MAX) * FGArena.asize*2) - FGArena.asize
 		);
-		bigs[i] = FGArena.Register( new Orb ( randpos, 5.f ) );
+		bigs[i] = FGArena.Register( new Orb ( randpos, 5 ) );
 	}
 	
 	// random connections

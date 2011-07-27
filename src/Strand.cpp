@@ -7,15 +7,15 @@ Strand::Strand(Pushable* _head, Pushable* _tail, float _targl)
 	, TargL(_targl >= 0 ? _targl : (_tail->Pos - _head->Pos).Length() * -_targl)
 {
 	// nNodes is the number of nodes in between the two ends
-	unsigned int nNodes = ceil(TargL* 2 ); // Density of nodes (compiled in)
+	unsigned int nNodes = ceil(TargL* 2 ); // Density of nodes
 	V3D<float> shift = _tail->Pos - _head->Pos;
 	shift /= nNodes+1;
 	
 	// Create nodes along string
 	for (unsigned int n = 1; n < nNodes+1; ++n) {
 		Nodes.push_back( new Pushable( _head->Pos + shift*n
-			, .05 // Mass of string nodes (compiled in)
-			, .22853907486704164 // Radius of string nodes (compiled in)
+			, .05 // Mass of string nodes
+			, .22853907486704164 // Radius of string nodes
 		) );
 	}
 }

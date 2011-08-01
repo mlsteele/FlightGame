@@ -5,43 +5,48 @@
 Arena::Arena() : asize(100) {}
 
 void Arena::Update () {	
-	list<Pushable*> sphericals;
+	vector<Pushable*> sphericals;
 	sphericals.insert( sphericals.end(), Orbs.begin(), Orbs.end() );
 	sphericals.insert( sphericals.end(), Ships.begin(), Ships.end() );
 	
-	list<Pushable*> tractorables;
+	float octMax = asize + 40;
+	float octMin = -asize - 40;
+	Octree<Pushable*> frameTree(octMin, octMin, octMin, octMax, octMax, octMax);
+  frameTree.Insert(sphericals);
+	
+	vector<Pushable*> tractorables;
 	tractorables.insert( tractorables.end(), Orbs.begin(), Orbs.end() );
 	tractorables.insert( tractorables.end(), Ships.begin(), Ships.end() );
 	
-	list<Pushable*> boundables;
+	vector<Pushable*> boundables;
 	boundables.insert( boundables.end(), Orbs.begin(), Orbs.end() );
 	boundables.insert( boundables.end(), Ships.begin(), Ships.end() );
 	
 	// Collision section
 	// Collide sphericals
-	for (list<Pushable*>::iterator itA = sphericals.begin(); itA != sphericals.end(); ++itA) {
-		for(list<Pushable*>::iterator itB = itA; ++itB != sphericals.end();) {
+	for (vector<Pushable*>::iterator itA = sphericals.begin(); itA != sphericals.end(); ++itA) {
+		for(vector<Pushable*>::iterator itB = itA; ++itB != sphericals.end();) {
 			FluffyCollideSpheres( *itA, *itB );
 		}
 	}
 		
 	// Bounding Box
-	for(std::list<Pushable*>::iterator it = boundables.begin(); it != boundables.end(); ++it) {
+	for(std::vector<Pushable*>::iterator it = boundables.begin(); it != boundables.end(); ++it) {
 		CollideBounds(*it);
 	}
 		
 	// Update Strands
-	for(std::list<Strand*>::iterator it = Strands.begin(); it != Strands.end(); ++it) {
+	for(std::vector<Strand*>::iterator it = Strands.begin(); it != Strands.end(); ++it) {
 		(**it).Update();
 	}
 	
 	// Update Orbs
-	for(std::list<Orb*>::iterator it = Orbs.begin(); it != Orbs.end(); ++it) {
+	for(std::vector<Orb*>::iterator it = Orbs.begin(); it != Orbs.end(); ++it) {
 		(**it).Update();
 	}
 
 	// Update Ships
-	for(std::list<Ship*>::iterator it = Ships.begin(); it != Ships.end(); ++it) {
+	for(std::vector<Ship*>::iterator it = Ships.begin(); it != Ships.end(); ++it) {
 		(**it).Update();
 		(**it).TractorEffect();
 	}
@@ -49,12 +54,12 @@ void Arena::Update () {
 
 void Arena::Render() {
 	// Strands
-	for(std::list<Strand*>::iterator it = Strands.begin(); it != Strands.end(); ++it) {
+	for(std::vector<Strand*>::iterator it = Strands.begin(); it != Strands.end(); ++it) {
 		(**it).Render();
 	}
 	
 	// Orbs
-	for(std::list<Orb*>::iterator it = Orbs.begin(); it != Orbs.end(); ++it) {	
+	for(std::vector<Orb*>::iterator it = Orbs.begin(); it != Orbs.end(); ++it) {	
 		(**it).Render();
 	}
 		

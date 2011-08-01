@@ -36,6 +36,7 @@
 		0200C5BF13D992E30025DF78 /* Render.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0200C5B113D992E30025DF78 /* Render.cpp */; };
 		0200C5C013D992E30025DF78 /* Ship.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0200C5B213D992E30025DF78 /* Ship.cpp */; };
 		0200C5C113D992E30025DF78 /* Strand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0200C5B413D992E30025DF78 /* Strand.cpp */; };
+		0273FF0D13E62822003B80AE /* Octree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0273FF0B13E62822003B80AE /* Octree.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -80,6 +81,8 @@
 		0200C5B513D992E30025DF78 /* Strand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Strand.h; path = src/Strand.h; sourceTree = "<group>"; };
 		0200C5B613D992E30025DF78 /* V3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = V3D.h; path = src/V3D.h; sourceTree = "<group>"; };
 		0200C5C213D992EE0025DF78 /* Doxyfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Doxyfile; path = src/Doxyfile; sourceTree = "<group>"; };
+		0273FF0B13E62822003B80AE /* Octree.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Octree.cpp; path = src/Octree.cpp; sourceTree = "<group>"; };
+		0273FF0C13E62822003B80AE /* Octree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Octree.h; path = src/Octree.h; sourceTree = "<group>"; };
 		8DD76F6C0486A84900D96B5E /* FlightGame */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = FlightGame; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -120,6 +123,8 @@
 				0200C5A613D992E30025DF78 /* glColor.h */,
 				0200C5A713D992E30025DF78 /* InputHandler.cpp */,
 				0200C5A813D992E30025DF78 /* main.cpp */,
+				0273FF0B13E62822003B80AE /* Octree.cpp */,
+				0273FF0C13E62822003B80AE /* Octree.h */,
 				0200C5AC13D992E30025DF78 /* Orb.h */,
 				0200C5AB13D992E30025DF78 /* Orb.cpp */,
 				0200C5AD13D992E30025DF78 /* Orientable.cpp */,
@@ -237,6 +242,7 @@
 				0200C5BF13D992E30025DF78 /* Render.cpp in Sources */,
 				0200C5C013D992E30025DF78 /* Ship.cpp in Sources */,
 				0200C5C113D992E30025DF78 /* Strand.cpp in Sources */,
+				0273FF0D13E62822003B80AE /* Octree.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

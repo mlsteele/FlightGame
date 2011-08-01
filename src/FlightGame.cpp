@@ -6,7 +6,7 @@ FlightGame::FlightGame() :
 	nFrame = 0;
 	Clock.Reset();
 	TimeStack = 0;
-	
+
 	
 	sf::VideoMode DesktopMode = sf::VideoMode::GetDesktopMode();
 	sf::ContextSettings OGLContext(
@@ -18,7 +18,7 @@ FlightGame::FlightGame() :
 	std::string windowName = "FlightGame";
 	
 	// Fullscreen Switch
-	if (true) {
+	if (false) {
 		WIDTH = DesktopMode.Width;
 		HEIGHT = DesktopMode.Height;
 		ASPECT = WIDTH/HEIGHT;
@@ -44,9 +44,9 @@ FlightGame::FlightGame() :
 //	FGArena.Register(new Strand(&MainShip, Hammer));
 	
 	// Create random orbs
-	int smalln = 320;
+	int smalln = 400;
 	Orb* smalls[smalln];
-	int bign = 32;
+	int bign = 40;
 	Orb* bigs[bign];
 	int rcons = 10;
 	

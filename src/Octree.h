@@ -22,8 +22,8 @@ class Octree {
 		Octree (float cornerMinX, float cornerMinY, float cornerMinZ, float cornerMaxX, float cornerMaxY, float cornerMaxZ);
 		~Octree ();
 		
-		void getItems (vector<T> items);
-		void fillPairs (vector<T> a, vector<T> b);
+		void getItems (vector<T>* items);
+		void fillPairs (vector<T>* a, vector<T>* b);
 		
 		void Insert (T insertion);
 		void Insert (vector<T> insertions);

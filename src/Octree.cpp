@@ -34,22 +34,22 @@ Octree<T>::~Octree ()
 }
 
 template <class T>
-void Octree<T>::getItems (vector<T> items)
+void Octree<T>::getItems (vector<T>* items)
 {
-	// allItems extend Items
-	items.insert(items.end(), Items.begin(), Items.end());
+	// Insert this level's items
+	items->insert(items->end(), Items.begin(), Items.end());
 	
+	// Recurse
 	for (int tx = 0; tx < 2; tx++)
 		for (int ty = 0; ty < 2; ty++)
 			for (int tz = 0; tz < 2; tz++)
 				if (Trees[tx][ty][tz] != NULL) {
-					// subItems extend Trees[tx][ty][tz]->getItems();
 					Trees[tx][ty][tz]->getItems(items);
 	}
 }
 
 template <class T>
-void Octree<T>::fillPairs (vector<T> a, vector<T> b)
+void Octree<T>::fillPairs (vector<T>* a, vector<T>* b)
 {
   for (vector<Pushable*>::iterator itA = Items.begin(); itA != Items.end(); ++itA) {
 		// Pairs from below
@@ -57,18 +57,19 @@ void Octree<T>::fillPairs (vector<T> a, vector<T> b)
 			for (int ty = 0; ty < 2; ty++)
 				for (int tz = 0; tz < 2; tz++)
 					if (Trees[tx][ty][tz] != NULL) {
-						vector<T> subItems;
+						vector<T>* subItems = new vector<T>;
 						Trees[tx][ty][tz]->getItems(subItems);
-						for (vector<Pushable*>::iterator itB = subItems.begin(); itB != subItems.end(); ++itB) {
-							a.push_back(*itA);
-							b.push_back(*itB);
+						for (vector<Pushable*>::iterator itB = subItems->begin(); itB != subItems->end(); ++itB) {
+							a->push_back(*itA);
+							b->push_back(*itB);
 						}
+						delete subItems;
 		}
 		
 		// Pairs from this level
 		for(vector<Pushable*>::iterator itB = itA; ++itB != Items.end();) {
-			a.push_back(*itA);
-			b.push_back(*itB);
+			a->push_back(*itA);
+			b->push_back(*itB);
 		}
 	}
 	
@@ -149,14 +150,14 @@ void Octree<T>::Insert (vector<T> insertions)
 template <class T>
 void Octree<T>::Render ()
 {
-	glDisable(GL_LIGHTING);
+//	glDisable(GL_LIGHTING);
 	glColor3f(1, 0, 0);
 	glPushMatrix();
 	float oscale = CornerMax[0] - CornerMin[0];
 	glTranslatef(CornerMax[0] - oscale/2, CornerMax[1] - oscale/2, CornerMax[2] - oscale/2);
 	glutWireCube(oscale);
 	glPopMatrix();
-	glEnable(GL_LIGHTING);
+//	glEnable(GL_LIGHTING);
 	
 	for (int tx = 0; tx < 2; tx++)
 		for (int ty = 0; ty < 2; ty++)

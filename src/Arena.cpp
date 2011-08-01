@@ -25,17 +25,18 @@ void Arena::Update () {
 	delete FrameTree;
 	FrameTree = new Octree<Pushable*>(octMin, octMin, octMin, octMax, octMax, octMax);
   FrameTree->Insert(colloids);
-	FrameTree->Render();
-	vector<Pushable*> colloidsA;
-	vector<Pushable*> colloidsB;
+	vector<Pushable*>* colloidsA = new vector<Pushable*>;
+	vector<Pushable*>* colloidsB = new vector<Pushable*>;
 	FrameTree->fillPairs(colloidsA, colloidsB);
-	vector<Pushable*>::iterator itA = colloidsA.begin();
-	vector<Pushable*>::iterator itB = colloidsB.begin();
-	while ( itA != colloidsA.end() && itB != colloidsB.end() ) {
+	vector<Pushable*>::iterator itA = colloidsA->begin();
+	vector<Pushable*>::iterator itB = colloidsB->begin();
+	while ( itA != colloidsA->end() && itB != colloidsB->end() ) {
 		FluffyCollideSpheres( *itA, *itB );
 		++itA;
 		++itB;
 	}
+	delete colloidsA;
+	delete colloidsB;
 		
 	// Bounding Box
 	for(std::vector<Pushable*>::iterator it = boundables.begin(); it != boundables.end(); ++it) {

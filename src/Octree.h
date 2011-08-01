@@ -22,7 +22,7 @@ class Octree {
 		Octree (float cornerMinX, float cornerMinY, float cornerMinZ, float cornerMaxX, float cornerMaxY, float cornerMaxZ);
 		~Octree ();
 		
-		vector<T> getItems ();
+		void getItems (vector<T> items);
 		void fillPairs (vector<T> a, vector<T> b);
 		
 		void Insert (T insertion);

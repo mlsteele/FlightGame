@@ -34,22 +34,18 @@ Octree<T>::~Octree ()
 }
 
 template <class T>
-vector<T> Octree<T>::getItems ()
+void Octree<T>::getItems (vector<T> items)
 {
-	vector<T> allItems;
 	// allItems extend Items
-	allItems.insert(allItems.end(), Items.begin(), Items.end());
+	items.insert(items.end(), Items.begin(), Items.end());
 	
 	for (int tx = 0; tx < 2; tx++)
 		for (int ty = 0; ty < 2; ty++)
 			for (int tz = 0; tz < 2; tz++)
 				if (Trees[tx][ty][tz] != NULL) {
 					// subItems extend Trees[tx][ty][tz]->getItems();
-					vector<T> subItems = Trees[tx][ty][tz]->getItems();
-					allItems.insert(allItems.end(), subItems.begin(), subItems.end());
+					Trees[tx][ty][tz]->getItems(items);
 	}
-	
-	return allItems;
 }
 
 template <class T>
@@ -61,7 +57,8 @@ void Octree<T>::fillPairs (vector<T> a, vector<T> b)
 			for (int ty = 0; ty < 2; ty++)
 				for (int tz = 0; tz < 2; tz++)
 					if (Trees[tx][ty][tz] != NULL) {
-						vector<T> subItems = Trees[tx][ty][tz]->getItems();
+						vector<T> subItems;
+						Trees[tx][ty][tz]->getItems(subItems);
 						for (vector<Pushable*>::iterator itB = subItems.begin(); itB != subItems.end(); ++itB) {
 							a.push_back(*itA);
 							b.push_back(*itB);

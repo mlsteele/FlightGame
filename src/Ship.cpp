@@ -3,7 +3,7 @@
 #include "Arena.h"
 
 Ship::Ship (V3D<float> _pos, Arena* _arena)
-	: Pushable(_pos, 5, 2) // Ship mass and radius
+	: Pushable(_pos, 1, 2) // Ship mass and radius
 	, Thrust(V3D<float>(0, 0, 0))
 	, ThrustFactor(.009)
 	, RotCmd(V3D<float>(0, 0, 0))
@@ -87,7 +87,8 @@ void Ship::PaintTargets() {
 }
 
 void Ship::ConnectOn() {
-	ActiveBall = FirstInScope();
+	if (!ActiveBall)
+		ActiveBall = FirstInScope();
 }
 
 void Ship::ConnectOff() {
@@ -109,13 +110,16 @@ void Ship::ConnectOff() {
 }
 
 void Ship::GrappleOn() {
+	// Safety
+	if (GrappleStrand != NULL) {return;}
+	
 	Orb* GrappleBall = FirstInScope();
 	
 	// Safety
 	if (GrappleBall == NULL) {return;}
 	
-	GrappleStrand = SArena->Register( new Strand(GrappleBall, this, (GrappleBall->Pos - Pos).Length() ) );
-//	GrappleStrand = SArena->Register( new Strand(GrappleBall, this, 4 ) );
+	GrappleStrand = SArena->Register( new Strand(GrappleBall, this, -.8) );
+	//GrappleStrand = SArena->Register( new Strand(GrappleBall, this, 4 ) );
 }
 
 void Ship::GrappleOff() {
@@ -131,7 +135,7 @@ void Ship::GrappleOff() {
 
 Orb* Ship::FirstInScope() {
 	Orb* theOne = NULL;
-	float theZ = 1e40;
+	float theZ = 50;
 	
 	for (list<Orb*>::iterator itA = SArena->Orbs.begin(); itA != SArena->Orbs.end(); ++itA) {
 		V3D<float> LP = GTL((**itA).Pos); // Local position of target object

@@ -29,17 +29,6 @@ void FlightGame::InputHandler() {
 //		else if (Event.Type == sf::Event::MouseButtonReleased) {
 //			MainShip.ConnectOff();
 //		}
-		
-		else if (Event.Type == sf::Event::KeyPressed) {
-			if (Event.Key.Code == sf::Key::RAlt) {
-				MainShip.GrappleOn();
-			}
-		}
-		else if (Event.Type == sf::Event::KeyReleased) {
-			if (Event.Key.Code == sf::Key::RAlt) {
-				MainShip.GrappleOff();
-			}
-		}
 	}
 	if ( WInput.IsKeyDown(sf::Key::Escape) ) {
 		Exit();
@@ -69,8 +58,10 @@ void FlightGame::InputHandler() {
 	
 	// Brake
 	MainShip.BrakeOff();
-	if ( WInput.IsKeyDown(sf::Key::Space) ) {
-		MainShip.BrakeOn();
+	if ( WInput.IsKeyDown(sf::Key::RAlt) ) {
+		MainShip.ConnectOn();
+	} else {
+		MainShip.ConnectOff();
 	}
 	
 	MainShip.KillRot();
@@ -87,6 +78,12 @@ void FlightGame::InputHandler() {
 	if ( WInput.IsKeyDown(sf::Key::E) ) {
 		MainShip.AddRoll(.01);;
 	}
+	
+	// Grapple
+	if ( WInput.IsKeyDown(sf::Key::Space) )
+		MainShip.GrappleOn();
+	else
+		MainShip.GrappleOff();
 	
 	// Tractor Beam
 	MainShip.TractorOff();

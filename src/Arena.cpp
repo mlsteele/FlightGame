@@ -27,7 +27,7 @@ void Arena::Update () {
 		
 	// Bounding Box
 	for(std::list<Pushable*>::iterator it = boundables.begin(); it != boundables.end(); ++it) {
-//		CollideBounds(*it);
+		CollideBounds(*it);
 	}
 		
 	// Update Strands
@@ -59,8 +59,8 @@ void Arena::Render() {
 	}
 		
 	// Render Bounds
-//	glColor3f(.6, .6, .6);
-//	glutSolidCube(asize*2);
+	glColor3f(.6, .6, .6);
+	glutSolidCube(asize*2);
 }
 
 /// Uses fluffy collision.\n

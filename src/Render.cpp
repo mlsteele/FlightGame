@@ -24,6 +24,23 @@ void FlightGame::Render3D() {
 	
 	// Color Targets
 	MainShip.PaintTargets();
+	
+	
+	// Targeting assist
+	V3D<float> tline;
+	tline += MainShip.Vel;
+	tline += MainShip.Fd;
+	tline = tline.Normalized() * 100;
+	tline += MainShip.Pos;
+	
+	glDisable(GL_LIGHTING);
+	glColor3f(.9, .9, .9);
+	glPushMatrix();
+		glTranslatef(tline.x, tline.y, tline.z);
+		glBegin(GL_LINE_STRIP);
+			gluSphere(GLUQ, .5, 10, 10);
+		glEnd();
+	glPopMatrix();
 }
 
 void FlightGame::Render2D() {

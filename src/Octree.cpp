@@ -29,9 +29,8 @@ Octree<T>::~Octree ()
 	for (int tx = 0; tx < 2; tx++)
 		for (int ty = 0; ty < 2; ty++)
 			for (int tz = 0; tz < 2; tz++)
-				if (Trees[tx][ty][tz] != NULL) {
+				if (Trees[tx][ty][tz] != NULL)
 					delete Trees[tx][ty][tz];
-	}
 }
 
 template <class T>
@@ -54,16 +53,47 @@ vector<T> Octree<T>::getItems ()
 }
 
 template <class T>
+void Octree<T>::fillPairs (vector<T> a, vector<T> b)
+{
+  for (vector<Pushable*>::iterator itA = Items.begin(); itA != Items.end(); ++itA) {
+		// Pairs from below
+		for (int tx = 0; tx < 2; tx++)
+			for (int ty = 0; ty < 2; ty++)
+				for (int tz = 0; tz < 2; tz++)
+					if (Trees[tx][ty][tz] != NULL) {
+						vector<T> subItems = Trees[tx][ty][tz]->getItems();
+						for (vector<Pushable*>::iterator itB = subItems.begin(); itB != subItems.end(); ++itB) {
+							a.push_back(*itA);
+							b.push_back(*itB);
+						}
+		}
+		
+		// Pairs from this level
+		for(vector<Pushable*>::iterator itB = itA; ++itB != Items.end();) {
+			a.push_back(*itA);
+			b.push_back(*itB);
+		}
+	}
+	
+	// Recurse
+	for (int tx = 0; tx < 2; tx++)
+		for (int ty = 0; ty < 2; ty++)
+			for (int tz = 0; tz < 2; tz++)
+				if (Trees[tx][ty][tz] != NULL)
+					Trees[tx][ty][tz]->fillPairs(a, b);
+}
+
+template <class T>
 void Octree<T>::Insert (T insertion)
 {
 	// Abort if too big for this cell
 	if ( !(
-		insertion->Pos[0] - insertion->Rad > CornerMin[0] &&
-		insertion->Pos[1] - insertion->Rad > CornerMin[1] &&
-		insertion->Pos[2] - insertion->Rad > CornerMin[2] &&
-		insertion->Pos[0] + insertion->Rad < CornerMax[0] &&
-		insertion->Pos[1] + insertion->Rad < CornerMax[1] &&
-		insertion->Pos[2] + insertion->Rad < CornerMax[2]
+		insertion->Pos.x - insertion->Rad > CornerMin[0] &&
+		insertion->Pos.y - insertion->Rad > CornerMin[1] &&
+		insertion->Pos.z - insertion->Rad > CornerMin[2] &&
+		insertion->Pos.x + insertion->Rad < CornerMax[0] &&
+		insertion->Pos.y + insertion->Rad < CornerMax[1] &&
+		insertion->Pos.z + insertion->Rad < CornerMax[2]
 	)) {
 		std::cerr << "ERROR: Object too big for Octree cell.\n\t" << __FILE__ << ": " << __LINE__ << "\n";
 		exit(EXIT_FAILURE);
@@ -88,12 +118,12 @@ void Octree<T>::Insert (T insertion)
 				};
 				
 				if (
-					insertion->Pos[0] - insertion->Rad > potentialMin[0] &&
-					insertion->Pos[1] - insertion->Rad > potentialMin[1] &&
-					insertion->Pos[2] - insertion->Rad > potentialMin[2] &&
-					insertion->Pos[0] + insertion->Rad < potentialMax[0] &&
-					insertion->Pos[1] + insertion->Rad < potentialMax[1] &&
-					insertion->Pos[2] + insertion->Rad < potentialMax[2]
+					insertion->Pos.x - insertion->Rad > potentialMin[0] &&
+					insertion->Pos.y - insertion->Rad > potentialMin[1] &&
+					insertion->Pos.z - insertion->Rad > potentialMin[2] &&
+					insertion->Pos.x + insertion->Rad < potentialMax[0] &&
+					insertion->Pos.y + insertion->Rad < potentialMax[1] &&
+					insertion->Pos.z + insertion->Rad < potentialMax[2]
 				) {
 					// Insert into subcell (create subcell if not existant)
 					if (Trees[tx][ty][tz] != NULL) {
@@ -117,6 +147,25 @@ void Octree<T>::Insert (vector<T> insertions)
 	for (class std::vector<T>::iterator iInsertions = insertions.begin(); iInsertions != insertions.end(); ++iInsertions) {
 		Insert(*iInsertions);
 	}
+}
+
+template <class T>
+void Octree<T>::Render ()
+{
+	glDisable(GL_LIGHTING);
+	glColor3f(1, 0, 0);
+	glPushMatrix();
+	float oscale = CornerMax[0] - CornerMin[0];
+	glTranslatef(CornerMax[0] - oscale/2, CornerMax[1] - oscale/2, CornerMax[2] - oscale/2);
+	glutWireCube(oscale);
+	glPopMatrix();
+	glEnable(GL_LIGHTING);
+	
+	for (int tx = 0; tx < 2; tx++)
+		for (int ty = 0; ty < 2; ty++)
+			for (int tz = 0; tz < 2; tz++)
+				if (Trees[tx][ty][tz] != NULL)
+					Trees[tx][ty][tz]->Render();
 }
 
 template class Octree<Pushable*>;

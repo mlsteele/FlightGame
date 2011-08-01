@@ -1,6 +1,8 @@
 #ifndef _OCTREE_H_
 #define _OCTREE_H_
 
+#include <OpenGL/gl.h>
+#include <GLUT/glut.h>
 #include <vector>
 using std::vector;
 
@@ -21,9 +23,12 @@ class Octree {
 		~Octree ();
 		
 		vector<T> getItems ();
+		void fillPairs (vector<T> a, vector<T> b);
 		
 		void Insert (T insertion);
 		void Insert (vector<T> insertions);
+		
+		void Render();
 };
 
 #endif

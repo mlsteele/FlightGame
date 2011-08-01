@@ -17,6 +17,7 @@ class Ship;
 class Arena {
 	public:
 		const float asize;
+		Octree<Pushable*>* FrameTree;
 		vector<Orb*>		Orbs;
 		vector<Ship*>		Ships;
 		vector<Strand*> 	Strands;

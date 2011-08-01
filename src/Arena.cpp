@@ -2,18 +2,12 @@
 
 #include "Ship.h"
 
-Arena::Arena() : asize(100) {}
+Arena::Arena()
+: asize(100)
+, FrameTree(NULL)
+{}
 
 void Arena::Update () {	
-	vector<Pushable*> sphericals;
-	sphericals.insert( sphericals.end(), Orbs.begin(), Orbs.end() );
-	sphericals.insert( sphericals.end(), Ships.begin(), Ships.end() );
-	
-	float octMax = asize + 40;
-	float octMin = -asize - 40;
-	Octree<Pushable*> frameTree(octMin, octMin, octMin, octMax, octMax, octMax);
-  frameTree.Insert(sphericals);
-	
 	vector<Pushable*> tractorables;
 	tractorables.insert( tractorables.end(), Orbs.begin(), Orbs.end() );
 	tractorables.insert( tractorables.end(), Ships.begin(), Ships.end() );
@@ -22,13 +16,26 @@ void Arena::Update () {
 	boundables.insert( boundables.end(), Orbs.begin(), Orbs.end() );
 	boundables.insert( boundables.end(), Ships.begin(), Ships.end() );
 	
-	// Collision section
-	// Collide sphericals
-	for (vector<Pushable*>::iterator itA = sphericals.begin(); itA != sphericals.end(); ++itA) {
-		for(vector<Pushable*>::iterator itB = itA; ++itB != sphericals.end();) {
-			FluffyCollideSpheres( *itA, *itB );
-		}
-	}
+	// Collisions
+	vector<Pushable*> colloids;
+	colloids.insert( colloids.end(), Orbs.begin(), Orbs.end() );
+	colloids.insert( colloids.end(), Ships.begin(), Ships.end() );
+	float octMax = asize + 40;
+	float octMin = -asize - 40;
+	delete FrameTree;
+	FrameTree = new Octree<Pushable*>(octMin, octMin, octMin, octMax, octMax, octMax);
+  FrameTree->Insert(colloids);
+	FrameTree->Render();
+//	vector<Pushable*> colloidsA;
+//	vector<Pushable*> colloidsB;
+//	frameTree.fillPairs(colloidsA, colloidsB);
+//	vector<Pushable*>::iterator itA = colloidsA.begin();
+//	vector<Pushable*>::iterator itB = colloidsB.begin();
+//	while ( itA != colloidsA.end() && itB != colloidsB.end() ) {
+//		FluffyCollideSpheres( *itA, *itB );
+//		++itA;
+//		++itB;
+//	}
 		
 	// Bounding Box
 	for(std::vector<Pushable*>::iterator it = boundables.begin(); it != boundables.end(); ++it) {
@@ -62,10 +69,13 @@ void Arena::Render() {
 	for(std::vector<Orb*>::iterator it = Orbs.begin(); it != Orbs.end(); ++it) {	
 		(**it).Render();
 	}
-		
+	
+	// Render Octree
+	FrameTree->Render();
+	
 	// Render Bounds
-	glColor3f(.6, .6, .6);
-	glutSolidCube(asize*2);
+//	glColor3f(.6, .6, .6);
+//	glutSolidCube(asize*2);
 }
 
 /// Uses fluffy collision.\n

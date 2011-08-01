@@ -38,13 +38,14 @@ FlightGame::FlightGame() :
 	// Setup Arena
 	// Ship
 	Ship& MainShip = *FGArena.Register( new Ship( V3D<float>(0, 0, FGArena.asize), &FGArena) );
+	MainShip;
 	// Hammer
 //	Orb* Hammer = FGArena.Register( new Orb(
 //		MainShip.Pos + MainShip.Fd * 10, 1) );
 //	FGArena.Register(new Strand(&MainShip, Hammer));
 	
 	// Create random orbs
-	int smalln = 400;
+	int smalln = 200;
 	Orb* smalls[smalln];
 	int bign = 40;
 	Orb* bigs[bign];

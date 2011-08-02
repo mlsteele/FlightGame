@@ -39,13 +39,16 @@ void Octree<T>::getItems (vector<T>* items)
 	// Insert this level's items
 	items->insert(items->end(), Items.begin(), Items.end());
 	
-	// Recurse
-	for (int tx = 0; tx < 2; tx++)
-		for (int ty = 0; ty < 2; ty++)
-			for (int tz = 0; tz < 2; tz++)
-				if (Trees[tx][ty][tz] != NULL) {
-					Trees[tx][ty][tz]->getItems(items);
-	}
+	// Insert cached sub-level items
+	items->insert(items->end(), SubItems.begin(), SubItems.end());
+	
+//	// Recurse
+//	for (int tx = 0; tx < 2; tx++)
+//		for (int ty = 0; ty < 2; ty++)
+//			for (int tz = 0; tz < 2; tz++)
+//				if (Trees[tx][ty][tz] != NULL) {
+//					Trees[tx][ty][tz]->getItems(items);
+//	}
 }
 
 template <class T>
@@ -58,6 +61,7 @@ void Octree<T>::fillPairs (vector<T>* a, vector<T>* b)
 				for (int tz = 0; tz < 2; tz++)
 					if (Trees[tx][ty][tz] != NULL) {
 						vector<T>* subItems = new vector<T>;
+						subItems->reserve(1024);
 						Trees[tx][ty][tz]->getItems(subItems);
 						for (vector<Pushable*>::iterator itB = subItems->begin(); itB != subItems->end(); ++itB) {
 							a->push_back(*itA);
@@ -97,6 +101,9 @@ void Octree<T>::Insert (T insertion)
 		exit(EXIT_FAILURE);
 		return;
 	}
+	
+	// Cache subitems
+	SubItems.push_back(insertion);
 	
 	// If it fits in a subcell
 	for (int tx = 0; tx < 2; tx++)
@@ -140,9 +147,9 @@ void Octree<T>::Insert (T insertion)
 }
 
 template <class T>
-void Octree<T>::Insert (vector<T> insertions)
+void Octree<T>::Insert (vector<T>* insertions)
 {
-	for (class std::vector<T>::iterator iInsertions = insertions.begin(); iInsertions != insertions.end(); ++iInsertions) {
+	for (class std::vector<T>::iterator iInsertions = insertions->begin(); iInsertions != insertions->end(); ++iInsertions) {
 		Insert(*iInsertions);
 	}
 }

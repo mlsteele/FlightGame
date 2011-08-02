@@ -45,7 +45,7 @@ FlightGame::FlightGame() :
 //	FGArena.Register(new Strand(&MainShip, Hammer));
 	
 	// Create random orbs
-	int smalln = 320;
+	int smalln = 500;
 	Orb* smalls[smalln];
 	int bign = 32;
 	Orb* bigs[bign];
@@ -158,7 +158,7 @@ int FlightGame::Execute() {
 		// Safety for spiral of death
 		if (TimeStack >= .2) {
 			TimeStack = .2;
-			std::cerr << "WARN: " << __TIME__ << ": Physics Safety Valve Tripped!\n";
+			//std::cerr << "WARN: " << __TIME__ << ": Physics Safety Valve Tripped!\n";
 		}
 		while (TimeStack >= 1/100.f) {
 			Physics();

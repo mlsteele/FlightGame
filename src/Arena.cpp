@@ -24,7 +24,7 @@ void Arena::Update () {
 	float octMin = -asize - 40;
 	delete FrameTree;
 	FrameTree = new Octree<Pushable*>(octMin, octMin, octMin, octMax, octMax, octMax);
-  FrameTree->Insert(colloids);
+  FrameTree->Insert(&colloids);
 	vector<Pushable*>* colloidsA = new vector<Pushable*>;
 	vector<Pushable*>* colloidsB = new vector<Pushable*>;
 	FrameTree->fillPairs(colloidsA, colloidsB);
@@ -72,11 +72,11 @@ void Arena::Render() {
 	}
 	
 	// Render Octree
-	FrameTree->Render();
+//	FrameTree->Render();
 	
 	// Render Bounds
-//	glColor3f(.6, .6, .6);
-//	glutSolidCube(asize*2);
+	glColor3f(.6, .6, .6);
+	glutSolidCube(asize*2);
 }
 
 /// Uses fluffy collision.\n

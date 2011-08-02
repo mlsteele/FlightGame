@@ -16,6 +16,7 @@ class Octree {
 		float SplitPoint[3];
 		
 		vector<T> Items;
+		vector<T> SubItems;
 		Octree<T>* Trees[2][2][2];
 	
 	public:
@@ -26,7 +27,7 @@ class Octree {
 		void fillPairs (vector<T>* a, vector<T>* b);
 		
 		void Insert (T insertion);
-		void Insert (vector<T> insertions);
+		void Insert (vector<T>* insertions);
 		
 		void Render();
 };

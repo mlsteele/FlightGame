@@ -2,7 +2,7 @@
 
 template <class T>
 Octree<T>::Octree (float cornerMinX, float cornerMinY, float cornerMinZ, float cornerMaxX, float cornerMaxY, float cornerMaxZ)
-	: Parent(NULL)
+	: Parent(NULL), PruneMe(false)
 {
 	// There has GOT to be a better way to do this!
 	for (int tx = 0; tx < 2; tx++)
@@ -168,30 +168,30 @@ void Octree<T>::Update ()
 	Items.clear();
 	Insert(&oldItems); // FIXME is this bad memory?
 	
-	bool gotKids = false;
+	PruneMe	= true;
 	for (int tx = 0; tx < 2; tx++)
 		for (int ty = 0; ty < 2; ty++)
 			for (int tz = 0; tz < 2; tz++)
 				if (Trees[tx][ty][tz] != NULL) {
-					gotKids = true;
+					PruneMe	= false;
 					Trees[tx][ty][tz]->Update();
 	}
+	if (PruneMe && !Items.empty())
+		PruneMe = false;
 	
-	if (!gotKids) {
-		Parent->PruneChild(this);
-	}
+	Prune();
 }
 
 template <class T>
-void Octree<T>::PruneChild (Octree<T>* victim)
+void Octree<T>::Prune ()
 {
-for (int tx = 0; tx < 2; tx++)
-	for (int ty = 0; ty < 2; ty++)
-		for (int tz = 0; tz < 2; tz++)
-			if (Trees[tx][ty][tz] == victim) {
-				delete Trees[tx][ty][tz];
-				Trees[tx][ty][tz] = NULL;
-			}
+	for (int tx = 0; tx < 2; tx++)
+		for (int ty = 0; ty < 2; ty++)
+			for (int tz = 0; tz < 2; tz++)
+				if (Trees[tx][ty][tz] != NULL && Trees[tx][ty][tz]->PruneMe) {
+					delete Trees[tx][ty][tz];
+					Trees[tx][ty][tz] = NULL;
+	}
 }
 
 template <class T>

@@ -45,9 +45,9 @@ FlightGame::FlightGame() :
 //	FGArena.Register(new Strand(&MainShip, Hammer));
 	
 	// Create random orbs
-	int smalln = 500;
+	int smalln = 1000;
 	Orb* smalls[smalln];
-	int bign = 32;
+	int bign = 100;
 	Orb* bigs[bign];
 	int rcons = 10;
 	

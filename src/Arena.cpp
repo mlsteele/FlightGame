@@ -5,7 +5,11 @@
 Arena::Arena()
 : asize(100)
 , FrameTree(NULL)
-{}
+{
+	float octMax = asize + 40;
+	float octMin = -asize - 40;
+	FrameTree = new Octree<Pushable*>(octMin, octMin, octMin, octMax, octMax, octMax);
+}
 
 void Arena::Update () {	
 	vector<Pushable*> tractorables;
@@ -17,26 +21,17 @@ void Arena::Update () {
 	boundables.insert( boundables.end(), Ships.begin(), Ships.end() );
 	
 	// Collisions
-	vector<Pushable*> colloids;
-	colloids.insert( colloids.end(), Orbs.begin(), Orbs.end() );
-	colloids.insert( colloids.end(), Ships.begin(), Ships.end() );
-	float octMax = asize + 40;
-	float octMin = -asize - 40;
-	delete FrameTree;
-	FrameTree = new Octree<Pushable*>(octMin, octMin, octMin, octMax, octMax, octMax);
-  FrameTree->Insert(&colloids);
-	vector<Pushable*>* colloidsA = new vector<Pushable*>;
-	vector<Pushable*>* colloidsB = new vector<Pushable*>;
-	FrameTree->fillPairs(colloidsA, colloidsB);
-	vector<Pushable*>::iterator itA = colloidsA->begin();
-	vector<Pushable*>::iterator itB = colloidsB->begin();
-	while ( itA != colloidsA->end() && itB != colloidsB->end() ) {
+	FrameTree->Update();
+	vector<Pushable*> colloidsA;
+	vector<Pushable*> colloidsB;
+	FrameTree->fillPairs(&colloidsA, &colloidsB);
+	vector<Pushable*>::iterator itA = colloidsA.begin();
+	vector<Pushable*>::iterator itB = colloidsB.begin();
+	while ( itA != colloidsA.end() && itB != colloidsB.end() ) {
 		FluffyCollideSpheres( *itA, *itB );
 		++itA;
 		++itB;
 	}
-	delete colloidsA;
-	delete colloidsB;
 		
 	// Bounding Box
 	for(std::vector<Pushable*>::iterator it = boundables.begin(); it != boundables.end(); ++it) {

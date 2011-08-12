@@ -2,6 +2,7 @@
 
 template <class T>
 Octree<T>::Octree (float cornerMinX, float cornerMinY, float cornerMinZ, float cornerMaxX, float cornerMaxY, float cornerMaxZ)
+	: Parent(NULL)
 {
 	// There has GOT to be a better way to do this!
 	for (int tx = 0; tx < 2; tx++)
@@ -97,9 +98,13 @@ void Octree<T>::Insert (T insertion)
 		insertion->Pos.y + insertion->Rad < CornerMax[1] &&
 		insertion->Pos.z + insertion->Rad < CornerMax[2]
 	)) {
-		std::cerr << "ERROR: Object too big for Octree cell.\n\t" << __FILE__ << ": " << __LINE__ << "\n";
-		exit(EXIT_FAILURE);
-		return;
+		if (Parent != NULL) {
+			Parent->Insert(insertion);
+			return;
+		} else {
+			std::cerr << "ERROR: Object out of bounds of octree.\n\t" << __FILE__ << ": " << __LINE__ << "\n";
+			exit(EXIT_FAILURE);
+		}
 	}
 	
 	// Cache subitems
@@ -135,6 +140,7 @@ void Octree<T>::Insert (T insertion)
 						Trees[tx][ty][tz]->Insert(insertion);
 					} else {
 						Trees[tx][ty][tz] = new Octree(potentialMin[0], potentialMin[1], potentialMin[2], potentialMax[0], potentialMax[1], potentialMax[2]);
+						Trees[tx][ty][tz]->Parent = this;
 						Trees[tx][ty][tz]->Insert(insertion);
 					}
 					
@@ -152,6 +158,27 @@ void Octree<T>::Insert (vector<T>* insertions)
 	for (class std::vector<T>::iterator iInsertions = insertions->begin(); iInsertions != insertions->end(); ++iInsertions) {
 		Insert(*iInsertions);
 	}
+}
+
+template <class T>
+void Octree<T>::Update ()
+{
+	vector<T> oldItems = Items;
+	SubItems.clear();
+	Items.clear();
+	Insert(&oldItems); // FIXME is this bad memory?
+	
+	bool gotKids = false;
+	for (int tx = 0; tx < 2; tx++)
+		for (int ty = 0; ty < 2; ty++)
+			for (int tz = 0; tz < 2; tz++)
+				if (Trees[tx][ty][tz] != NULL) {
+					gotKids = true;
+					Trees[tx][ty][tz]->Update();
+	}
+	
+//	if (!gotKids)
+//		delete this;
 }
 
 template <class T>

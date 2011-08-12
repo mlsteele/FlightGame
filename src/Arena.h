@@ -32,9 +32,19 @@ class Arena {
 		void Render();
 		
 		/// \brief Register Orb into arena
-		inline Orb* 	Register(Orb* _op)		{ Orbs.push_back(_op); return _op; };
+		inline Orb* 	Register(Orb* _op) {
+			Orbs.push_back(_op);
+			// Oh my god what is that!?
+			FrameTree->Insert(reinterpret_cast<Pushable*> (_op));
+			return _op;
+		};
 		/// \brief Register Ship into arena
-		inline Ship* 	Register(Ship* _op)		{ Ships.push_back(_op); return _op; };
+		inline Ship* 	Register(Ship* _op)		{
+			Ships.push_back(_op);
+			// Compiler... put a sock in it.
+			FrameTree->Insert(reinterpret_cast<Pushable*> (_op));
+			return _op;
+		};
 		/// \brief Register Strand into arena
 		inline Strand* 	Register(Strand* _op)	{ Strands.push_back(_op); return _op; };
 		/// \brief Unegister Strand from arena

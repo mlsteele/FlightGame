@@ -18,7 +18,7 @@ class Octree {
 		vector<T> Items;
 		vector<T> SubItems;
 		Octree<T>* Trees[2][2][2];
-	
+		Octree<T>* Parent;
 	public:
 		Octree (float cornerMinX, float cornerMinY, float cornerMinZ, float cornerMaxX, float cornerMaxY, float cornerMaxZ);
 		~Octree ();
@@ -28,6 +28,8 @@ class Octree {
 		
 		void Insert (T insertion);
 		void Insert (vector<T>* insertions);
+		
+		void Update ();
 		
 		void Render();
 };

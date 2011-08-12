@@ -177,8 +177,21 @@ void Octree<T>::Update ()
 					Trees[tx][ty][tz]->Update();
 	}
 	
-//	if (!gotKids)
-//		delete this;
+	if (!gotKids) {
+		Parent->PruneChild(this);
+	}
+}
+
+template <class T>
+void Octree<T>::PruneChild (Octree<T>* victim)
+{
+for (int tx = 0; tx < 2; tx++)
+	for (int ty = 0; ty < 2; ty++)
+		for (int tz = 0; tz < 2; tz++)
+			if (Trees[tx][ty][tz] == victim) {
+				delete Trees[tx][ty][tz];
+				Trees[tx][ty][tz] = NULL;
+			}
 }
 
 template <class T>

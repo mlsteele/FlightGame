@@ -30,6 +30,7 @@ class Octree {
 		void Insert (vector<T>* insertions);
 		
 		void Update ();
+		void PruneChild (Octree<T>* victim);
 		
 		void Render();
 };

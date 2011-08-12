@@ -6,7 +6,7 @@ FlightGame::FlightGame() :
 	nFrame = 0;
 	Clock.Reset();
 	TimeStack = 0;
-	
+
 	
 	sf::VideoMode DesktopMode = sf::VideoMode::GetDesktopMode();
 	sf::ContextSettings OGLContext(
@@ -18,7 +18,7 @@ FlightGame::FlightGame() :
 	std::string windowName = "FlightGame";
 	
 	// Fullscreen Switch
-	if (true) {
+	if (false) {
 		WIDTH = DesktopMode.Width;
 		HEIGHT = DesktopMode.Height;
 		ASPECT = WIDTH/HEIGHT;
@@ -38,15 +38,16 @@ FlightGame::FlightGame() :
 	// Setup Arena
 	// Ship
 	Ship& MainShip = *FGArena.Register( new Ship( V3D<float>(0, 0, FGArena.asize), &FGArena) );
+	MainShip;
 	// Hammer
 //	Orb* Hammer = FGArena.Register( new Orb(
 //		MainShip.Pos + MainShip.Fd * 10, 1) );
 //	FGArena.Register(new Strand(&MainShip, Hammer));
 	
 	// Create random orbs
-	int smalln = 320;
+	int smalln = 1000;
 	Orb* smalls[smalln];
-	int bign = 32;
+	int bign = 100;
 	Orb* bigs[bign];
 	int rcons = 10;
 	
@@ -157,7 +158,7 @@ int FlightGame::Execute() {
 		// Safety for spiral of death
 		if (TimeStack >= .2) {
 			TimeStack = .2;
-			std::cerr << "WARN: " << __TIME__ << ": Physics Safety Valve Tripped!\n";
+			//std::cerr << "WARN: " << __TIME__ << ": Physics Safety Valve Tripped!\n";
 		}
 		while (TimeStack >= 1/100.f) {
 			Physics();

@@ -14,7 +14,7 @@ Orb::Orb (V3D<float> _pos, float _rad)
 	if (_rad <= 3.) {
 		res = 16;
 	} else if (_rad <= 20.) {
-		res = 30;
+		res = 24;
 	} else {
 		res = 30;
 		std::cerr << "ERROR: Sphere bigger than I know how to draw!\n\t" << __FILE__ << ": " << __LINE__ << "\n";

@@ -1,14 +1,15 @@
 #ifndef _ARENA_H_
 	#define _ARENA_H_
 
-#include <list>
-using std::list;
+#include <vector>
+using std::vector;
 #include <OpenGL/gl.h>
 #include <GLUT/glut.h>
 
 #include "Pushable.h"
 #include "Orb.h"
 #include "Strand.h"
+#include "Octree.h"
 
 class Ship;
 
@@ -16,9 +17,10 @@ class Ship;
 class Arena {
 	public:
 		const float asize;
-		list<Orb*>		Orbs;
-		list<Ship*>		Ships;
-		list<Strand*> 	Strands;
+		Octree<Pushable*>* FrameTree;
+		vector<Orb*>		Orbs;
+		vector<Ship*>		Ships;
+		vector<Strand*> 	Strands;
 	
 	public:
 		/// \brief Constructor loads bounding model
@@ -30,13 +32,23 @@ class Arena {
 		void Render();
 		
 		/// \brief Register Orb into arena
-		inline Orb* 	Register(Orb* _op)		{ Orbs.push_back(_op); return _op; };
+		inline Orb* 	Register(Orb* _op) {
+			Orbs.push_back(_op);
+			// Oh my god what is that!?
+			FrameTree->Insert(reinterpret_cast<Pushable*> (_op));
+			return _op;
+		};
 		/// \brief Register Ship into arena
-		inline Ship* 	Register(Ship* _op)		{ Ships.push_back(_op); return _op; };
+		inline Ship* 	Register(Ship* _op)		{
+			Ships.push_back(_op);
+			// Compiler... put a sock in it.
+			FrameTree->Insert(reinterpret_cast<Pushable*> (_op));
+			return _op;
+		};
 		/// \brief Register Strand into arena
 		inline Strand* 	Register(Strand* _op)	{ Strands.push_back(_op); return _op; };
 		/// \brief Unegister Strand from arena
-		inline Strand*  Unregister(Strand* _op) { Strands.remove(_op); return _op; };
+		inline Strand*  Unregister(Strand* _op) { Strands.erase( find(Strands.begin(), Strands.end(), _op) ); return _op; };
 		
 		/// \brief Enact a soft elastic collision on two pushables
 		/// \return Whether collision occured

@@ -2,46 +2,54 @@
 
 #include "Ship.h"
 
-Arena::Arena() : asize(100) {}
+Arena::Arena()
+: asize(100)
+, FrameTree(NULL)
+{
+	float octMax = asize + 40;
+	float octMin = -asize - 40;
+	FrameTree = new Octree<Pushable*>(octMin, octMin, octMin, octMax, octMax, octMax);
+}
 
 void Arena::Update () {	
-	list<Pushable*> sphericals;
-	sphericals.insert( sphericals.end(), Orbs.begin(), Orbs.end() );
-	sphericals.insert( sphericals.end(), Ships.begin(), Ships.end() );
-	
-	list<Pushable*> tractorables;
+	vector<Pushable*> tractorables;
 	tractorables.insert( tractorables.end(), Orbs.begin(), Orbs.end() );
 	tractorables.insert( tractorables.end(), Ships.begin(), Ships.end() );
 	
-	list<Pushable*> boundables;
+	vector<Pushable*> boundables;
 	boundables.insert( boundables.end(), Orbs.begin(), Orbs.end() );
 	boundables.insert( boundables.end(), Ships.begin(), Ships.end() );
 	
-	// Collision section
-	// Collide sphericals
-	for (list<Pushable*>::iterator itA = sphericals.begin(); itA != sphericals.end(); ++itA) {
-		for(list<Pushable*>::iterator itB = itA; ++itB != sphericals.end();) {
-			FluffyCollideSpheres( *itA, *itB );
-		}
+	// Collisions
+	FrameTree->Update();
+	vector<Pushable*> colloidsA;
+	vector<Pushable*> colloidsB;
+	FrameTree->fillPairs(&colloidsA, &colloidsB);
+	vector<Pushable*>::iterator itA = colloidsA.begin();
+	vector<Pushable*>::iterator itB = colloidsB.begin();
+	while ( itA != colloidsA.end() && itB != colloidsB.end() ) {
+		FluffyCollideSpheres( *itA, *itB );
+		++itA;
+		++itB;
 	}
 		
 	// Bounding Box
-	for(std::list<Pushable*>::iterator it = boundables.begin(); it != boundables.end(); ++it) {
+	for(std::vector<Pushable*>::iterator it = boundables.begin(); it != boundables.end(); ++it) {
 		CollideBounds(*it);
 	}
 		
 	// Update Strands
-	for(std::list<Strand*>::iterator it = Strands.begin(); it != Strands.end(); ++it) {
+	for(std::vector<Strand*>::iterator it = Strands.begin(); it != Strands.end(); ++it) {
 		(**it).Update();
 	}
 	
 	// Update Orbs
-	for(std::list<Orb*>::iterator it = Orbs.begin(); it != Orbs.end(); ++it) {
+	for(std::vector<Orb*>::iterator it = Orbs.begin(); it != Orbs.end(); ++it) {
 		(**it).Update();
 	}
 
 	// Update Ships
-	for(std::list<Ship*>::iterator it = Ships.begin(); it != Ships.end(); ++it) {
+	for(std::vector<Ship*>::iterator it = Ships.begin(); it != Ships.end(); ++it) {
 		(**it).Update();
 		(**it).TractorEffect();
 	}
@@ -49,15 +57,18 @@ void Arena::Update () {
 
 void Arena::Render() {
 	// Strands
-	for(std::list<Strand*>::iterator it = Strands.begin(); it != Strands.end(); ++it) {
+	for(std::vector<Strand*>::iterator it = Strands.begin(); it != Strands.end(); ++it) {
 		(**it).Render();
 	}
 	
 	// Orbs
-	for(std::list<Orb*>::iterator it = Orbs.begin(); it != Orbs.end(); ++it) {	
+	for(std::vector<Orb*>::iterator it = Orbs.begin(); it != Orbs.end(); ++it) {	
 		(**it).Render();
 	}
-		
+	
+	// Render Octree
+//	FrameTree->Render();
+	
 	// Render Bounds
 	glColor3f(.6, .6, .6);
 	glutSolidCube(asize*2);

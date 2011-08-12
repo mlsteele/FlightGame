@@ -68,7 +68,7 @@ void Ship::Shoot() {
 void Ship::PaintTargets() {
 	
 	// Default Colors
-	for (list<Orb*>::iterator itA = SArena->Orbs.begin(); itA != SArena->Orbs.end(); ++itA) {
+	for (vector<Orb*>::iterator itA = SArena->Orbs.begin(); itA != SArena->Orbs.end(); ++itA) {
 		(**itA).ColorDefault();
 	}
 	
@@ -137,7 +137,7 @@ Orb* Ship::FirstInScope() {
 	Orb* theOne = NULL;
 	float theZ = 50;
 	
-	for (list<Orb*>::iterator itA = SArena->Orbs.begin(); itA != SArena->Orbs.end(); ++itA) {
+	for (vector<Orb*>::iterator itA = SArena->Orbs.begin(); itA != SArena->Orbs.end(); ++itA) {
 		V3D<float> LP = GTL((**itA).Pos); // Local position of target object
 		float r = sqrt( (LP.x)*(LP.x) + (LP.y)*(LP.y) ); // Cylindrical coordinate. Cylinder long axis from eyes to back of head.
 		float rmax = r + (**itA).Rad;

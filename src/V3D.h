@@ -40,6 +40,20 @@ class V3D {
 			z = _z;
 		};
 		
+		/// \brief Access by indices 0, 1, 2
+		inline T operator[] (int i) {
+			switch (i) {
+				case 0:
+					return x;
+				case 1:
+					return y;
+				case 2:
+					return z;
+				default:
+					throw "Error: Index out of bounds";
+			}
+		};
+		
 		/// \brief Zeroes out components
 		inline void Zero() {
 			x = 0;

@@ -67,7 +67,7 @@ void Arena::Render() {
 	}
 	
 	// Render Octree
-//	FrameTree->Render();
+	FrameTree->Render();
 	
 	// Render Bounds
 	glColor3f(.6, .6, .6);

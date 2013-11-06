@@ -9,19 +9,18 @@ Octree<T>::Octree (float cornerMinX, float cornerMinY, float cornerMinZ, float c
 		for (int ty = 0; ty < 2; ty++)
 			for (int tz = 0; tz < 2; tz++)
 				Trees[tx][ty][tz] = NULL;
-	
+
 	CornerMin[0] = cornerMinX;
 	CornerMin[1] = cornerMinY;
 	CornerMin[2] = cornerMinZ;
-	
+
 	CornerMax[0] = cornerMaxX;
 	CornerMax[1] = cornerMaxY;
 	CornerMax[2] = cornerMaxZ;
-	
+
 	SplitPoint[0] = (CornerMin[0] + CornerMax[0]) / 2;
 	SplitPoint[1] = (CornerMin[1] + CornerMax[1]) / 2;
 	SplitPoint[2] = (CornerMin[2] + CornerMax[2]) / 2;
-	printf("");
 }
 
 template <class T>
@@ -39,10 +38,10 @@ void Octree<T>::getItems (vector<T>* items)
 {
 	// Insert this level's items
 	items->insert(items->end(), Items.begin(), Items.end());
-	
+
 	// Insert cached sub-level items
 	items->insert(items->end(), SubItems.begin(), SubItems.end());
-	
+
 //	// Recurse
 //	for (int tx = 0; tx < 2; tx++)
 //		for (int ty = 0; ty < 2; ty++)
@@ -70,14 +69,14 @@ void Octree<T>::fillPairs (vector<T>* a, vector<T>* b)
 						}
 						delete subItems;
 		}
-		
+
 		// Pairs from this level
 		for(vector<Pushable*>::iterator itB = itA; ++itB != Items.end();) {
 			a->push_back(*itA);
 			b->push_back(*itB);
 		}
 	}
-	
+
 	// Recurse
 	for (int tx = 0; tx < 2; tx++)
 		for (int ty = 0; ty < 2; ty++)
@@ -106,27 +105,27 @@ void Octree<T>::Insert (T insertion)
 			exit(EXIT_FAILURE);
 		}
 	}
-	
+
 	// Cache subitems
 	SubItems.push_back(insertion);
-	
+
 	// If it fits in a subcell
 	for (int tx = 0; tx < 2; tx++)
 		for (int ty = 0; ty < 2; ty++)
 			for (int tz = 0; tz < 2; tz++) {
-				
+
 				float potentialMin[3] = {
 					(tx == 0) ? CornerMin[0] : SplitPoint[0],
 					(ty == 0) ? CornerMin[1] : SplitPoint[1],
 					(tz == 0) ? CornerMin[2] : SplitPoint[2]
 				};
-				
+
 				float potentialMax[3] = {
 					(tx == 0) ? SplitPoint[0] : CornerMax[0],
 					(ty == 0) ? SplitPoint[1] : CornerMax[1],
 					(tz == 0) ? SplitPoint[2] : CornerMax[2]
 				};
-				
+
 				if (
 					insertion->Pos.x - insertion->Rad > potentialMin[0] &&
 					insertion->Pos.y - insertion->Rad > potentialMin[1] &&
@@ -143,11 +142,11 @@ void Octree<T>::Insert (T insertion)
 						Trees[tx][ty][tz]->Parent = this;
 						Trees[tx][ty][tz]->Insert(insertion);
 					}
-					
+
 					return;
 				}
 	}
-	
+
 	// Fits only into this cell
 	Items.push_back(insertion);
 }
@@ -155,7 +154,7 @@ void Octree<T>::Insert (T insertion)
 template <class T>
 void Octree<T>::Insert (vector<T>* insertions)
 {
-	for (class std::vector<T>::iterator iInsertions = insertions->begin(); iInsertions != insertions->end(); ++iInsertions) {
+	for (typename std::vector<T>::iterator iInsertions = insertions->begin(); iInsertions != insertions->end(); ++iInsertions) {
 		Insert(*iInsertions);
 	}
 }
@@ -167,7 +166,7 @@ void Octree<T>::Update ()
 	SubItems.clear();
 	Items.clear();
 	Insert(&oldItems); // FIXME is this bad memory?
-	
+
 	PruneMe	= true;
 	for (int tx = 0; tx < 2; tx++)
 		for (int ty = 0; ty < 2; ty++)
@@ -178,7 +177,7 @@ void Octree<T>::Update ()
 	}
 	if (PruneMe && !Items.empty())
 		PruneMe = false;
-	
+
 	Prune();
 }
 
@@ -205,7 +204,7 @@ void Octree<T>::Render ()
 	glutWireCube(oscale);
 	glPopMatrix();
 //	glEnable(GL_LIGHTING);
-	
+
 	for (int tx = 0; tx < 2; tx++)
 		for (int ty = 0; ty < 2; ty++)
 			for (int tz = 0; tz < 2; tz++)

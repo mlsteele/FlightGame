@@ -1,96 +1,96 @@
 #include "FlightGame.h"
 
 void FlightGame::InputHandler() {
-	const sf::Input &WInput = Window.GetInput();
 	Ship& MainShip = *(*FGArena.Ships.begin());
-	
+
 	// Initialize or stash mouse position
 	if (nFrame < 2){
 		mX = WIDTH/2;
 		mY = HEIGHT/2;
 	} else {
-		mX = WInput.GetMouseX();
-		mY = WInput.GetMouseY();
+		mX = sf::Mouse::getPosition(Window).x;
+		mY = sf::Mouse::getPosition(Window).y;
 	}
-	
-	while (Window.GetEvent(Event)) {
-		if (Event.Type == sf::Event::Closed) {
+
+	sf::Event event;
+	while (Window.pollEvent(event)) {
+		if (event.type == sf::Event::Closed) {
 			Exit();
 		}
-		else if (Event.Type == sf::Event::Resized) {
-			glViewport(0, 0, Event.Size.Width, Event.Size.Height);
+		else if (event.type == sf::Event::Resized) {
+			glViewport(0, 0, event.size.width, event.size.height);
 		}
-		
+
 		// MainShip
 		// Firing on mouse
-		else if (Event.Type == sf::Event::MouseButtonPressed) {
+		else if (event.type == sf::Event::MouseButtonPressed) {
 			MainShip.Shoot();
 		}
-//		else if (Event.Type == sf::Event::MouseButtonReleased) {
+//		else if (event.type == sf::Event::MouseButtonReleased) {
 //			MainShip.ConnectOff();
 //		}
 	}
-	if ( WInput.IsKeyDown(sf::Key::Escape) ) {
+	if ( sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) ) {
 		Exit();
 	}
-	
+
 	// Main Ship Control
 	// Translate
 	MainShip.KillThrust();
-	if ( WInput.IsKeyDown(sf::Key::W) ) {
+	if ( sf::Keyboard::isKeyPressed(sf::Keyboard::W) ) {
 		MainShip.AddThrust(0, 0, 1);
 	}
-	if ( WInput.IsKeyDown(sf::Key::S) ) {
+	if ( sf::Keyboard::isKeyPressed(sf::Keyboard::S) ) {
 		MainShip.AddThrust(0, 0, -1);
 	}
-	if ( WInput.IsKeyDown(sf::Key::A) ) {
+	if ( sf::Keyboard::isKeyPressed(sf::Keyboard::A) ) {
 		MainShip.AddThrust(-1, 0, 0);
 	}
-	if ( WInput.IsKeyDown(sf::Key::D) ) {
+	if ( sf::Keyboard::isKeyPressed(sf::Keyboard::D) ) {
 		MainShip.AddThrust(1, 0, 0);
 	}
-	if ( WInput.IsKeyDown(sf::Key::R) ) {
+	if ( sf::Keyboard::isKeyPressed(sf::Keyboard::R) ) {
 		MainShip.AddThrust(0, 1, 0);
 	}
-	if ( WInput.IsKeyDown(sf::Key::F) ) {
+	if ( sf::Keyboard::isKeyPressed(sf::Keyboard::F) ) {
 		MainShip.AddThrust(0, -1, 0);
 	}
-	
+
 	// Brake
 	MainShip.BrakeOff();
-	if ( WInput.IsKeyDown(sf::Key::RAlt) ) {
+	if ( sf::Keyboard::isKeyPressed(sf::Keyboard::RAlt) ) {
 		MainShip.ConnectOn();
 	} else {
 		MainShip.ConnectOff();
 	}
-	
+
 	MainShip.KillRot();
 	// Pitch & Yaw
 //	if (sqrt(pow(mX-WIDTH/2, 2) + pow(mY-HEIGHT/2, 2)) > 20) {
 		MainShip.AddYaw( ((mX - WIDTH/2)/float(WIDTH)) * -.04 );
 		MainShip.AddPitch( ((mY - HEIGHT/2)/float(HEIGHT)) * -.04*ASPECT );
 //	}
-	
+
 	// Roll
-	if ( WInput.IsKeyDown(sf::Key::Q) ) {
+	if ( sf::Keyboard::isKeyPressed(sf::Keyboard::Q) ) {
 		MainShip.AddRoll(-.01);;
 	}
-	if ( WInput.IsKeyDown(sf::Key::E) ) {
+	if ( sf::Keyboard::isKeyPressed(sf::Keyboard::E) ) {
 		MainShip.AddRoll(.01);;
 	}
-	
+
 	// Grapple
-	if ( WInput.IsKeyDown(sf::Key::Space) )
+	if ( sf::Keyboard::isKeyPressed(sf::Keyboard::Space) )
 		MainShip.GrappleOn();
 	else
 		MainShip.GrappleOff();
-	
+
 	// Tractor Beam
 	MainShip.TractorOff();
-	if ( WInput.IsKeyDown(sf::Key::LShift) ) {
+	if ( sf::Keyboard::isKeyPressed(sf::Keyboard::LShift) ) {
 		MainShip.TractorIn();
 	}
-	if ( WInput.IsKeyDown(sf::Key::RShift) ) {
+	if ( sf::Keyboard::isKeyPressed(sf::Keyboard::RShift) ) {
 		MainShip.TractorOut();
 	}
 }

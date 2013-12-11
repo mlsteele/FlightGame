@@ -6,9 +6,10 @@
 #include "FlightGame.h"
 
 int main(int argc, char** argv) {
-	
+  glutInit(&argc, argv);
+
 	FlightGame game;
 	int result = game.Execute();
-	
+
 	return result;
 }

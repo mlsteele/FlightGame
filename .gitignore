@@ -3,3 +3,4 @@ build
 docs/
 FlightGame.xcodeproj/miles*
 !FlightGame.xcodeproj/project.pbxproj
+*.o

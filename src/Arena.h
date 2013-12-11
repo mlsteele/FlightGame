@@ -3,8 +3,8 @@
 
 #include <vector>
 using std::vector;
-#include <OpenGL/gl.h>
-#include <GLUT/glut.h>
+#include <GL/gl.h>
+#include <GL/glut.h>
 
 #include "Pushable.h"
 #include "Orb.h"
@@ -21,16 +21,16 @@ class Arena {
 		vector<Orb*>		Orbs;
 		vector<Ship*>		Ships;
 		vector<Strand*> 	Strands;
-	
+
 	public:
 		/// \brief Constructor loads bounding model
 		Arena();
-		
+
 		/// \brief Run physics updates on all objects in arena
 		void Update();
 		/// \brief Render physical objects
 		void Render();
-		
+
 		/// \brief Register Orb into arena
 		inline Orb* 	Register(Orb* _op) {
 			Orbs.push_back(_op);
@@ -49,7 +49,7 @@ class Arena {
 		inline Strand* 	Register(Strand* _op)	{ Strands.push_back(_op); return _op; };
 		/// \brief Unegister Strand from arena
 		inline Strand*  Unregister(Strand* _op) { Strands.erase( find(Strands.begin(), Strands.end(), _op) ); return _op; };
-		
+
 		/// \brief Enact a soft elastic collision on two pushables
 		/// \return Whether collision occured
 		bool FluffyCollideSpheres (Pushable* sphereA, Pushable* sphereB);

@@ -5,8 +5,8 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
-#include <OpenGL/gl.h>
-#include <GLUT/glut.h>
+#include <GL/gl.h>
+#include <GL/glut.h>
 
 #include "Pushable.h"
 
@@ -28,26 +28,26 @@ class Strand {
 		Pushable* Tail;
 		/// \brief Target length of whole strand
 		const float TargL;
-	
+
 	public:
 		/// \param _head Head end ([0]) of strand
 		/// \param _tail Tail end of strand
 		/// \param _targl Target length. If negative, represents fraction of auto-distance. Defaults to auto-distance * 1.
 		Strand(Pushable* _head, Pushable* _tail, float _targl = -1);
 		~Strand();
-		
+
 		/// \brief Update hidden members
 		///
-		/// Does not update ends, those are assumed to be handled elsewhere. 
+		/// Does not update ends, those are assumed to be handled elsewhere.
 		/// Does, however, push ends.
 		void Update();
-		
+
 		/// \brief Visualize
 		void Render() const;
-		
+
 		// \brief Calculate target length of each partition
 		inline float MiniTargL() const {return TargL / Nodes.size();};
-	
+
 	private:
 		void InfluencePair(Pushable* A, Pushable* B, bool Viscize);
 };
